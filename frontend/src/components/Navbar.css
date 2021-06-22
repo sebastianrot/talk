@@ -1,0 +1,22 @@
+.nav-header {
+    width: 100%;
+    background-color: #151a21;
+    background-color: #fff;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.nav-search {
+    border: 1px solid #ddd;
+    background-color: #22303c;
+   padding: 10px 30px 10px 25px;
+   color:#fff;
+}
+
+.nav-search:focus {
+    outline: none;
+}

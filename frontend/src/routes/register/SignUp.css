@@ -1,0 +1,44 @@
+.section-signup {
+    display: flex;
+    flex-direction: column;
+    padding: 25px 50px 30px 50px;
+    position: relative;
+    border-radius: 10px;
+    width: 700px;
+    height: 400px;
+    margin: 0 auto;
+    background-color: #fff;
+}
+
+
+.input-register {
+    border: 1px solid #edf2f7;
+    color: #686868;
+    border-radius: 3px;
+    padding: 18px 10px;
+    background-color: #f7fafc;
+    transition: all 0.2s ease-in-out;
+    margin: 10px 0;
+}
+
+.input-register:focus {
+    outline: none;
+    border: 1px solid #1877f2;
+    background-color: #fff;
+}
+
+.btn-register {
+    border-radius: 5px;
+    border: none;
+    background-color: #1877f2;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    height: 35px;
+    opacity: 1;
+}
+
+.btn-disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
