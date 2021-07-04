@@ -1,16 +1,15 @@
 const express = require('express')
 const db = require('../db-config')
-const verify = require('../middlewares/jwt-verify')
 const router = express.Router();
 
-router.get('/:id', (req, res) => {
-    const id = req.params.id
-    console.log(id)
-
-    db.query('SELECT * FROM users WHERE id = ?', id, (err, user) => {
+router.get('/:username', (req, res) => {
+    const username = req.params.username
+    
+    db.query('SELECT images.id_user, users.username, users.email, users.verified, users.date, images.path FROM users LEFT JOIN images ON users.id = images.id_user WHERE users.username = ?', username, (err, user) => {
         if(err) return err
         if(user.length === 0) return res.sendStatus(404)
-        return res.json({id: user[0].id, username: user[0].username, email: user[0].email, date: user[0].date})
+        console.log(user)
+        return res.json({id_user: user[0].id_user, username: user[0].username, email: user[0].email, verified: user[0].verified ,date: user[0].date, path: user[0].path})
     })
 })
 

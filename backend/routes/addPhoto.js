@@ -2,9 +2,7 @@ const express = require('express')
 const db = require('../db-config')
 const verify = require('../middlewares/jwt-verify')
 const multer = require('multer')
-const sharp = require('sharp')
-const path = require('path')
-const fs = require('fs')
+const jimp = require('jimp')
 const router = express.Router();
 
 const storage = multer.diskStorage({
@@ -28,12 +26,12 @@ const upload = multer({
     }
 })
 
-router.post('/' , verify, upload.single('image'), async (req, res) => {
+router.post('/' , verify, upload.single('image'), (req, res) => {
     let file = req.file
     console.log(file)
-    db.query('INSERT INTO images (path, mimetype, id_user, date) VALUES (? ,? ,? ,?)', [file.path ,file.mimetype, req.userId, new Date()], (err, result) => {
+    db.query('UPDATE images SET path = ?, mimetype = ?, date = ? WHERE id_user = ?', [`/static/profile/${file.filename}` ,file.mimetype, new Date(), req.userId], (err, result) => {
         if(err) return err
-        return res.json({path: file.filename})
+        return res.json({path: `profile/${file.filename}`})
     })
 
 })

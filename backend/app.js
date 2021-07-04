@@ -13,7 +13,8 @@ const registerRoute = require('./routes/register');
 const loginRoute = require('./routes/login');
 const logoutRoute = require('./routes/logout');
 const loggedRoute = require('./routes/logged');
-const addPhotoRoute = require('./routes/addPhoto')
+const addPhotoRoute = require('./routes/addPhoto');
+const searchRoute = require('./routes/search');
 
 app.use('/static', express.static('public'))
 app.use(express.json())
@@ -29,7 +30,7 @@ app.listen(PORT)
 
 app.use('/api/myprofile', myProfileRouter)
 
-app.use('/api/profile', profileRouter)
+app.use('/api/user', profileRouter)
 
 app.use('/api/register', registerRoute)
 
@@ -40,5 +41,7 @@ app.use('/api/logout', logoutRoute)
 app.use('/api/logged', loggedRoute)
 
 app.use('/api/addphoto', addPhotoRoute)
+
+app.use('/api/search', searchRoute)
 
 

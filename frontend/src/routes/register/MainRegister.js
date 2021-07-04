@@ -8,7 +8,6 @@ const MainRegister = () => {
     const [registerUsername, setRegisterUsername] = useState('')
     const [registerEmail, setRegisterEmail] = useState('')
     const [registerPassword, setRegisterPassword] = useState('')
-    const [registerChecked, setRegisterChecked] = useState(false)
     const [errors, setErrors] = useState([])
     const [invisible, setInvisible] = useState(true)
     const {logged, loggedFetch} = useContext(AuthContext)
@@ -22,7 +21,7 @@ const MainRegister = () => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ username: registerUsername, email: registerEmail, 
-                password: registerPassword, check: registerChecked})
+                password: registerPassword})
         })
         .then(res => res.json())
         .then(data => {
@@ -46,8 +45,6 @@ const MainRegister = () => {
         setRegisterEmail,
         registerPassword,
         setRegisterPassword,
-        registerChecked,
-        setRegisterChecked,
         handleClick,
         invisible
     }

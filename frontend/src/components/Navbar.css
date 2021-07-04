@@ -1,22 +1,22 @@
 .nav-header {
     width: 100%;
-    background-color: #151a21;
     background-color: #fff;
+    position: fixed;
+    height: 50px;
+    border-top: 1px solid #ddd;
+    top: 0;
+    z-index: 99;
 }
 
 nav {
     display: flex;
     justify-content: space-between;
     height: 100%;
+    max-width: 1200px;
+    margin: auto;
 }
 
-.nav-search {
-    border: 1px solid #ddd;
-    background-color: #22303c;
-   padding: 10px 30px 10px 25px;
-   color:#fff;
-}
-
-.nav-search:focus {
-    outline: none;
+.account-dropdown {
+    display: flex;
+    flex-direction: column;
 }

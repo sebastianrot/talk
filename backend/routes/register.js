@@ -7,11 +7,11 @@ const router = express.Router();
 router.post('/', (req, res) => {
     console.log(req.body)
     const errors = []
-    let {username, email, password, check} = req.body
+    let {username, email, password } = req.body
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     email = email.toLowerCase()
 
-    if(!username || !email || !password || !check) {
+    if(!username || !email || !password) {
         errors.push({msg: 'Uzupełnij wszystkie pola'})
     }else {
 
@@ -42,10 +42,12 @@ router.post('/', (req, res) => {
             bcrypt.genSalt(12, (err, salt) => bcrypt.hash(password, salt, (err, hash) => {
                 if(err) throw err
 
-                db.query('INSERT INTO users (username, email, password, date) VALUES (? ,? ,? ,?)', [username, email, hash, new Date()], (er, result) => {
+                db.query('INSERT INTO users (username, email, password, date) VALUES (? ,? ,? ,?)', [username, email, hash, new Date()], (err, result) => {
                     if(err) throw err
+                    db.query('INSERT INTO images (path, mimetype, id_user, date) VALUES (? ,? ,? ,?)', ['/static/profile/default.jpeg', 'image/jpeg', result.insertId, new Date()], (er, resu) => {
                     const token = jwtGenerator(result.insertId)
                     return res.cookie('access_token', token, { httpOnly: true}).json({auth: true})
+                    })
                 })
             }))
         })  
