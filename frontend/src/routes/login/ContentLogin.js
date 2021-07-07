@@ -1,7 +1,7 @@
 import './ContentLogin.css';
 import {useContext, useState} from 'react';
 import SignIn from './SignIn';
-import { useHistory, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import AuthContext from '../../context/AuthContext';
 import urlSettings from '../../components/urlSettings';
 

@@ -1,5 +1,5 @@
 const express = require('express')
-const db = require('../db-config')
+const User = require('../models/User')
 const verify = require('../middlewares/jwt-verify')
 const multer = require('multer')
 const jimp = require('jimp')
@@ -29,7 +29,7 @@ const upload = multer({
 router.post('/' , verify, upload.single('image'), (req, res) => {
     let file = req.file
     console.log(file)
-    db.query('UPDATE images SET path = ?, mimetype = ?, date = ? WHERE id_user = ?', [`/static/profile/${file.filename}` ,file.mimetype, new Date(), req.userId], (err, result) => {
+    User.updateOne({_id: req.userId}, {img: file.filename}, (err) => {    
         if(err) return err
         return res.json({path: `profile/${file.filename}`})
     })

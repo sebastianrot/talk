@@ -1,4 +1,5 @@
 import AddPhoto from "./AddPhoto"
+import Desc from './Desc'
 
 const MyProfile = ({user}) => {
     return(
@@ -9,6 +10,7 @@ const MyProfile = ({user}) => {
         <br />
         <span>{user.email}</span>
         <AddPhoto/>
+        <Desc/>
         </>
     )
 }

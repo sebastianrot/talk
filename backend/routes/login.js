@@ -1,7 +1,6 @@
 const express = require('express')
 const bcrypt = require('bcryptjs')
-const db = require('../db-config')
-const verify = require('../middlewares/jwt-verify')
+const User = require('../models/User')
 const jwtGenerator = require('../jwtGenerator')
 const router = express.Router();
 require('dotenv').config()
@@ -14,7 +13,7 @@ router.post('/', (req, res) => {
     if(!email || !password) {
        return res.json({error: 'Wprowadź dane'})
     } else {
-        db.query('SELECT * FROM users WHERE email = ?', email, (err, user) => {
+        User.find({email}, (err, user) => {
             if(err) return err
             if(user.length === 0) return res.json({error: 'Wprowadź poprawny email'})
             try {
@@ -22,7 +21,7 @@ router.post('/', (req, res) => {
                 if(err) return err    
                 if(!result) return res.json({error: 'Wprowadź poprawne hasło'})
 
-                const token = jwtGenerator(user[0].id)
+                const token = jwtGenerator(user[0]._id)
                 return res.cookie('access_token', token, { httpOnly: true}).json({auth: true})
                 })
             }catch(e) {

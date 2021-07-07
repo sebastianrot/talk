@@ -1,12 +1,12 @@
 const express = require('express')
 const verify = require('../middlewares/jwt-verify')
-const db = require('../db-config')
+const User = require('../models/User')
 const router = express.Router();
 
 router.get('/', verify, (req, res) => {
-    db.query('SELECT * FROM users WHERE id = ?', req.userId, (err, user) => {
+    User.find({_id: req.userId}, (err, user) =>{
         if(err) return err
-        return res.json({id: user[0].id, username: user[0].username, email: user[0].email})
+        return res.json({id: user[0]._id, username: user[0].username, email: user[0].email})
     }) 
 })
 

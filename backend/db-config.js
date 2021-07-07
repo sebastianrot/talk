@@ -1,10 +1,7 @@
-const mysql = require('mysql');
+const mongoose = require('mongoose')
 
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'talk_datebase'
+module.exports = mongoose.connect('mongodb://127.0.0.1:27017/talk', {
+    useNewUrlParser: true, 
+    useUnifiedTopology: true,
+    useCreateIndex: true,
 })
-
-module.exports = connection

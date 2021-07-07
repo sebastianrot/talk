@@ -5,6 +5,7 @@ import ProfileContext from '../../context/ProfileContext'
 import MyProfile from './MyProfile'
 import ProfileNotExist from './ProfileNotExist'
 import Loading from '../../components/Loading'
+import { ReactComponent as VerifiedLogo} from '../../components/svg/verified.svg'
 
 const Profile = () => {
 
@@ -35,21 +36,22 @@ const Profile = () => {
 
     if(loading || loadingProfile) return <Loading/>
 
-    if(myUser.id === user.id_user) return <MyProfile user={myUser}/>
+    if(myUser.id === user.id) return <MyProfile user={myUser}/>
 
     return(
         <>
-        <img src={`${url.serverUrl}${user.path}`} alt='zdjęcie profilowe' style={{width: '200px'}}/>
+        <img src={`${url.serverUrl}/static/profile/${user.image}`} alt='zdjęcie profilowe' style={{width: '200px'}}/>
         <br />
+        {user.verified && <VerifiedLogo/>}
         <span>{user.id}</span>
         <br />
         <span>{user.username}</span>
         <br />
-        <span>{user.verified}</span>
-        <br />
         <span>{user.email}</span>
         <br />
         <span>{user.date}</span>
+        <br />
+        <span>{user.desc}</span>
         </>
     )
 }

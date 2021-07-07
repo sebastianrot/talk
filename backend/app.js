@@ -2,7 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-const multer = require('multer');
 
 const app = express();
 const PORT = process.env.PORT || 5000
@@ -15,6 +14,7 @@ const logoutRoute = require('./routes/logout');
 const loggedRoute = require('./routes/logged');
 const addPhotoRoute = require('./routes/addPhoto');
 const searchRoute = require('./routes/search');
+const descRoute = require('./routes/description');
 
 app.use('/static', express.static('public'))
 app.use(express.json())
@@ -43,5 +43,7 @@ app.use('/api/logged', loggedRoute)
 app.use('/api/addphoto', addPhotoRoute)
 
 app.use('/api/search', searchRoute)
+
+app.use('/api/desc', descRoute)
 
 

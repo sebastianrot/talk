@@ -13,7 +13,7 @@ const SearchResults = ({results, load, isdata}) => {
     )
 
     let result = results.map((data)=> (
-    <div className='search-result'>
+    <div className='search-result' key={data._id}>
         <Link to={`/user/${data.username}`}>{data.username}</Link>
     </div>
     ))
