@@ -1,9 +1,11 @@
+import './Profile.css'
 import {useState, useEffect, useContext} from 'react'
 import {useParams} from 'react-router-dom'
 import url from '../../components/urlSettings'
 import ProfileContext from '../../context/ProfileContext'
 import MyProfile from './MyProfile'
 import ProfileNotExist from './ProfileNotExist'
+import Post from '../../components/posts/Post'
 import Loading from '../../components/Loading'
 import { ReactComponent as VerifiedLogo} from '../../components/svg/verified.svg'
 
@@ -38,21 +40,25 @@ const Profile = () => {
 
     if(myUser.id === user.id) return <MyProfile user={myUser}/>
 
+    const date = new Date(user.date)
+    console.log(user.text)
+    const posts = user.text.map((current)=> <Post value={current}/>)
     return(
-        <>
-        <img src={`${url.serverUrl}/static/profile/${user.image}`} alt='zdjęcie profilowe' style={{width: '200px'}}/>
-        <br />
-        {user.verified && <VerifiedLogo/>}
-        <span>{user.id}</span>
-        <br />
+        <main className='profile-main'>
+        <section className='profile-section'>
+        <img src={`${url.serverUrl}/static/profile/${user.image}`} alt='zdjęcie profilowe' style={{width: '150px', borderRadius: '50%', objectFit: 'cover'}}/>
+        <div>
         <span>{user.username}</span>
-        <br />
+        {user.verified && <VerifiedLogo/>}
+        </div>
         <span>{user.email}</span>
-        <br />
-        <span>{user.date}</span>
-        <br />
+        <span>Dołączył/a {date.getFullYear()}</span>
         <span>{user.desc}</span>
-        </>
+        </section>
+        <section>
+        {posts}
+        </section>
+        </main>
     )
 }
 

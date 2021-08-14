@@ -14,6 +14,7 @@ const logoutRoute = require('./routes/logout');
 const loggedRoute = require('./routes/logged');
 const addPhotoRoute = require('./routes/addPhoto');
 const searchRoute = require('./routes/search');
+const postRoute = require('./routes/posts');
 const descRoute = require('./routes/description');
 
 app.use('/static', express.static('public'))
@@ -43,6 +44,8 @@ app.use('/api/logged', loggedRoute)
 app.use('/api/addphoto', addPhotoRoute)
 
 app.use('/api/search', searchRoute)
+
+app.use('/api/posts', postRoute)
 
 app.use('/api/desc', descRoute)
 
