@@ -14,12 +14,13 @@ const Desc = () => {
             },
             body: JSON.stringify({desc: value})
         })
+        setValue('')
     }
 
     return(
         <>
         <input type='text' placeholder='Wprowadź opis' value={value} onChange={(e)=>setValue(e.target.value)}/>
-        <button onClick={handleClick}>Zaktulizuj</button>
+        <button onClick={handleClick}>Zapisz</button>
         </>
     )
 }

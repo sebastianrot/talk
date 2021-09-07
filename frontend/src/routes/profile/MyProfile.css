@@ -1,4 +1,4 @@
-.myprofile-section {
+.myprofile-main {
     max-width: 680px;
     margin: auto;
     display: flex;
@@ -6,4 +6,16 @@
     align-items: center;
     border-left: 1px solid #eff3f4;
     border-right: 1px solid #eff3f4;
+}
+
+.myprofile-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 20px 40px 20px;
+    width: 100%;
+}
+
+.posts-profile-section {
+width: 100%;
 }

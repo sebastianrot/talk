@@ -1,0 +1,10 @@
+.search-panel-section {
+    width: 700px;
+    height: 150px;
+    background-color: #fff;
+    position: absolute;
+    z-index: 99;
+    overflow-y: auto;
+    border-radius: 8px;
+    box-shadow: rgba(101, 119, 134, 0.2) 0px 0px 15px, rgba(101, 119, 134, 0.15) 0px 0px 3px 1px;
+}

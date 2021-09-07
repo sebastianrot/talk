@@ -45,13 +45,13 @@ const AddPhoto = () => {
 
     return(
        <div>
-           {choose ? <PhotoPreview prev={prevImageUrl}/> : null}
+           {choose && <PhotoPreview prev={prevImageUrl}/>}
+           {image !== '' && <img src={`${url.serverUrl}/static/${image}`} alt='zdjecie profilowe' style={{width: '250px'}}/>}
            <form onSubmit={handleSubmit}>
            <input type='file' onChange={(e)=>handleChange(e)}/>
-           <input type='submit' value='Wyślij'/>
+           <input type='submit' value='Zapisz'/>
            </form>
-           {image !== '' ? <img src={`${url.serverUrl}/static/${image}`} alt='zdjecie profilowe'/> : null}
-           {error ? <span>Zdjęcie jest nie prawidłowe</span> : null}
+           {error && <span style={{color: 'red'}}>Zdjęcie jest nie prawidłowe</span>}
        </div>
     )
 }

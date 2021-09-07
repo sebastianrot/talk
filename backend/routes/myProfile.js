@@ -6,7 +6,7 @@ const router = express.Router();
 router.get('/', verify, (req, res) => {
     User.find({_id: req.userId}, (err, user) =>{
         if(err) return err
-        return res.json({id: user[0]._id, username: user[0].username, email: user[0].email})
+        return res.json({id: user[0]._id, username: user[0].username})
     }) 
 })
 

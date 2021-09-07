@@ -14,8 +14,10 @@ const logoutRoute = require('./routes/logout');
 const loggedRoute = require('./routes/logged');
 const addPhotoRoute = require('./routes/addPhoto');
 const searchRoute = require('./routes/search');
-const postRoute = require('./routes/posts');
+const addpostRoute = require('./routes/addposts');
 const descRoute = require('./routes/description');
+const likeRoute = require('./routes/like');
+const postRoute = require('./routes/post');
 
 app.use('/static', express.static('public'))
 app.use(express.json())
@@ -45,8 +47,11 @@ app.use('/api/addphoto', addPhotoRoute)
 
 app.use('/api/search', searchRoute)
 
-app.use('/api/posts', postRoute)
+app.use('/api/addposts', addpostRoute)
 
 app.use('/api/desc', descRoute)
 
+app.use('/api/post', likeRoute)
+
+app.use('/api/post', postRoute)
 

@@ -1,0 +1,26 @@
+.div-upload-file label {
+    position: relative;
+    width: 100px;
+    height: 25px;
+    border-radius: 2px;
+    background: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.post-file {
+    z-index: 1;
+    width: 0.1;
+    height: 0.1;
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.div-photos-prev {
+    display: flex;
+}

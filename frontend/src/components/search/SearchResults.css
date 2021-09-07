@@ -1,13 +1,3 @@
-.search-results {
-    width: 300px;
-    height: 150px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    position: absolute;
-    z-index: 99;
-    overflow-y: auto;
-}
-
 .search-result {
     display: flex;
     border-top: 1px solid #ccc;

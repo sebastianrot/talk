@@ -1,0 +1,14 @@
+.post-article {
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+}
+
+.post-page-post {
+    display: flex;
+    flex-direction: column;
+}
+
+.post-image {
+    width: 100%;
+}

@@ -38,15 +38,16 @@ const Profile = () => {
 
     if(loading || loadingProfile) return <Loading/>
 
-    if(myUser.id === user.id) return <MyProfile user={myUser}/>
+     const posts = user.posts.map((current)=> <Post key={current._id} value={current} user={user}/>)
+     
+    if(myUser.id === user.id) return <MyProfile user={user} post={posts}/>
 
     const date = new Date(user.date)
-    console.log(user.text)
-    const posts = user.text.map((current)=> <Post value={current}/>)
+     console.log(user)
     return(
         <main className='profile-main'>
         <section className='profile-section'>
-        <img src={`${url.serverUrl}/static/profile/${user.image}`} alt='zdjęcie profilowe' style={{width: '150px', borderRadius: '50%', objectFit: 'cover'}}/>
+        <img src={`${url.serverUrl}/static/profile/${user.img !== '' ? user.img : 'default.jpeg'}`} alt='zdjęcie profilowe' style={{width: '150px', borderRadius: '50%', objectFit: 'cover'}}/>
         <div>
         <span>{user.username}</span>
         {user.verified && <VerifiedLogo/>}
@@ -55,7 +56,7 @@ const Profile = () => {
         <span>Dołączył/a {date.getFullYear()}</span>
         <span>{user.desc}</span>
         </section>
-        <section>
+        <section className='posts-profile-section'>
         {posts}
         </section>
         </main>

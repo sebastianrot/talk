@@ -3,6 +3,7 @@ import Home from '../routes/home/Home';
 import Login from '../routes/login/ContentLogin';
 import Register from '../routes/register/MainRegister';
 import Profile from '../routes/profile/Profile';
+import PostPage from './posts/PostPage';
 import PublicRoute from './PublicRoute';
 import PrivateRoute from './PrivateRoute';
 
@@ -13,6 +14,7 @@ const Router = () => {
             <PublicRoute path='/login' component={Login}/>
             <PublicRoute path='/register' component={Register}/>
             <Route path='/user/:username' component={Profile}/>
+            <Route path='/p/:id' component={PostPage}/>
             <Route render={() => <span>404</span>} />
         </Switch>
     )

@@ -2,14 +2,16 @@ import './SearchResults.css'
 import {Link} from 'react-router-dom'
 import Loading from '../Loading'
 
-const SearchResults = ({results, load, isdata}) => {
+const SearchResults = ({results, load, isdata, start}) => {
+
+    if(start) return(
+        <span>Wyszukaj użytkownika albo grupe</span>
+    )
 
     if(load) return <Loading/>
 
     if(!isdata) return(
-    <div className='search-results'>
     <span>brak wyników</span>
-    </div>
     )
 
     let result = results.map((data)=> (
@@ -19,9 +21,9 @@ const SearchResults = ({results, load, isdata}) => {
     ))
 
     return(
-        <div className='search-results'>
+        <>
             {result}
-        </div>
+        </>
     )
 }
 

@@ -1,0 +1,10 @@
+.post-page-article {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: auto;
+}
+
+.post-page-user {
+    display: flex;
+}

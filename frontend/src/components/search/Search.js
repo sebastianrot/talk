@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import './Search.css'
 import url from '../urlSettings'
-import SearchResults from "./SearchResults"
+import SearchPanel from './SearchPanel'
 
 const Search = () => {
 
@@ -10,10 +10,11 @@ const Search = () => {
     const [click, setClick] = useState(false)
     const [loading, setLoading] = useState(true)
     const [isData, setIsData] = useState(true)
+    const [isStart, setIsStart] = useState(true)
 
     useEffect(()=>{
         if(value.length > 0) {
-        setClick(true)
+            setIsStart(false)
         fetch(`${url.serverUrl}/api/search?queries=${value}`)
         .then(res => res.json())
         .then(data => {
@@ -30,7 +31,7 @@ const Search = () => {
             setLoading(false)
         })
         } else {
-            setClick(false)
+            setIsStart(true)
         }
     },[value])
 
@@ -42,8 +43,8 @@ const Search = () => {
 
     return(
         <div className='search-box'>
-        <input type='search' placeholder='Search...' className='search' value={value} onChange={handleChange} />
-        {click ? <SearchResults results={results} load={loading} isdata={isData} /> : null}
+        <input type='search' placeholder='Search...' className='search' value={value} onChange={handleChange} onFocus={()=>setClick(true)} onBlur={()=>setTimeout(()=>setClick(false), 300)}/>
+        {click && <SearchPanel results={results} load={loading} isdata={isData} start={isStart}/>}
         </div>
     )
 }
