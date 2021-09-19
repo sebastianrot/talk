@@ -26,12 +26,10 @@ const upload = multer({
 })
 
 
-router.post('/', verify, upload.array('images', 4), (req, res) => {
+router.post('/', verify, upload.array('images', 4), async(req, res) => {
     const {text} = req.body
     const files = req.files
     const filesArray = []
-    
-    console.log(req.body.text)
 
     files.forEach(value => {
         filesArray.push(value.filename)
@@ -42,10 +40,12 @@ router.post('/', verify, upload.array('images', 4), (req, res) => {
         img: filesArray,
         by: req.userId
     })
-
-    postData.save((err)=> {
-        if(err) return err
-    })
+try{
+    await postData.save()
+    res.json({add: true})
+}catch (err) {
+    res.status(500).send()
+}
 })
 
 module.exports = router

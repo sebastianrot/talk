@@ -3,13 +3,11 @@ import { Link } from 'react-router-dom';
 import './Navbar.css';
 import Search from './search/Search'
 import AuthContext from '../context/AuthContext';
-import ProfileContext from '../context/ProfileContext';
 import LogOut from './LogOut';
 
 const Navbar = () => {
 
-    const {myUser, loadingProfile} = useContext(ProfileContext)
-    const {logged, isLoading} = useContext(AuthContext)
+    const {logged, myUser} = useContext(AuthContext)
 
     const [click, setClick] = useState(false)
 
@@ -22,13 +20,14 @@ const Navbar = () => {
             <nav>
                 <Link to='/'>logo</Link>
                 <Search/>
+                <Link to={`/groups`}>grupy</Link>
                 {logged ?
                 <div onClick={handleClick}>
                     Konto
                  {click ? <div>
                      <span>notifications</span>
                      <div className='account-dropdown'>
-                     <Link>konto</Link>
+                     <Link to={`/user/${myUser.id}`}>konto</Link>
                      <LogOut/>
                      </div>
                 </div> : null} 

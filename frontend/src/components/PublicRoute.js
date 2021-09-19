@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import AuthContext from '../context/AuthContext';
 import Loading from './Loading';
 
-const PublicRoute = ({component: Component, auth, ...rest}) => {
+const PublicRoute = ({component: Component, ...rest}) => {
     const {logged, isLoading} = useContext(AuthContext)
 
     if(isLoading) {

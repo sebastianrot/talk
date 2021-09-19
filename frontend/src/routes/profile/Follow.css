@@ -1,0 +1,10 @@
+.follow-user-btn {
+    font-family: "Helvetica";
+    font-size: 10pt;
+    border: 1px solid;
+    border-color: #3399FF;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    padding: 5px 15px;
+}

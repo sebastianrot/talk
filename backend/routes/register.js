@@ -32,15 +32,15 @@ router.post('/', async (req, res) => {
     if(errors.length > 0) {
         res.json(errors)
     } else {
-            User.find({email}, (err, result) => {
-                if(err) return err
+        try {
+            const result = await User.find({email})
                 console.log(result)
                 if(result.length > 0) {
                     errors.push({msg: 'Już istnieje konto z tym email', type: 'email'})
                     return res.json(errors)
                 }
         
-            bcrypt.genSalt(12, (err, salt) => bcrypt.hash(password, salt, (err, hash) => {
+            bcrypt.genSalt(12, (err, salt) => bcrypt.hash(password, salt, async(err, hash) => {
                 if(err) throw err
 
                     const userData = new User({
@@ -50,15 +50,15 @@ router.post('/', async (req, res) => {
                         verified: false,
                     })
 
-                    userData.save((err, user) => {
-                        if(err) return err
-        
+                   const user = await userData.save()
                         const token = jwtGenerator(user._id)
                         return res.cookie('access_token', token, { httpOnly: true}).json({auth: true})
-                    })
+              
             }))
-        })
-    }
+            }catch (err) {
+                res.status(500).send()
+            }
+        }
 })
 
 module.exports = router

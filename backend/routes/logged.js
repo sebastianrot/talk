@@ -1,17 +1,14 @@
 const express = require('express')
-const jwt = require('jsonwebtoken')
+const verify = require('../middlewares/jwt-verify')
+const User = require('../models/User')
 const router = express.Router();
-require('dotenv').config()
 
-router.get('/', (req, res) => {
-    const token = req.cookies.access_token
-    if(!token) return res.json({auth: false})
+router.get('/', verify, async(req, res) => {
+try{
+    const user = await User.find({_id: req.userId})
+        return res.json({id: user[0]._id, username: user[0].username})
+}catch (err) {
+    res.status(500).send()
+}})
 
-        jwt.verify(token, process.env.SECRET_JWT, (err, decoded) => {
-            if(err) return res.json({auth: false})
-
-            return res.json({auth: true})
-        })
-})
-
-module.exports = router
+module.exports = router;

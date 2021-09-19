@@ -6,11 +6,12 @@ import Date from './Date'
 import url from '../urlSettings'
 
 const Post = ({value, user}) => {
-    const image = value.img.map(el => <img src={`${url.serverUrl}/static/posts/${el}`} alt='zdjęcie' className='post-image'/>)
+    const image = value.img.map(el => <img src={`${url.serverUrl}/static/posts/${el}`} key={el} alt='zdjęcie' className='post-image'/>)
+    console.log(value)
     return(
         <article className='post-article'>
             <div className='post-page-user'>
-                <Link to={`/user/${user.username}`} style={{width: '48px', height: '48px'}}><img src={`${url.serverUrl}/static/profile/${user.img !== '' ? user.img : 'default.jpeg'}`}
+                <Link to={`/user/${user.username}`} style={{width: '48px', height: '48px'}}><img src={`${url.serverUrl}/static/profile/${user.photo !== '' ? user.photo : 'default.jpeg'}`}
                     alt='zdjęcie profilowe' style={{width: '100%', borderRadius: '999px', objectFit: 'cover'}}/></Link>
                 <Link to={`/user/${user.username}`}>{user.username}</Link>
                 <Date value={value.date}/>

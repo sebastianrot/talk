@@ -26,14 +26,14 @@ const upload = multer({
     }
 })
 
-router.post('/' , verify, upload.single('image'), (req, res) => {
+router.post('/' , verify, upload.single('image'), async(req, res) => {
     let file = req.file
     console.log(file)
-    User.updateOne({_id: req.userId}, {img: file.filename}, (err) => {    
-        if(err) return err
+try{
+    await User.updateOne({_id: req.userId}, {img: file.filename})
         return res.json({path: `profile/${file.filename}`})
-    })
-
-})
+}catch(err) {
+    res.status(500).send()
+}})
 
 module.exports = router

@@ -5,16 +5,15 @@ const jwtGenerator = require('../jwtGenerator')
 const router = express.Router();
 require('dotenv').config()
 
-router.post('/', (req, res) => {
-    console.log(req.body)
+router.post('/', async(req, res) => {
     let error
     const {email, password} = req.body
 
     if(!email || !password) {
        return res.json({error: 'Wprowadź dane'})
     } else {
-        User.find({email}, (err, user) => {
-            if(err) return err
+    try{
+        const user = await User.find({email})
             if(user.length === 0) return res.json({error: 'Wprowadź poprawny email'})
             try {
                 bcrypt.compare(password, user[0].password, (err, result) => {
@@ -27,7 +26,9 @@ router.post('/', (req, res) => {
             }catch(e) {
                 return(e)
             }
-        })
+    }catch (err) {
+        res.status(500).send()
+    }
     }
 })
 

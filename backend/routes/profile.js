@@ -1,31 +1,22 @@
 const express = require('express')
 const User = require('../models/User')
-const Post = require('../models/Post')
 const verify = require('./jwt-profile')
+const isfollowing = require('../isfollowing')
 const router = express.Router();
 
-router.get('/:username', verify, (req, res) => {
+router.get('/:username', verify, async(req, res) => {
     const username = req.params.username
-    
-    User.find({username}, (err, user) => {
-        if(err) return err
+try{
+        const user = await User.find({username})
         if(user.length === 0) return res.sendStatus(404)
         console.log(user)
-        Post.find({by: user[0]._id}).sort({date: -1}).lean().exec((err, post) => {
-            if(err) return err
-            const posts = [...post]
-           
-            posts.forEach((value) => {
-                const likes = value.like.toString()
-                if(likes.includes(req.userId)) {
-                    Object.assign(value, {liked: true})
-                }
-            })
-            console.log(posts)
-            return res.json({id: user[0]._id, username: user[0].username, email: user[0].email, 
-                verified: user[0].verified ,date: user[0].date, img: user[0].img, desc: user[0].desc, posts})
-        })
-    })
+        const followed = await isfollowing(user[0]._id, req.userId)
+
+            return res.json({user: {id: user[0]._id, username: user[0].username, email: user[0].email, 
+                verified: user[0].verified ,date: user[0].date, photo: user[0].img, desc: user[0].desc, followed}})
+    }catch (err){
+        res.status(500).send()
+    }
 })
 
 module.exports = router

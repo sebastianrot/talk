@@ -1,6 +1,6 @@
 import { useContext } from "react"
-import url from "./urlSettings"
 import AuthContext from "../context/AuthContext"
+import url from "./urlSettings"
 
 const LogOut = () => {
 
