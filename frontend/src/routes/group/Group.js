@@ -1,6 +1,8 @@
 import {useState, useEffect} from 'react'
 import {useParams} from 'react-router-dom'
 import JoinGroup from './JoinGroup'
+import ShareGroup from './ShareGroup'
+import Leave from './Leave'
 import Loading from '../../components/Loading'
 import url from '../../components/urlSettings'
 
@@ -16,7 +18,7 @@ const Group = () => {
         })
         .then(res => res.json())
         .then(data=>{
-            setGroup(data.group)
+            setGroup(data)
             setIsExist(true)
             setLoading(false)
         }).catch(err=>{
@@ -33,7 +35,8 @@ const Group = () => {
             <span>{group.name}</span>
             <span>{group.category}</span>
             <span>{group.priv}</span>
-            <JoinGroup id={group._id}/>
+            {group.status === 'accept' ? <ShareGroup id={group._id}/> : <JoinGroup id={group._id} status={group.status}/>}
+            {group.status === 'accept' && <Leave id={group._id}/>}
         </section>
     )
 }

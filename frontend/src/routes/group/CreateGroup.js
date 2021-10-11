@@ -5,6 +5,7 @@ const CreateGroup = () => {
     const [name, setName] = useState('')
     const [desc, setDesc] = useState('')
     const [priv, setPriv] = useState(false)
+    const [hide, setHide] = useState(false)
     const [category, setCategory] = useState('sport')
 
     const handleClick = () => {
@@ -15,7 +16,7 @@ const CreateGroup = () => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({name, desc, priv, category})
+            body: JSON.stringify({name, desc, priv, hide, category})
         })
     }
 
@@ -27,6 +28,11 @@ const CreateGroup = () => {
                 Prywatna
             <input type='checkbox' checked={priv} onChange={(e)=>setPriv(e.target.checked)} />
             </label>
+            {priv &&
+            <label>
+                Ukryta
+            <input type='checkbox' checked={hide} onChange={(e)=>setHide(e.target.checked)} />
+            </label>}
             <label>
           Wybierz kategorie
           <select value={category} onChange={(e)=>setCategory(e.target.value)}>

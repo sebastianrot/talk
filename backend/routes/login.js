@@ -13,7 +13,7 @@ router.post('/', async(req, res) => {
        return res.json({error: 'Wprowadź dane'})
     } else {
     try{
-        const user = await User.find({email})
+        const user = await User.find({email, ban: false})
             if(user.length === 0) return res.json({error: 'Wprowadź poprawny email'})
             try {
                 bcrypt.compare(password, user[0].password, (err, result) => {

@@ -6,6 +6,7 @@ const commentSchema = new mongoose.Schema({
     post: {type: mongoose.Schema.Types.ObjectId, ref: 'Post'},
     by: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     like: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+    parent: {type: String, ref: 'Comment'},
     date: {type: Date, default: Date.now}
 })
 

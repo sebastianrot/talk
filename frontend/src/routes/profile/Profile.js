@@ -41,7 +41,6 @@ const Profile = () => {
     if(logged && myUser.id === user.id) return <MyProfile user={user}/>
 
     const date = new Date(user.date)
-     console.log(user)
     return(
         <main className='profile-main'>
         <section className='profile-section'>
@@ -55,7 +54,7 @@ const Profile = () => {
         <span>Dołączył/a {date.getFullYear()}</span>
         <span>{user.desc}</span>
         </section>
-        <PostsProfile id={user.id}/>
+        <PostsProfile key={user.id} id={user.id}/>
         </main>
     )
 }

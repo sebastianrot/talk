@@ -1,0 +1,15 @@
+.btn-join-status {
+    border: none;
+}
+
+.pending {
+    background-color: gray;
+}
+
+.reject {
+    background-color: blue;
+}
+
+.block {
+    background-color: red;
+}

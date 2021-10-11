@@ -5,7 +5,6 @@ import url from "../urlSettings"
 
 const Comments = ({id}) => {
     const [comments, setComments] = useState()
-    const [user, setUser] = useState()
     const [isComment, setIsComment] = useState(true)
     const [loading, setLoading] = useState(true)
 
@@ -15,8 +14,7 @@ const Comments = ({id}) => {
         })
         .then(res=>res.json())
         .then(data=>{
-            setComments(data.comment)
-            setUser(data.user)
+            setComments(data)
             setIsComment(true)
             setLoading(false)
         }).catch(err=> {
@@ -26,9 +24,9 @@ const Comments = ({id}) => {
 
     if(loading) return <Loading/>
 
-    if(!isComment) return <span>Nie ma postów</span>
+    if(!isComment) return <span>Nie ma komentarzy</span>
 
-    const result = comments.map((current, i)=> <Comment key={current.id} value={current} user={user[i]}/>)
+    const result = comments.map(current=> <Comment key={current._id} value={current} id={id}/>)
 
     return(
     <section>

@@ -1,13 +1,17 @@
 import './Post.css'
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import Like from './Like'
 import Share from './Share'
 import Date from './Date'
 import url from '../urlSettings'
 
 const Post = ({value, user}) => {
+    const history = useHistory();
     const image = value.img.map(el => <img src={`${url.serverUrl}/static/posts/${el}`} key={el} alt='zdjęcie' className='post-image'/>)
     console.log(value)
+    const handleClick = () => {
+        history.push(`/p/${value._id}`)
+    }
     return(
         <article className='post-article'>
             <div className='post-page-user'>

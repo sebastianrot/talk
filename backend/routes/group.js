@@ -2,24 +2,37 @@ const express = require('express')
 const verify = require('../middlewares/jwt-verify')
 const Group = require('../models/Group')
 const Join = require('../models/Join')
+const ingroup = require('../ingroup')
+const jwt = require('./jwt-profile')
 const router = express.Router();
 
-router.get('/:id', async(req, res) => {
+router.get('/:id', jwt, async(req, res) => {
     const id = req.params.id
 try{
-    const result = await Group.findById(id)
+    const result = await Group.findById(id).lean()
     if(result.length === 0) return res.status(404).send()
-    return res.json({group: result})
+    const status = await ingroup(id, req.userId)
+    const group = {...result, status}
+    return res.json(group)
 }catch (err) {
     res.status(500).send()
 }
 })
 
-
+router.get('/:id/members', verify, async(req, res)=> {
+    const id = req.params.id
+ try{
+    const result = await Join.find({group: id, status: 'accept'}).populate('user')
+    return res.json(result)
+ }catch(err) {
+    res.status(500).send()
+}
+})
 
 router.post('/create', verify, async(req, res) => {
     console.log('grupa stworzona')
     const data = req.body
+    if(req.body.hide && !req.body.priv) req.body.hide=false
     const groupData= new Group(data)
 try {
         const save = await groupData.save()
@@ -48,6 +61,16 @@ router.post('/:id/join', verify, async(req, res)=> {
     }
 })
 
+
+router.post('/:id/leave', verify, async(req,res) => {
+    const id = req.params.id
+    try{
+        await Join.deleteOne({group: id, user: req.userId, status: 'accept'})
+        return res.json({leave: true})
+    }catch(err){
+        res.status(500).send()
+    }
+})
 
 
 module.exports = router

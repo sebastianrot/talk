@@ -7,8 +7,8 @@ const router = express.Router();
 router.get('/:username', verify, async(req, res) => {
     const username = req.params.username
 try{
-        const user = await User.find({username})
-        if(user.length === 0) return res.sendStatus(404)
+        const user = await User.find({username}).select({password: 0})
+        if(user.length === 0 || user[0].ban) return res.sendStatus(404)
         console.log(user)
         const followed = await isfollowing(user[0]._id, req.userId)
 

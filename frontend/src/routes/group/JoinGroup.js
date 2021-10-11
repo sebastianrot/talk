@@ -1,6 +1,7 @@
+import './JoinGroup.css'
 import url from "../../components/urlSettings"
 
-const JoinGroup = ({id}) => {
+const JoinGroup = ({id, status}) => {
 
     const handleClick = () => {
         fetch(`${url.serverUrl}/api/group/${id}/join`,{
@@ -13,8 +14,14 @@ const JoinGroup = ({id}) => {
         })
     }
 
+    const text = (accept) => {
+        if(accept === 'pending') return 'Oczekiwanie'
+        if(accept=== 'reject') return 'Dołącz'
+        if(accept === 'block') return 'Zablokowany'
+    }
+
     return(
-        <button onClick={handleClick}>Dołącz</button>
+        <button onClick={handleClick} className={`btn-join-status ${status}`}>{text(status)}</button>
     )
 }
 

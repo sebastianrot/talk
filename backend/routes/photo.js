@@ -26,7 +26,7 @@ const upload = multer({
     }
 })
 
-router.post('/' , verify, upload.single('image'), async(req, res) => {
+router.post('/photo' , verify, upload.single('image'), async(req, res) => {
     let file = req.file
     console.log(file)
 try{
@@ -35,5 +35,16 @@ try{
 }catch(err) {
     res.status(500).send()
 }})
+
+
+router.get('/:username/photo', async (req, res) => {
+    const username = req.params.username
+    try{
+        const photo = await User.find({username})
+        res.json(photo)
+    }catch(err) {
+        res.status(500).send()
+    }
+})
 
 module.exports = router

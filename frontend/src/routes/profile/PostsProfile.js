@@ -6,30 +6,31 @@ import url from '../../components/urlSettings'
 const PostsProfile = ({id}) => {
     const [post, setPost] = useState()
     const [user, setUser] = useState()
-    const [isPosts, setIsPosts] = useState(true)
+    const [status, setStatus] = useState()
     const [loading, setLoading] = useState(true)
 
     useEffect(()=> {
         fetch(`${url.serverUrl}/api/user/${id}/posts`, {
             credentials: 'include'
         })
-        .then(res=> res.json())
+        .then(res=>{
+            if(!res.ok) throw Error(res.status)
+            return res.json()})
         .then(data=>{
             setPost(data.post)
             setUser(data.user)
-            setIsPosts(true)
             setLoading(false)})
             .catch(err=>{ 
-                setIsPosts(false)
+                setStatus(err.message)
                 setLoading(false)})
             
         }, [id])
 
     if(loading) return <Loading/>
 
-    if(!isPosts) return <span>Nie ma postów</span>
-console.log(user)
-    if(user.priv && !user.followed) return <span>Konto jest prywatne</span>
+    if(status === '404') return <span>Nie ma postów</span>
+
+    if(status === '401') return <span>Konto jest prywatne</span>
 
  const posts = post.map((current)=><Post key={current._id} value={current} user={user}/>)
 

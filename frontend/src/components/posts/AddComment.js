@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import url from '../urlSettings'
 
-const AddComment = ({id}) => {
+const AddComment = ({id, parent}) => {
     const [comment, setComment] = useState('')
 
     const handleClick = () => {
@@ -12,7 +12,7 @@ const AddComment = ({id}) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ comment })
+            body: JSON.stringify({ comment, parent })
         })
         setComment('')
     }

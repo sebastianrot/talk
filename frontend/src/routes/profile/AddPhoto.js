@@ -26,7 +26,7 @@ const AddPhoto = () => {
         const formData = new FormData()
         formData.append('image', file)
         setChoose(false)
-        fetch(`${url.serverUrl}/api/addphoto`,{
+        fetch(`${url.serverUrl}/api/user/photo`,{
             method: 'POST',
             mode: 'cors',
             credentials: 'include',
