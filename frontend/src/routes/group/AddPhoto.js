@@ -1,8 +1,8 @@
 import { useState } from "react"
+import PhotoPreview from "../profile/PhotoPreview"
 import url from "../../components/urlSettings"
-import PhotoPreview from "./PhotoPreview"
 
-const AddPhoto = () => {
+const AddPhoto = ({id}) => {
     const[image, setImage] = useState('')
     const[prevImageUrl, setPrevImageUrl] = useState('')
     const[choose, setChoose] = useState(false)
@@ -30,7 +30,7 @@ const AddPhoto = () => {
         const formData = new FormData()
         formData.append('image', files)
         setChoose(false)
-        fetch(`${url.serverUrl}/api/user/photo`,{
+        fetch(`${url.serverUrl}/api/group/${id}/photo`,{
             method: 'POST',
             mode: 'cors',
             credentials: 'include',

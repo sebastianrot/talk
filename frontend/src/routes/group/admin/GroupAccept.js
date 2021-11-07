@@ -3,8 +3,8 @@ import {useParams, Redirect} from 'react-router-dom'
 import Accept from './Accept'
 import Reject from './Reject'
 import Block from './Block'
-import Loading from '../../components/Loading'
-import url from '../../components/urlSettings'
+import Loading from '../../../components/Loading'
+import url from '../../../components/urlSettings'
 
 const GroupAccept = () => {
 

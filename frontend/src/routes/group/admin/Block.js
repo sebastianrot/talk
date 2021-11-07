@@ -1,4 +1,4 @@
-import url from '../../components/urlSettings'
+import url from '../../../components/urlSettings'
 
 const Block = ({id, user}) => {
 

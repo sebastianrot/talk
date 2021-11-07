@@ -1,20 +1,20 @@
-import './PostPage.css'
 import { useState, useEffect } from "react"
-import { useParams, Redirect } from "react-router-dom"
-import Post from './Post'
-import AddComment from './AddComment'
-import Comments from './Comments'
-import Loading from "../Loading"
-import url from "../urlSettings"
+import { useParams } from "react-router"
+import Comments from "../../components/posts/Comments"
+import AddComment from "../../components/posts/AddComment"
+import Post from "../group/Post"
+import Loading from "../../components/Loading"
+import url from "../../components/urlSettings"
 
-const PostPage = () => {
+const GroupPost = () => {
     let { id } = useParams()
+    let { postid } = useParams()
     const [post, setPost] = useState()
     const [isExist, setIsExist] = useState(true)
     const [loading, setLoading] = useState(true)
 
-    useEffect(() => {
-        fetch(`${url.serverUrl}/api/post/${id}`, {
+    useEffect(()=>{
+        fetch(`${url.serverUrl}/api/group/${id}/post/${postid}`, {
             credentials: 'include'
         })
         .then(res =>res.json())
@@ -23,22 +23,23 @@ const PostPage = () => {
             setIsExist(true)
             setLoading(false)
         })
-        .catch(err => {
+        .catch(err=>{
             setIsExist(false)
-            setLoading(false)})
-    }, [id])
+            setLoading(false)
+        })
+    },[id, postid])
 
     if(loading) return <Loading/>
 
     if(!isExist) return <span>Taki post nie istnieje</span>
 
     return(
-       <article className='post-page-article'>
-            <Post value={post} key={post._id}/>
+        <main>
+            <Post key={post._id} value={post}/>
             <AddComment id={post._id} parent={'0'}/>
             <Comments id={post._id}/>
-       </article>
+        </main>
     )
 }
 
-export default PostPage
+export default GroupPost

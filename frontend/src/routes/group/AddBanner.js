@@ -1,15 +1,15 @@
 import { useState } from "react"
+import PhotoPreview from "../profile/PhotoPreview"
 import url from "../../components/urlSettings"
-import PhotoPreview from "./PhotoPreview"
 
-const AddPhoto = () => {
+const AddBanner = ({id}) => {
     const[image, setImage] = useState('')
     const[prevImageUrl, setPrevImageUrl] = useState('')
     const[choose, setChoose] = useState(false)
     const[show, setShow] = useState(false)
     const [cropped, setCropped] = useState('')
     const[error, setError] = useState(false)
-    const [aspect, setAspect] = useState(1)
+    const [aspect, setAspect] = useState(3/1)
 
     const handleChange = (e) => {
         let files = e.target.files[0]
@@ -26,11 +26,11 @@ const AddPhoto = () => {
         e.preventDefault()
         let response = await fetch(cropped);
         let data = await response.blob();
-        let files = new File([data], "profile", {type: data.type});
+        let files = new File([data], "banner", {type: data.type});
         const formData = new FormData()
         formData.append('image', files)
         setChoose(false)
-        fetch(`${url.serverUrl}/api/user/photo`,{
+        fetch(`${url.serverUrl}/api/group/${id}/banner`,{
             method: 'POST',
             mode: 'cors',
             credentials: 'include',
@@ -60,4 +60,4 @@ const AddPhoto = () => {
     )
 }
 
-export default AddPhoto
+export default AddBanner

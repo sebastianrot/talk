@@ -24,7 +24,7 @@ const Profile = () => {
         })
         .then(res => res.json())
         .then(data => {
-            setUser(data.user)
+            setUser(data)
             setIsExist(true)
             setLoading(false)
         })
@@ -38,23 +38,26 @@ const Profile = () => {
 
     if(!isExist) return <ProfileNotExist/>
  
-    if(logged && myUser.id === user.id) return <MyProfile user={user}/>
+    if(logged && myUser.id === user._id) return <MyProfile user={user}/>
 
     const date = new Date(user.date)
     return(
         <main className='profile-main'>
         <section className='profile-section'>
-        <img src={`${url.serverUrl}/static/profile/${user.photo!== '' ? user.photo : 'default.jpeg'}`} alt='zdjęcie profilowe' style={{width: '150px', borderRadius: '50%', objectFit: 'cover'}}/>
+        <img src={`${url.serverUrl}/static/banner/${user.banner!== '' ? user.banner : 'default.jpeg'}`} alt='banner' style={{width: '100%',objectFit: 'cover'}}/>
+        <img src={`${url.serverUrl}/static/profile/${user.img!== '' ? user.img : 'default.jpeg'}`} alt='zdjęcie profilowe' style={{width: '150px', borderRadius: '50%', objectFit: 'cover'}}/>
         <div>
         <span>{user.username}</span>
         {user.verified && <VerifiedLogo/>}
         </div>
+        <span>{user.followers} Obserwujących</span>
+        <span>{user.follow} Obserwuje</span>
         <span>{user.email}</span>
-        <Follow id={user.id} followed={user.followed} key={user.id}/>
+        <Follow id={user._id} followed={user.followed} key={user._id}/>
         <span>Dołączył/a {date.getFullYear()}</span>
         <span>{user.desc}</span>
         </section>
-        <PostsProfile key={user.id} id={user.id}/>
+        <PostsProfile key={user._id} id={user._id}/>
         </main>
     )
 }

@@ -1,27 +1,37 @@
 const express = require('express')
 const verify = require('../middlewares/jwt-verify')
+const jwt = require('./jwt-profile')
 const Comment = require('../models/Comment')
 const router = express.Router();
 
-router.get('/:id/comments', async(req, res) => {
+router.get('/:id/comments', jwt ,async(req, res) => {
     const id = req.params.id
     const comment = []
 try{
-    const result = await Comment.find({post: id}).populate('by').lean().sort({date: 1})
+    const result = await Comment.find({post: id}).populate('by', 'username img verified').lean().sort({date: 1})
     if(result.length === 0) return res.status(404).send()
+
+    const sort = (val) => {
+        if(val.parent !== '0') {
+          const parent = result.find((p)=>val.parent === p._id.toString())
+          console.log(parent)
+            parent.replies.push(val)
+        }else{
+          comment.push(val)
+        }
+    }
+
         result.forEach((val)=>{
                 const likes = val.like.toString()
-                if(likes.includes(req.userId)) {
+            if(likes.includes(req.userId)) {
                     Object.assign(val, {liked: true})
                 }
-            if(val.parent === '0'){
+                val.like = val.like.length
                 Object.assign(val, {replies: []})
-                const reply = result.filter(el => val._id.toString() === el.parent) 
-                val.replies.push(...reply)
-                comment.push(val)
-            }})
-            console.log(result)
-    return res.json(comment)
+                sort(val)
+                })
+            console.log(comment)
+            return res.json(comment)
 }catch (err) {
     res.status(500).send()
 }

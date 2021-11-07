@@ -2,6 +2,7 @@ const express = require('express')
 const verify = require('../middlewares/jwt-verify')
 const Group = require('../models/Group')
 const Join = require('../models/Join')
+const GroupPost = require('../models/GroupPost')
 const ingroup = require('../ingroup')
 const jwt = require('./jwt-profile')
 const router = express.Router();
@@ -9,12 +10,59 @@ const router = express.Router();
 router.get('/:id', jwt, async(req, res) => {
     const id = req.params.id
 try{
-    const result = await Group.findById(id).lean()
+    const result = await Group.find({_id: id}).lean()
+    const users = await Join.count({group: id, status: 'accept'})
+    console.log(result)
     if(result.length === 0) return res.status(404).send()
-    const status = await ingroup(id, req.userId)
-    const group = {...result, status}
+    const join = await Join.find({group: id, user: req.userId}).select({status: 1, role: 1, _id: 0}).lean()
+    if(join.length === 0) join.push({status: 'reject'})
+    const group = {...result[0], users, ...join[0]}
     return res.json(group)
 }catch (err) {
+    console.log(err)
+    res.status(500).send()
+}
+})
+
+router.get('/:id/posts', jwt, async(req, res)=> {
+    const id = req.params.id
+try{
+    const result = await GroupPost.find({group: id}).populate('by', 'username img verified').populate('group', 'name priv').sort({date: -1}).lean()
+    if(result.length === 0) return res.status(404).send()
+    const status = await ingroup(id, req.userId)
+    if(!result[0].group.priv || status === 'accept') {
+        const posts = [...result]
+        posts.forEach((value) => {
+            const likes = value.like.toString()
+            if(likes.includes(req.userId)) {
+                Object.assign(value, {liked: true})
+            }
+            value.like = value.like.length
+        })
+        return res.json(posts)
+    }
+    return res.status(401).send()
+}catch(err){
+    res.status(500).send()
+}
+})
+
+router.get('/:id/post/:postid', jwt, async(req, res)=> {
+    const id = req.params.id
+    const postid = req.params.postid
+try{
+    const result = await GroupPost.find({_id: postid ,group: id}).populate('by', 'username img verified').populate('group', 'name priv').lean()
+    if(result.length === 0) return res.status(404).send()
+    console.log(result)
+    const status = await ingroup(id, req.userId)
+    if(!result[0].group.priv || status === 'accept') {
+        const likes = result[0].like.toString()
+        if(likes.includes(req.userId)) Object.assign(result[0], {liked: true})
+        result[0].like = result[0].like.length
+        return res.json(result)
+    }
+    return res.status(401).send()
+}catch(err){
     res.status(500).send()
 }
 })
@@ -22,23 +70,25 @@ try{
 router.get('/:id/members', verify, async(req, res)=> {
     const id = req.params.id
  try{
-    const result = await Join.find({group: id, status: 'accept'}).populate('user')
+    const result = await Join.find({group: id, status: 'accept'}).populate('user', 'username img verified')
     return res.json(result)
  }catch(err) {
     res.status(500).send()
 }
 })
 
+
 router.post('/create', verify, async(req, res) => {
-    console.log('grupa stworzona')
     const data = req.body
     if(req.body.hide && !req.body.priv) req.body.hide=false
     const groupData= new Group(data)
 try {
+        if(data.name.length > 2 && data.name.length < 25 && data.desc.length < 150){
         const save = await groupData.save()
         const joinData = new Join({user: req.userId, group: save._id, status: 'accept', role: 'admin'})
         await joinData.save()
         return res.json({add: true})
+        }
 }catch (err) {
     res.status(500).send()
 }
@@ -70,6 +120,32 @@ router.post('/:id/leave', verify, async(req,res) => {
     }catch(err){
         res.status(500).send()
     }
+})
+
+
+router.post('/:id/like', verify, async (req, res) => {
+    const id = req.params.id
+    console.log(req.userId)
+try {
+     const like = await GroupPost.updateOne({_id: id}, {$addToSet: {like: req.userId}})
+        console.log(like)
+        res.json({like: true})
+}catch (err){
+        res.status(500).send()
+    }
+})
+
+
+
+router.post('/:id/unlike', verify, async (req, res) => {
+    const id = req.params.id
+try{
+    const unlike = await GroupPost.updateOne({_id: id}, {$pull: {like: req.userId}})
+    console.log(unlike)
+    res.json({like: false})
+}catch(err) {
+    res.status(500).send()
+}
 })
 
 

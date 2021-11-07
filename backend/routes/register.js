@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
         if(password.length < 6) {
             errors.push({msg: 'Hasło musi mieć więcej niż 6 znaków', type: 'password'})
         }
-        if(username.length <= 3 || username.length > 20) {
+        if(username.length < 3 || username.length > 20) {
             errors.push({msg: 'Nazwa użytkownika musi być się mieścić w zakresie od 3 do 20 znaków', type: 'username'})
         }
         if(username.includes(" ")) {
@@ -34,12 +34,17 @@ router.post('/', async (req, res) => {
     } else {
         try {
             const result = await User.find({email})
-                console.log(result)
                 if(result.length > 0) {
                     errors.push({msg: 'Już istnieje konto z tym email', type: 'email'})
                     return res.json(errors)
                 }
-        
+            const isuser =  await User.find({username})
+                console.log(isuser)
+                if(isuser.length > 0) {
+                    errors.push({msg: 'Już istnieje konto z tym nickiem', type: 'username'})
+                    return res.json(errors)
+                }
+
             bcrypt.genSalt(12, (err, salt) => bcrypt.hash(password, salt, async(err, hash) => {
                 if(err) throw err
 

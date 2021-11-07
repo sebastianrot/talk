@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
     password: {type: String, required: true},
     desc: {type: String, default: ''},
     img: {type: String, default: ''},
+    banner: {type: String, default: ''},
     priv: {type: Boolean, default: false},
     verified: {type: Boolean, default: false},
     ban: {type: Boolean, default: false},

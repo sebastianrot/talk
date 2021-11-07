@@ -1,8 +1,8 @@
-import './AddPosts.css'
 import { useState } from "react"
 import url from "../../components/urlSettings"
 
-const AddPosts = () => {
+
+const GroupPostAdd = ({id}) => {
     const [text, setText] = useState('')
     const[file, setFile] = useState([])
     const[image, setImage] = useState('')
@@ -31,7 +31,7 @@ const AddPosts = () => {
         })
         formData.set('text', text)
         setChoose(false)
-        fetch(`${url.serverUrl}/api/post`, {
+        fetch(`${url.serverUrl}/api/group/${id}/post`, {
             method: 'POST',
             mode: 'cors',
             credentials: 'include',
@@ -62,4 +62,4 @@ const AddPosts = () => {
     )
 }
 
-export default AddPosts
+export default GroupPostAdd

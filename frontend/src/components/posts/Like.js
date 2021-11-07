@@ -5,14 +5,14 @@ import NotLogged from '../NotLogged'
 import { ReactComponent as Heart} from '../../components/svg/heart.svg'
 import url from '../urlSettings'
 
-const Like = ({id, liked, number}) => {
+const Like = ({id, option, liked, number}) => {
     const [like, setLike] = useState(liked)
     const [amount, setAmount] = useState(number)
     const [loginMessage, setLoginMessage] = useState(false)
     const {logged} = useContext(AuthContext)
 
     const handleClick = () => {
-        logged ? (fetch(`${url.serverUrl}/api/post/${id}/${like ? 'unlike' : 'like'}`,  {
+        logged ? (fetch(`${url.serverUrl}/api/${option}/${id}/${like ? 'unlike' : 'like'}`,  {
             method: 'POST',
             mode: 'cors',
             credentials: 'include'

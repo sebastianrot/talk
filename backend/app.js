@@ -12,6 +12,7 @@ const loginRoute = require('./routes/login');
 const logoutRoute = require('./routes/logout');
 const loggedRoute = require('./routes/logged');
 const photoRoute = require('./routes/photo');
+const bannerRoute = require('./routes/banner');
 const searchRoute = require('./routes/search');
 const addpostRoute = require('./routes/addposts');
 const descRoute = require('./routes/description');
@@ -24,6 +25,9 @@ const groupsRoute = require('./routes/groups');
 const groupRoute = require('./routes/group');
 const admingroupRoute = require('./routes/admingroup');
 const commentRoute = require('./routes/comment')
+const hotRoute = require('./routes/hot')
+const photogroupRoute = require('./routes/photogroup')
+const bannergroupRoute = require('./routes/bannergroup')
 
 app.use('/static', express.static('public'))
 app.use(express.json())
@@ -49,9 +53,11 @@ app.use('/api/logged', loggedRoute)
 
 app.use('/api/user', photoRoute)
 
+app.use('/api/user', bannerRoute)
+
 app.use('/api/search', searchRoute)
 
-app.use('/api/addposts', addpostRoute)
+app.use('/api', addpostRoute)
 
 app.use('/api/desc', descRoute)
 
@@ -72,3 +78,9 @@ app.use('/api/groups', groupsRoute)
 app.use('/api/group', groupRoute)
 
 app.use('/api/group', admingroupRoute)
+
+app.use('/api/group', photogroupRoute)
+
+app.use('/api/group', bannergroupRoute)
+
+app.use('/api', hotRoute)

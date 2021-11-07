@@ -6,8 +6,10 @@ const router = express.Router();
 router.post('/', verify, async(req, res) => {
     const {desc} = req.body
 try {
+    if(desc.length < 150){
     await User.updateOne({_id: req.userId}, {desc})
         res.json({add: true})
+    }
 }catch (err) {
     res.status(500).send()
 }

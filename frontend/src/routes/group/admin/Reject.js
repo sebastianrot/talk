@@ -1,4 +1,4 @@
-import url from '../../components/urlSettings'
+import url from "../../../components/urlSettings"
 
 const Reject = ({id, user}) => {
 
@@ -14,7 +14,7 @@ const Reject = ({id, user}) => {
     }
 
     return(
-        <button onClick={handleClick}>Odrzuć</button>
+        <button onClick={handleClick}>Usuń</button>
     )
 }
 

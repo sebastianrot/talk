@@ -1,9 +1,9 @@
 import './Comment.css'
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import AuthContext from '../../context/AuthContext'
 import AddComment from './AddComment'
 import Reply from './Reply'
-import LikeComment from './LikeComment'
+import Like from './Like'
 import EditComment from './EditComment'
 import DeleteComment from './DeleteComment'
 
@@ -13,7 +13,12 @@ const Comment = ({value, id}) => {
     const [show, setShow] = useState(false)
     const [reply, setReply] = useState(false)
     const [edit, setEdit] = useState(false)
+    const [length, setLength] = useState(0)
     const replies = value.replies.map(el=><Reply key={el._id} value={el}/>)
+    useEffect(()=>{
+    value.replies.forEach(el => {
+        setLength(prev=>prev+el.replies.length)
+    })},[value])
     return(
         <article className='comment-article'>
             {myUser.id === value.by._id && <>
@@ -22,10 +27,10 @@ const Comment = ({value, id}) => {
             {edit ? 
             <EditComment id={value._id} post={id} text={value.text}/> : <span>{value.text}</span>}</>}
             <span>{value.by.username}</span>
-            <LikeComment id={value._id} liked={false} amount={value.like.length}/>
+            <Like id={value._id} option={'comment'} liked={value.liked} number={value.like}/>
             <button onClick={()=>setReply(!reply)}>odpowiedz</button>
             {reply && <AddComment id={id} parent={value._id}/>}
-            <button onClick={()=>setShow(!show)}>{show ? `ukryj odpowiedzi` : `pokaż ${value.replies.length} odpowiedzi`}</button>
+            <button onClick={()=>setShow(!show)}>{show ? `ukryj odpowiedzi` : `pokaż ${value.replies.length + length} odpowiedzi`}</button>
             {show && replies}
         </article>
     )

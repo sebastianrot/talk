@@ -5,7 +5,6 @@ import url from '../../components/urlSettings'
 
 const PostsProfile = ({id}) => {
     const [post, setPost] = useState()
-    const [user, setUser] = useState()
     const [status, setStatus] = useState()
     const [loading, setLoading] = useState(true)
 
@@ -17,8 +16,7 @@ const PostsProfile = ({id}) => {
             if(!res.ok) throw Error(res.status)
             return res.json()})
         .then(data=>{
-            setPost(data.post)
-            setUser(data.user)
+            setPost(data)
             setLoading(false)})
             .catch(err=>{ 
                 setStatus(err.message)
@@ -32,7 +30,7 @@ const PostsProfile = ({id}) => {
 
     if(status === '401') return <span>Konto jest prywatne</span>
 
- const posts = post.map((current)=><Post key={current._id} value={current} user={user}/>)
+ const posts = post.map((current)=><Post key={current._id} value={current}/>)
 
     return(
         <section className='posts-profile-section'>
