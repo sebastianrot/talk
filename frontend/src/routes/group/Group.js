@@ -10,6 +10,7 @@ import url from '../../components/urlSettings'
 import AddPhoto from './AddPhoto'
 import AddBanner from './AddBanner'
 import AddDescGroup from './AddDescGroup'
+import HashtagsGroup from './HashtagsGroup'
 
 const Group = () => {
     let { id } = useParams()
@@ -44,6 +45,7 @@ const Group = () => {
             <span>{group.category}</span>
             <span>{group.priv}</span>
             <span>{group.desc}</span>
+            {group.nsfw && 'dla +18'}
             <span>{`${group.users} członków grupy`}</span>
             <img src={`${url.serverUrl}/static/bannergroup/${group.banner}`} alt='banner grupy' style={{width: '400px', objectFit: 'cover'}}/>
             <img src={`${url.serverUrl}/static/profilegroup/${group.img}`} alt='zdjęcie grupy' style={{width: '150px', borderRadius: '50%', objectFit: 'cover'}}/>
@@ -59,6 +61,7 @@ const Group = () => {
             <Switch>
             <Route path={[`${path}/`, `${path}/posts`]} exact >
                 <GroupPosts/>
+                <HashtagsGroup id={group._id}/>
             </Route>
             <Route path={`${path}/members`} component={GroupMembers}/>
             <Route render={() => <Redirect to='/'/>} />

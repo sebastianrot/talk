@@ -5,6 +5,7 @@ const Join = require('../models/Join')
 const GroupPost = require('../models/GroupPost')
 const ingroup = require('../ingroup')
 const jwt = require('./jwt-profile')
+const mongoose = require("mongoose");
 const router = express.Router();
 
 router.get('/:id', jwt, async(req, res) => {
@@ -19,7 +20,24 @@ try{
     const group = {...result[0], users, ...join[0]}
     return res.json(group)
 }catch (err) {
-    console.log(err)
+    res.status(500).send()
+}
+})
+
+
+router.get('/:id/hashtags', jwt, async(req, res)=>{
+    const id = req.params.id
+try{
+    const top = await GroupPost.aggregate([
+        {$match: {group: new mongoose.Types.ObjectId(id)}},
+        {$project:{words:'$hashtag'}},
+        {$unwind: {path: '$words'}},
+        {$group: {_id: '$words', count: {$sum: 1}}},
+        {$sort: {count: -1}},
+        {$limit: 6}
+      ])
+        res.json(top)
+}catch(err){
     res.status(500).send()
 }
 })
@@ -79,11 +97,13 @@ router.get('/:id/members', verify, async(req, res)=> {
 
 
 router.post('/create', verify, async(req, res) => {
+    const c = ['sport', 'gry', 'nauka', 'muzyka', 'tech', 'auta', 'moda', 'zwierzęta', 'sztuka', 'biznes', 'jedzenie']
     const data = req.body
     if(req.body.hide && !req.body.priv) req.body.hide=false
     const groupData= new Group(data)
 try {
-        if(data.name.length > 2 && data.name.length < 25 && data.desc.length < 150){
+        if(!c.includes(data.category)) return res.status(404).send()
+        if(data.name.length >= 2 && data.name.length < 25 && data.desc.length < 150){
         const save = await groupData.save()
         const joinData = new Join({user: req.userId, group: save._id, status: 'accept', role: 'admin'})
         await joinData.save()

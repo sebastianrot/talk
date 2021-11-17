@@ -29,7 +29,12 @@ const GroupPosts = () => {
 
     if(loading) return <Loading/>
 
-    if(!isExist) return <span>Tu nie ma postów</span>
+    if(!isExist) return(
+    <>
+    <GroupPostAdd id={id}/>
+    <span>Tu nie ma postów</span>
+    </>
+    )
 
     const result = posts.map(val=><Post key={val._id} value={val}/>)
     return(

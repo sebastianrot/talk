@@ -34,8 +34,6 @@ router.post('/photo' , verify, upload.single('image'), async(req, res) => {
     let r = (Math.random() + 1).toString(36).substring(7);
     const name = `${parts[0]}-${r}.${parts[1]}`
 try{
-    const img = await User.find({_id: req.userId}).select({img: 1})
-    if(img[0].img !== '') fs.unlinkSync(path.resolve(file.destination, `${img[0].img}`))
     await sharp(`${file.path}`).resize({height:400, width:400}).toFile(path.resolve(file.destination, `${img[0].img}`))
     fs.unlinkSync(file.path)
     await User.updateOne({_id: req.userId}, {img: name})

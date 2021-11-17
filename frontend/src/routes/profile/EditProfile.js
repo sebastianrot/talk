@@ -2,9 +2,10 @@ import './EditProfile.css'
 import AddPhoto from "./AddPhoto"
 import AddBanner from './AddBanner'
 import Desc from './Desc'
+import AddCategory from './AddCategory'
 import url from '../../components/urlSettings'
 
-const EditProfile = ({state, img, banner}) => {
+const EditProfile = ({state, img, banner, hobby}) => {
 
     return(
         <article className='edit-profile-article'>
@@ -22,6 +23,9 @@ const EditProfile = ({state, img, banner}) => {
                 <div className='edit-profile-desc'>
                     <span>Opis</span>
                     <Desc/>
+                </div>
+                <div className='edit-profile-category'>
+                <AddCategory hobby={hobby}/>
                 </div>
             </div>
         </article>

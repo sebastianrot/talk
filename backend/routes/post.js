@@ -1,7 +1,9 @@
 const express = require('express')
 const verify = require('./jwt-profile')
 const Post = require('../models/Post')
+const Comment = require('../models/Comment')
 const isfollowing = require('../isfollowing')
+const fs = require('fs')
 const router = express.Router();
 
 router.get('/:id', verify, async(req, res) => {
@@ -23,6 +25,25 @@ try{
      return res.sendStatus(500).send()
     }
 
+})
+
+
+router.post('/:id/delete', verify, async(req, res)=>{
+    const id = req.params.id
+    try{
+        const result = await Post.find({_id: id})
+        if(result[0].by.toString() !== req.userId) return res.status(403).send()
+        await Post.deleteOne({_id: id})
+        await Comment.deleteMany({post: id})
+        if(result[0].img.length > 0){
+            result[0].img.forEach(val => {
+                fs.unlinkSync(`public/posts/${val}`);
+            });
+        }
+        return res.json({delete: true})
+    }catch(err){
+        res.sendStatus(500).send()
+    }
 })
 
 module.exports = router

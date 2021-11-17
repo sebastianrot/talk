@@ -1,5 +1,6 @@
 import './Post.css'
 import {Link, useHistory} from 'react-router-dom'
+import PostDelete from './PostDelete'
 import Like from './Like'
 import Share from './Share'
 import Date from './Date'
@@ -24,6 +25,7 @@ const Post = ({value}) => {
                 <Like id={value._id} option={'post'} liked={value.liked} number={value.like}/>
                 <Share id={value._id}/>
             </div>
+            <PostDelete id={value._id}/>
         </article>
     )
 }

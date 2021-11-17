@@ -23,7 +23,7 @@ const MyProfile = ({user}) => {
         <span>Dołączył/a {date.getFullYear()}</span>
         <span>{user.desc}</span>
         <AddPosts/>
-        {open && <EditProfile state={setOpen} img={user.img} banner={user.banner}/>}
+        {open && <EditProfile state={setOpen} img={user.img} banner={user.banner} hobby={user.category}/>}
         </section>
         <section className='posts-profile-section'>
             <PostsProfile id={user._id}/>

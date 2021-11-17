@@ -7,6 +7,7 @@ const GroupPostSchema = new mongoose.Schema({
     group: {type: mongoose.Schema.Types.ObjectId, ref: 'Group'},
     by: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     like: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+    hashtag: [{type: String}],
     date: {type: Date, default: Date.now}
 })
 

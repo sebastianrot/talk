@@ -2,6 +2,7 @@ import {Link, useHistory} from 'react-router-dom'
 import Like from '../../components/posts/Like'
 import Share from '../../components/posts/Share'
 import Date from '../../components/posts/Date'
+import PostDeleteGroup from './admin/PostDeleteGroup'
 import url from '../../components/urlSettings'
 
 const Post = ({value}) => {
@@ -23,6 +24,7 @@ const Post = ({value}) => {
                 <Like id={value._id} option={'group'} liked={value.liked} number={value.like}/>
                 <Share id={value._id}/>
             </div>
+            <PostDeleteGroup id={value.group._id} postid={value._id}/>
         </article>
     )
 }

@@ -10,6 +10,7 @@ const groupSchema = new mongoose.Schema({
     hide: {type: Boolean, default: false},
     category: {type: String},
     verified: {type: Boolean, default: false},
+    nsfw: {type: Boolean, default: false},
     ban: {type: Boolean, default: false},
     date: {type: Date, default: Date.now}
 })

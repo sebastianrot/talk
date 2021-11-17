@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
     banner: {type: String, default: ''},
     priv: {type: Boolean, default: false},
     verified: {type: Boolean, default: false},
+    category: {type: String},
     ban: {type: Boolean, default: false},
     date: {type: Date, default: Date.now}
 })

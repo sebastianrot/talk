@@ -14,7 +14,6 @@ try{
     const sort = (val) => {
         if(val.parent !== '0') {
           const parent = result.find((p)=>val.parent === p._id.toString())
-          console.log(parent)
             parent.replies.push(val)
         }else{
           comment.push(val)
@@ -74,8 +73,12 @@ router.post('/:post/comment/:id/delete', verify, async(req,res)=> {
     const id = req.params.id
     const post = req.params.post
     try{
+        const access = await Comment.find({_id: id, post})
+        if(access[0].by.toString() !== req.userId) return res.status(403).send()
+        const subcomment = await Comment.find({parent: id, post})
+        const idsubcomment = subcomment.map(val=>val._id)
+        await Comment.deleteMany({$or: [{parent: {$in: idsubcomment}}, {parent: id, post}]})
         await Comment.deleteOne({_id: id, by: req.userId, post})
-        await Comment.deleteMany({parent: id, post})
         return res.json({delete: true})
     }catch(err) {
         res.status(500).send()

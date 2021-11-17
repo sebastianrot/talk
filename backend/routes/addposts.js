@@ -12,7 +12,8 @@ const storage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         const parts = file.mimetype.split('/')
-        cb(null, `${file.fieldname}-${Date.now()}.${parts[1]}`)
+        let r = (Math.random() + 1).toString(36).substring(7);
+        cb(null, `${file.fieldname}-${Date.now()}-${r}.${parts[1]}`)
     }
 })
 
@@ -62,11 +63,14 @@ router.post('/group/:id/post', verify, upload.array('images', 4), async(req,res)
     files.forEach(value => {
         filesArray.push(value.filename)
     })
-    const postData = new GroupPost({text: text, group: id, by: req.userId, img: filesArray})
+
     try{
         if(text.length < 10000 && (text.length > 0 || files.length > 0)){
         const status = await ingroup(id, req.userId)
         if(status === 'accept') {
+        let hashtag = text.match(/#[\p{L}]+/ugi)
+        hashtag = hashtag===null?[]:hashtag
+        const postData = new GroupPost({text: text, group: id, by: req.userId, img: filesArray, hashtag})
         await postData.save()
         res.json({add: true})
     }

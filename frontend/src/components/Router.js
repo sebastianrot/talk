@@ -11,6 +11,7 @@ import GroupMembers from '../routes/group/GroupMembers';
 import GroupAccept from '../routes/group/admin/GroupAccept';
 import GroupBlock from '../routes/group/admin/GroupBlock';
 import GroupPost from '../routes/grouppost/GroupPost';
+import CreateGroup from '../routes/group/CreateGroup';
 import PublicRoute from './PublicRoute';
 import PrivateRoute from './PrivateRoute';
 
@@ -27,7 +28,8 @@ const Router = () => {
             <PrivateRoute path='/group/:id/accept' component={GroupAccept}/>
             <PrivateRoute path='/group/:id/block' component={GroupBlock}/>
             <Route path='/group/:id' component={Group}/> 
-            <Route path='/groups' exact component={Groups}/>
+            <PrivateRoute path='/groups/create' component={CreateGroup}/>
+            <Route path='/groups/discover' exact component={Groups}/>
             <Route render={() => <span>404</span>} />
         </Switch>
     )

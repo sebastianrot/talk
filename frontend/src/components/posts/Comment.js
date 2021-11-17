@@ -21,11 +21,11 @@ const Comment = ({value, id}) => {
     })},[value])
     return(
         <article className='comment-article'>
-            {myUser.id === value.by._id && <>
+            
             <DeleteComment id={value._id} post={id}/>
             <button onClick={()=>setEdit(!edit)}>Edytuj</button>
             {edit ? 
-            <EditComment id={value._id} post={id} text={value.text}/> : <span>{value.text}</span>}</>}
+            <EditComment id={value._id} post={id} text={value.text}/> : <span>{value.text}</span>}
             <span>{value.by.username}</span>
             <Like id={value._id} option={'comment'} liked={value.liked} number={value.like}/>
             <button onClick={()=>setReply(!reply)}>odpowiedz</button>

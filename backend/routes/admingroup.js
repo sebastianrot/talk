@@ -2,13 +2,17 @@ const express = require('express')
 const verify = require('../middlewares/jwt-verify')
 const Join = require('../models/Join')
 const Group = require('../models/Group')
+const GroupPost = require('../models/GroupPost')
+const Comment = require('../models/Comment')
 const isadmin = require('../isadmin')
 const admin = require('../middlewares/admin-verify')
+const access = require('../middlewares/role-verify')
+const fs = require('fs')
 const router = express.Router();
 
 
 
-router.get('/:id/accept', verify, admin, async(req, res)=> {
+router.get('/:id/accept', verify, access, async(req, res)=> {
     const id = req.params.id
     try{
         const join = await Join.find({group: id, status: 'pending'}).populate('user', 'username img verified').sort({date: -1})
@@ -32,18 +36,30 @@ router.post('/:id/desc', verify, admin, async(req, res)=>{
     }
 })
 
-router.post('/:id/user/:user/role', verify, admin, async(req, res)=>{
+router.post('/:id/user/:user/role/:role', verify, admin, async(req, res)=>{
     const id = req.params.id
     const user = req.params.user
+    const role = req.params.role
 try{
-    await Join.updateOne({group: id, user, status: 'accept'}, {role})
-    return res.json({role: true})
+    if(user !== req.userId){
+    if(role === 'admin'){
+        await Join.updateOne({group: id, user, status: 'accept'}, {role})
+        return res.json({role: true})
+    }else if(role === 'mod'){
+        await Join.updateOne({group: id, user, status: 'accept'}, {role})
+        return res.json({role: true})
+    }else if(role === 'user'){
+        await Join.updateOne({group: id, user, status: 'accept'}, {role})
+        return res.json({role: true})
+    }
+}
+    return res.status(403).send()
 }catch(err){
     res.status(500).send()
 }
 })
 
-router.get('/:id/block', verify, admin, async(req, res)=> {
+router.get('/:id/block', verify, access, async(req, res)=> {
     const id = req.params.id
  try{
     const block = await Join.find({group: id, status: 'block'}).populate('user', 'username img verified').sort({date: -1})
@@ -54,7 +70,7 @@ router.get('/:id/block', verify, admin, async(req, res)=> {
 })
 
 
-router.post('/:id/user/:user/accept', verify, admin, async(req, res) => {
+router.post('/:id/user/:user/accept', verify, access, async(req, res) => {
     const id = req.params.id
     const user = req.params.user
 try{
@@ -66,25 +82,56 @@ try{
 })
 
 
-router.post('/:id/user/:user/reject', verify, admin, async(req, res) => {
+router.post('/:id/user/:user/reject', verify, access, async(req, res) => {
     const id = req.params.id
     const user = req.params.user
     try{
+        const result = await Join.find({group: id, user})
+        if(result[0].role !== 'admin' && user !== req.userId) {
             await Join.deleteOne({group: id, user})
             return res.json({reject: true})
+        }
+        return res.status(403).send()
     }catch(err) {
         res.status(500).send()
     }
 })
 
 
-router.post('/:id/user/:user/block', verify, admin, async(req, res) => {
+router.post('/:id/user/:user/block', verify, access, async(req, res) => {
     const id = req.params.id
     const user = req.params.user
 try{
+        const result = await Join.find({group: id, user})
+        if(result[0].role !== 'admin' && user !== req.userId) {
         await Join.updateOne({group: id, user}, {status: 'block'})
         return res.json({block: true})
+        }
+        return res.status(403).send()
 }catch(err) {
+    res.status(500).send()
+}
+})
+
+
+router.post('/:id/post/:postid/delete', verify, async(req,res)=>{
+    const id = req.params.id
+    const postid = req.params.postid
+try{
+    const result = await Join.find({user: req.userId, group: id})
+    const post = await GroupPost.find({_id: postid})
+    if(result[0].role === 'admin' || result[0].role === 'mod' || post[0].by.toString() === req.userId){
+    await GroupPost.deleteOne({_id: postid, group: id})
+    await Comment.deleteMany({post: postid})
+    if(post[0].img.length > 0){
+        post[0].img.forEach(val => {
+            fs.unlinkSync(`public/posts/${val}`);
+        });
+    }
+    return res.json({delete: true})
+    }
+    return res.status(403).send()
+}catch(err){
     res.status(500).send()
 }
 })
