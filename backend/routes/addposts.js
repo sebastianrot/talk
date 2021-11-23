@@ -68,7 +68,8 @@ router.post('/group/:id/post', verify, upload.array('images', 4), async(req,res)
         if(text.length < 10000 && (text.length > 0 || files.length > 0)){
         const status = await ingroup(id, req.userId)
         if(status === 'accept') {
-        let hashtag = text.match(/#[\p{L}]+/ugi)
+        let change = text.match(/#[\p{L}]+/ugi)
+        let hashtag = [...new Set(change)]
         hashtag = hashtag===null?[]:hashtag
         const postData = new GroupPost({text: text, group: id, by: req.userId, img: filesArray, hashtag})
         await postData.save()

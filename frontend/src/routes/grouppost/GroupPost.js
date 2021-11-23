@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { useParams } from "react-router"
+import { useParams } from "react-router-dom"
 import Comments from "../../components/posts/Comments"
 import AddComment from "../../components/posts/AddComment"
 import Post from "../group/Post"

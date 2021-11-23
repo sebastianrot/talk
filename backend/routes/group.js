@@ -5,6 +5,7 @@ const Join = require('../models/Join')
 const GroupPost = require('../models/GroupPost')
 const ingroup = require('../ingroup')
 const jwt = require('./jwt-profile')
+const Notification = require('../models/Notification')
 const mongoose = require("mongoose");
 const router = express.Router();
 
@@ -28,6 +29,9 @@ try{
 router.get('/:id/hashtags', jwt, async(req, res)=>{
     const id = req.params.id
 try{
+    const result = await Group.find({_id: id})
+    const status = await ingroup(id, req.userId)
+    if(result[0].priv && status !== 'accept') return res.status(401).send()
     const top = await GroupPost.aggregate([
         {$match: {group: new mongoose.Types.ObjectId(id)}},
         {$project:{words:'$hashtag'}},
@@ -40,6 +44,28 @@ try{
 }catch(err){
     res.status(500).send()
 }
+})
+
+router.get('/:id/search', jwt, async(req, res)=>{
+    const id = req.params.id
+    const query = req.query
+ try{
+    const result = await GroupPost.find({group: id, hashtag: {$in: query.q}}).populate('by', 'username img verified').populate('group', 'name priv').sort({date: -1}).lean()
+    if(result.length === 0) return res.status(404).send()
+    const status = await ingroup(id, req.userId)
+    if(result[0].group.priv && status !== 'accept') return res.status(401).send()
+    const posts = [...result]
+    posts.forEach((value) => {
+        const likes = value.like.toString()
+        if(likes.includes(req.userId)) {
+            Object.assign(value, {liked: true})
+        }
+        value.like = value.like.length
+    })
+    res.json(result)
+ }catch(err){
+    res.status(500).send()
+ }
 })
 
 router.get('/:id/posts', jwt, async(req, res)=> {
@@ -125,6 +151,13 @@ router.post('/:id/join', verify, async(req, res)=> {
       const status = group.priv ? 'pending' : 'accept'
       const joinData = new Join({user: req.userId, group: id, status})
       await joinData.save()
+      
+        const admin = await Join.find({group: id, $or: [{role: 'admin'}, {role: 'mod'}]}).lean()
+        const notificationData = admin.map(val=>({
+        message: 'Nowa osoba dołączyła do grupy',
+        sender: req.userId,
+        receiver: val}))
+        await Notification.insertMany(notificationData)
       return res.json({add: true})
     }catch(err) {
         res.status(500).send()
@@ -147,8 +180,16 @@ router.post('/:id/like', verify, async (req, res) => {
     const id = req.params.id
     console.log(req.userId)
 try {
-     const like = await GroupPost.updateOne({_id: id}, {$addToSet: {like: req.userId}})
-        console.log(like)
+    await GroupPost.updateOne({_id: id}, {$addToSet: {like: req.userId}})
+
+     const user = await GroupPost.find({_id: id}).select({by: 1})
+     if(user[0].by.toString() === req.userId) return res.json({like: true})
+     const notificationData = new Notification({
+        message: 'Twój post został polubiony',
+        sender: req.userId,
+        receiver: user[0].by,
+    })
+        await notificationData.save()
         res.json({like: true})
 }catch (err){
         res.status(500).send()

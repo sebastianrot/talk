@@ -10,7 +10,8 @@ import url from '../../components/urlSettings'
 import AddPhoto from './AddPhoto'
 import AddBanner from './AddBanner'
 import AddDescGroup from './AddDescGroup'
-import HashtagsGroup from './HashtagsGroup'
+import SectionGroupHashtags from './SectionGroupHashtags'
+import GroupHashtags from './GroupHashtags'
 
 const Group = () => {
     let { id } = useParams()
@@ -61,10 +62,11 @@ const Group = () => {
             <Switch>
             <Route path={[`${path}/`, `${path}/posts`]} exact >
                 <GroupPosts/>
-                <HashtagsGroup id={group._id}/>
+                <SectionGroupHashtags id={group._id}/>
             </Route>
             <Route path={`${path}/members`} component={GroupMembers}/>
-            <Route render={() => <Redirect to='/'/>} />
+            <Route path={`${path}/search`} component={GroupHashtags}/>
+            {/* <Route render={() => <Redirect to='/'/>} /> */}
             </Switch>
         </main>
         </Router>

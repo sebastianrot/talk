@@ -12,6 +12,7 @@ import GroupAccept from '../routes/group/admin/GroupAccept';
 import GroupBlock from '../routes/group/admin/GroupBlock';
 import GroupPost from '../routes/grouppost/GroupPost';
 import CreateGroup from '../routes/group/CreateGroup';
+import Notifications from '../routes/Notifications/Notifications';
 import PublicRoute from './PublicRoute';
 import PrivateRoute from './PrivateRoute';
 
@@ -24,12 +25,13 @@ const Router = () => {
             <Route path='/user/:username' component={Profile}/>
             <Route path='/p/:id' component={PostPage}/>
             <Route path='/search/:action' component={SearchResult}/>
-            <Route path='/group/:id/post/:postid' component={GroupPost}/>
+            <Route path='/group/:id/p/:postid' component={GroupPost}/>
             <PrivateRoute path='/group/:id/accept' component={GroupAccept}/>
             <PrivateRoute path='/group/:id/block' component={GroupBlock}/>
             <Route path='/group/:id' component={Group}/> 
             <PrivateRoute path='/groups/create' component={CreateGroup}/>
-            <Route path='/groups/discover' exact component={Groups}/>
+            <PrivateRoute path='/groups/discover' exact component={Groups}/>
+            <PrivateRoute path='/notifications' component={Notifications}/>
             <Route render={() => <span>404</span>} />
         </Switch>
     )

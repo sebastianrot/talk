@@ -29,6 +29,7 @@ const hotRoute = require('./routes/hot')
 const photogroupRoute = require('./routes/photogroup')
 const bannergroupRoute = require('./routes/bannergroup')
 const categoryRoute = require('./routes/category')
+const notifications = require('./routes/notifications')
 
 app.use('/static', express.static('public'))
 app.use(express.json())
@@ -87,3 +88,5 @@ app.use('/api/group', bannergroupRoute)
 app.use('/api/user', categoryRoute)
 
 app.use('/api', hotRoute)
+
+app.use('/api/notifications', notifications)

@@ -4,8 +4,8 @@ const db = require('../db-config')
 const groupSchema = new mongoose.Schema({
     name: {type: String},
     desc: {type: String, default: ''},
-    img: {type: String},
-    banner: {type: String},
+    img: {type: String, default: ''},
+    banner: {type: String, default: ''},
     priv: {type: Boolean, default: false},
     hide: {type: Boolean, default: false},
     category: {type: String},

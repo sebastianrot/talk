@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react"
 import Loading from "../../components/Loading"
+import {Link} from 'react-router-dom'
 import url from "../../components/urlSettings"
 
-const HashtagsGroup = ({id}) => {
+const SectionGroupHashtags = ({id}) => {
     const [hashtags, setHashtags] = useState()
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
@@ -25,7 +26,7 @@ const HashtagsGroup = ({id}) => {
 
     if(error) return <span>błąd</span>
 
-    const result = hashtags.map(val=><div key={val._id}>{val._id}: {val.count}</div>)
+    const result = hashtags.map(val=><div key={val._id}><Link to={`/group/${id}/search?q=%23${val._id.slice(1)}`}>{val._id}: {val.count}</Link></div>)
     return(
         <article>
             {result}
@@ -33,4 +34,4 @@ const HashtagsGroup = ({id}) => {
     )
 }
 
-export default HashtagsGroup
+export default SectionGroupHashtags

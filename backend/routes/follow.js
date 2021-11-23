@@ -1,6 +1,7 @@
 const express = require('express')
 const verify = require('../middlewares/jwt-verify')
 const Follow = require('../models/Follow')
+const Notification = require('../models/Notification')
 const router = express.Router();
 
 router.post('/:id/follow', verify, async(req, res) => {
@@ -13,6 +14,14 @@ try{
                 follower: req.userId
             })
             await followData.save()
+
+            const notificationData = new Notification({
+               message: 'Zostałeś zaobserwowany',
+               sender: req.userId,
+               receiver: id,
+           })
+            await notificationData.save()
+            
             return res.json({follow: true})
 }catch (err) {
     res.status(500).send()

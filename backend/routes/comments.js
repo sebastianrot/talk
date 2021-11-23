@@ -2,6 +2,7 @@ const express = require('express')
 const verify = require('../middlewares/jwt-verify')
 const jwt = require('./jwt-profile')
 const Comment = require('../models/Comment')
+const Notification = require('../models/Notification')
 const router = express.Router();
 
 router.get('/:id/comments', jwt ,async(req, res) => {
@@ -49,6 +50,14 @@ router.post('/:id/comment/add', verify, async(req, res) => {
     })
 try {
         await commentData.save()
+        const user = await Comment.find({post: id}).select({by: 1})
+        if(user[0].by.toString() === req.userId) return res.json({add: true})
+        const notificationData = new Notification({
+        message: 'Ktoś napisał komentarz',
+        sender: req.userId,
+        receiver: user[0].by,
+    })
+        await notificationData.save()
         return res.json({add: true})
 }catch (err) {
     res.status(500).send()

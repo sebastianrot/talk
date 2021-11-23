@@ -45,7 +45,7 @@ const Profile = () => {
         <main className='profile-main'>
         <section className='profile-section'>
         <img src={`${url.serverUrl}/static/banner/${user.banner!== '' ? user.banner : 'default.jpeg'}`} alt='banner' style={{width: '100%',objectFit: 'cover'}}/>
-        <img src={`${url.serverUrl}/static/profile/${user.img!== '' ? user.img : 'default.jpeg'}`} alt='zdjęcie profilowe' style={{width: '150px', borderRadius: '50%', objectFit: 'cover'}}/>
+        <img src={user.img !== '' ? `${url.serverUrl}/static/profile/${user.img}` : `https://avatars.dicebear.com/api/initials/${user.username}.svg`} alt='zdjęcie profilowe' style={{width: '150px', borderRadius: '50%', objectFit: 'cover'}}/>
         <div>
         <span>{user.username}</span>
         {user.verified && <VerifiedLogo/>}

@@ -1,6 +1,7 @@
 const express = require('express')
 const verify = require('../middlewares/jwt-verify')
 const Post = require('../models/Post')
+const Notification = require('../models/Notification')
 const router = express.Router();
 
 router.post('/:id/like', verify, async (req, res) => {
@@ -8,6 +9,15 @@ router.post('/:id/like', verify, async (req, res) => {
     console.log(req.userId)
 try {
      const like = await Post.updateOne({_id: id}, {$addToSet: {like: req.userId}})
+
+     const user = await Post.find({_id: id}).select({by: 1})
+     if(user[0].by.toString() === req.userId) return res.json({like: true})
+     const notificationData = new Notification({
+        message: 'Twój post został polubiony',
+        sender: req.userId,
+        receiver: user[0].by,
+    })
+        await notificationData.save()
         console.log(like)
         res.json({like: true})
  
