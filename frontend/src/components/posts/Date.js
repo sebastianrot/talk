@@ -1,3 +1,4 @@
+import { Text } from "@chakra-ui/layout"
 
 const DatePost = ({value}) => {
     const date = new Date(value)
@@ -26,9 +27,9 @@ const DatePost = ({value}) => {
     const ago = checkToday()
 
     return(
-        <div>
-        <span>{today ? ago : date.getDate()}</span>
-        <span>{!today && month[date.getMonth()]}</span>
+        <div style={{display: 'flex'}}>
+        <Text fontSize='sm'>{today ? ago : date.getDate()}</Text>
+        <Text fontSize='sm' marginLeft='3px'>{!today && month[date.getMonth()]}</Text>
         </div>
     )
 }

@@ -19,6 +19,8 @@ try{
                message: 'Zostałeś zaobserwowany',
                sender: req.userId,
                receiver: id,
+               type: 'user',
+               ref: req.userId
            })
             await notificationData.save()
             

@@ -50,12 +50,14 @@ router.post('/:id/comment/add', verify, async(req, res) => {
     })
 try {
         await commentData.save()
-        const user = await Comment.find({post: id}).select({by: 1})
+        const user = await Comment.find({post: id}).select({by: 1, post: 1})
         if(user[0].by.toString() === req.userId) return res.json({add: true})
         const notificationData = new Notification({
         message: 'Ktoś napisał komentarz',
         sender: req.userId,
         receiver: user[0].by,
+        type: 'post',
+        ref: user[0].post
     })
         await notificationData.save()
         return res.json({add: true})

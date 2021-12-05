@@ -16,6 +16,8 @@ try {
         message: 'Twój post został polubiony',
         sender: req.userId,
         receiver: user[0].by,
+        type: 'post',
+        ref: user[0]._id
     })
         await notificationData.save()
         console.log(like)

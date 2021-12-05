@@ -1,8 +1,18 @@
 .prevphoto-article {
     display: flex;
     flex-direction: column;
+    width: 120px;
 }
 
-.image-preview {
-    width: 250px;
+.reactEasyCrop_Container {
+    z-index: 2;
+}
+
+.prevphoto-button {
+    z-index: 2;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
 }

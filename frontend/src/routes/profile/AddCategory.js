@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Select, Button } from "@chakra-ui/react"
 import url from "../../components/urlSettings"
 
 const AddCategory = ({hobby}) => {
@@ -17,13 +18,13 @@ const AddCategory = ({hobby}) => {
     }
     return(
         <>
-        <label>
+        <label style={{fontWeight: '600'}}>
         Wybierz kategorie
-        <select value={category} onChange={(e)=>setCategory(e.target.value)}>
+        <Select placeholder='Wybierz' value={category} onChange={(e)=>setCategory(e.target.value)} marginBottom='10px'>
             {result}
-        </select>
+        </Select>
         </label>
-        <button onClick={handleClick}>Zapisz</button>
+        <Button onClick={handleClick} size='sm'>Zapisz</Button>
         </>
     )
 }

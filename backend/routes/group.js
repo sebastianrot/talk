@@ -151,12 +151,14 @@ router.post('/:id/join', verify, async(req, res)=> {
       const status = group.priv ? 'pending' : 'accept'
       const joinData = new Join({user: req.userId, group: id, status})
       await joinData.save()
-      
+
         const admin = await Join.find({group: id, $or: [{role: 'admin'}, {role: 'mod'}]}).lean()
         const notificationData = admin.map(val=>({
         message: 'Nowa osoba dołączyła do grupy',
         sender: req.userId,
-        receiver: val}))
+        receiver: val.user,
+        type: 'group',
+        ref: val.group}))
         await Notification.insertMany(notificationData)
       return res.json({add: true})
     }catch(err) {
@@ -176,9 +178,9 @@ router.post('/:id/leave', verify, async(req,res) => {
 })
 
 
-router.post('/:id/like', verify, async (req, res) => {
+router.post('/:group/post/:id/like', verify, async (req, res) => {
     const id = req.params.id
-    console.log(req.userId)
+    const group = req.params.group
 try {
     await GroupPost.updateOne({_id: id}, {$addToSet: {like: req.userId}})
 
@@ -188,6 +190,8 @@ try {
         message: 'Twój post został polubiony',
         sender: req.userId,
         receiver: user[0].by,
+        type: 'post',
+        ref: user[0]._id
     })
         await notificationData.save()
         res.json({like: true})
@@ -198,7 +202,7 @@ try {
 
 
 
-router.post('/:id/unlike', verify, async (req, res) => {
+router.post('/:group/post/:id/unlike', verify, async (req, res) => {
     const id = req.params.id
 try{
     const unlike = await GroupPost.updateOne({_id: id}, {$pull: {like: req.userId}})

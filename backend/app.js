@@ -16,6 +16,7 @@ const bannerRoute = require('./routes/banner');
 const searchRoute = require('./routes/search');
 const addpostRoute = require('./routes/addposts');
 const descRoute = require('./routes/description');
+const privRoute = require('./routes/private');
 const likeRoute = require('./routes/like');
 const postRoute = require('./routes/post');
 const followRoute = require('./routes/follow');
@@ -62,6 +63,8 @@ app.use('/api/search', searchRoute)
 app.use('/api', addpostRoute)
 
 app.use('/api/desc', descRoute)
+
+app.use('/api/priv', privRoute)
 
 app.use('/api/post', likeRoute)
 

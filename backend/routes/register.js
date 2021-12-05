@@ -2,17 +2,21 @@ const express = require('express')
 const bcrypt = require('bcryptjs')
 const User = require('../models/User')
 const jwtGenerator = require('../jwtGenerator')
+const fetch = require('node-fetch')
 const router = express.Router();
 
 router.post('/', async (req, res) => {
     console.log(req.body)
     const errors = []
-    let {username, email, password } = req.body
+    let {username, email, password, captcha } = req.body
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    username = username.toLowerCase()
     email = email.toLowerCase()
+    const key = '6Lcq2FgdAAAAACRNYH_DZmnA0WE5YqU79-ZBF9ta'
+    const verifyurl = `https://www.google.com/recaptcha/api/siteverify?secret=${key}&response=${captcha}&remoteip=${req.socket.remoteAddress}`
 
     if(!username || !email || !password) {
-        errors.push({msg: 'Uzupełnij wszystkie pola'})
+        errors.push({msg: 'Uzupełnij wszystkie pola', type: 'all'})
     }else {
 
         if(!re.test(email)) {
@@ -23,16 +27,26 @@ router.post('/', async (req, res) => {
             errors.push({msg: 'Hasło musi mieć więcej niż 6 znaków', type: 'password'})
         }
         if(username.length < 3 || username.length > 20) {
-            errors.push({msg: 'Nazwa użytkownika musi być się mieścić w zakresie od 3 do 20 znaków', type: 'username'})
+            errors.push({msg: 'Nazwa użytkownika musi się mieścić w zakresie od 3 do 20 znaków', type: 'username'})
         }
         if(username.includes(" ")) {
             errors.push({msg: 'Podaj prawidłową nazwę', type: 'username'})
+        }
+        if(captcha === undefined || captcha === '' || captcha === null){
+            errors.push({msg: 'Zatwierdź recaptche', type: 'recaptcha'})
         }
     }
     if(errors.length > 0) {
         res.json(errors)
     } else {
         try {
+            const response = await fetch(verifyurl)
+            const data = await response.json()
+            console.log(data)
+            if(data.success !== undefined && !data.success){
+                errors.push({msg: 'Zatwierdź recaptche', type: 'recaptcha'})
+                return res.json(errors)
+            }
             const result = await User.find({email})
                 if(result.length > 0) {
                     errors.push({msg: 'Już istnieje konto z tym email', type: 'email'})

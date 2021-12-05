@@ -1,19 +1,21 @@
 import './ContentLogin.css';
 import {useContext, useState} from 'react';
 import SignIn from './SignIn';
-import { Redirect } from "react-router-dom";
 import AuthContext from '../../context/AuthContext';
 import urlSettings from '../../components/urlSettings';
 
 
 const ContentLogin = () => {
-    const {logged, loggedFetch} = useContext(AuthContext)
+    const {loggedFetch} = useContext(AuthContext)
 
     const [loginEmail, setLoginEmail] = useState('')
     const [loginPassword, setLoginPassword] = useState('')
-    const [error, setError] = useState()
+    const [error, setError] = useState(false)
+    const [loading, setLoading] = useState(false);
+
 
     const handleClick = () => {
+        setLoading(true)
         fetch(`${urlSettings.serverUrl}/api/login`, {
             method: 'POST',
             mode: 'cors',
@@ -24,9 +26,13 @@ const ContentLogin = () => {
             body: JSON.stringify({ email: loginEmail, password: loginPassword})
         })
         .then(res => res.json())
-        .then(data => setError(data.error))
+        .then(data =>{
+            setError(true)
+            setLoading(false)})
         .then(() => loggedFetch())
-        .catch(err => console.log(err))
+        .catch(err => {
+            setError(true)
+            setLoading(false)})
     }
 
     const states = {
@@ -34,12 +40,9 @@ const ContentLogin = () => {
         setLoginEmail,
         loginPassword,
         setLoginPassword,
-        handleClick
+        handleClick,
+        loading
     }
-
-    if(logged) return(
-        <Redirect to='/'/>
-    )
 
     return(
         <main className='main-login'>

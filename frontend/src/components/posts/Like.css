@@ -1,5 +1,6 @@
 .div-like {
   display: flex;
+  align-items: center;
 }
 
 .icon-heart {

@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react'
-import {useParams,Link, Route, useRouteMatch, BrowserRouter as Router, Switch, Redirect} from 'react-router-dom'
+import {useParams,Link, Route, useRouteMatch, BrowserRouter as Router, Switch} from 'react-router-dom'
 import JoinGroup from './JoinGroup'
 import ShareGroup from './ShareGroup'
 import GroupMembers from './GroupMembers'
@@ -12,6 +12,8 @@ import AddBanner from './AddBanner'
 import AddDescGroup from './AddDescGroup'
 import SectionGroupHashtags from './SectionGroupHashtags'
 import GroupHashtags from './GroupHashtags'
+import GroupAccept from './admin/GroupAccept'
+import GroupBlock from './admin/GroupBlock'
 
 const Group = () => {
     let { id } = useParams()
@@ -58,6 +60,7 @@ const Group = () => {
             {group.role === 'admin' && <AddBanner id={group._id}/>}
             {group.role === 'admin' && <AddDescGroup id={group._id}/>}
             {group.role === 'admin' && <Link to={`/group/${group._id}/accept`}>Zaakceptuj</Link>}
+            {group.role === 'admin' && <Link to={`/group/${group._id}/block`}>Block</Link>}
             </section>
             <Switch>
             <Route path={[`${path}/`, `${path}/posts`]} exact >
@@ -66,7 +69,9 @@ const Group = () => {
             </Route>
             <Route path={`${path}/members`} component={GroupMembers}/>
             <Route path={`${path}/search`} component={GroupHashtags}/>
-            {/* <Route render={() => <Redirect to='/'/>} /> */}
+            {group.role === 'admin' && <Route path={`${path}/accept`} component={GroupAccept}/>}
+            {group.role === 'admin' && <Route path={`${path}/block`} component={GroupBlock}/>}
+            <Route render={() => <span>404</span>} />
             </Switch>
         </main>
         </Router>

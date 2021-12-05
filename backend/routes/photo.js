@@ -43,14 +43,4 @@ try{
 }})
 
 
-router.get('/:username/photo', async (req, res) => {
-    const username = req.params.username
-    try{
-        const photo = await User.find({username}).select({password: 0})
-        res.json(photo)
-    }catch(err) {
-        res.status(500).send()
-    }
-})
-
 module.exports = router

@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Textarea, Button } from "@chakra-ui/react"
 import url from "../../components/urlSettings"
 
 const Desc = () => {
@@ -19,8 +20,8 @@ const Desc = () => {
 
     return(
         <>
-        <input type='text' placeholder='Wprowadź opis' value={value} onChange={(e)=>setValue(e.target.value)}/>
-        <button onClick={handleClick}>Zapisz</button>
+        <Textarea placeholder='Wprowadź opis' value={value} onChange={(e)=>setValue(e.target.value)} marginBottom='10px'/>
+        <Button onClick={handleClick} size='sm'>Zapisz</Button>
         </>
     )
 }

@@ -8,12 +8,14 @@ router.post('/:id/like', verify, async (req, res) => {
     const id = req.params.id
 try {
      await Comment.updateOne({_id: id}, {$addToSet: {like: req.userId}})
-     const user = await Comment.find({_id: id}).select({by: 1})
+     const user = await Comment.find({_id: id}).select({by: 1, post: 1})
      if(user[0].by.toString() === req.userId) return res.json({like: true})
      const notificationData = new Notification({
         message: 'Twój komentarz został polubiony',
         sender: req.userId,
         receiver: user[0].by,
+        type: 'post',
+        ref: user[0].post
     })
         await notificationData.save()
         res.json({like: true})

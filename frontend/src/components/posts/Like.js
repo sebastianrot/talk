@@ -1,5 +1,6 @@
 import './Like.css'
 import { useState, useContext } from 'react'
+import { Text } from '@chakra-ui/layout'
 import AuthContext from '../../context/AuthContext'
 import NotLogged from '../NotLogged'
 import { ReactComponent as Heart} from '../../components/svg/heart.svg'
@@ -26,11 +27,11 @@ const Like = ({id, option, liked, number}) => {
     }
     return(
         <div className='div-like'>
-            {loginMessage && <NotLogged/>}
+            {loginMessage && <NotLogged notlogin={setLoginMessage}/>}
         <div onClick={handleClick} className='icon-heart' style={like ? {fill: '#e2264d', animation: 'like 0.4s ease-in-out'} : {fill: '#aab8c2'}}>
         <Heart/>
         </div>
-        <span>{amount}</span>
+        <Text fontSize='sm' marginLeft='3px' fontWeight='600'>{amount}</Text>
         </div>
     )
 }

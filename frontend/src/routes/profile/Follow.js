@@ -1,5 +1,6 @@
 import './Follow.css'
 import {useState, useContext} from 'react'
+import { Button } from '@chakra-ui/react'
 import AuthContext from '../../context/AuthContext'
 import url from "../../components/urlSettings"
 
@@ -18,10 +19,7 @@ const Follow = ({id, followed}) => {
     }
 
     return(
-        <button onClick={handleClick} style={follow ? 
-             {backgroundColor: '#ffffff', color: '#3399FF'} : 
-            {backgroundColor: '#3399FF', color: '#ffffff'}}
-             className='follow-user-btn'>{follow ? 'Following' : '+ Follow'}</button>
+        <Button onClick={handleClick} variant={follow ? 'outline' : 'solid'} style={follow ? {color: '#1071fe', borderColor: '#1071fe'} : {background: '#1071fe', color: '#fff'}}>{follow ? 'Following' : 'Follow'}</Button>
     )
 }
 

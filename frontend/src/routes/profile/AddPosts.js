@@ -1,5 +1,6 @@
 import './AddPosts.css'
 import { useState } from "react"
+import { Input } from '@chakra-ui/react'
 import url from "../../components/urlSettings"
 
 const AddPosts = () => {
@@ -50,7 +51,7 @@ const AddPosts = () => {
         <div>
             {choose && prev}
             <form onSubmit={handleSubmit}>
-            <input type='text' placeholder='Napisz' onChange={e=>setText(e.target.value)} value={text}/>
+            <Input type='text' placeholder='Napisz' onChange={e=>setText(e.target.value)} value={text}/>
             <div className='div-upload-file'>
             <input type='file' placeholder='upload' id='file' className='post-file' onChange={(e)=>handleChange(e)}/>
             <label htmlFor='file'>Wybierz plik</label>

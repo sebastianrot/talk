@@ -1,34 +1,47 @@
 import './EditProfile.css'
+import { Button, Modal, ModalOverlay, ModalContent,
+ModalBody, ModalHeader, ModalCloseButton, useDisclosure, Divider, Text} from '@chakra-ui/react'
 import AddPhoto from "./AddPhoto"
 import AddBanner from './AddBanner'
 import Desc from './Desc'
+import AddPriv from './AddPriv'
 import AddCategory from './AddCategory'
 import url from '../../components/urlSettings'
 
-const EditProfile = ({state, img, banner, hobby}) => {
-
+const EditProfile = ({img, banner, hobby}) => {
+    const { isOpen, onOpen, onClose } = useDisclosure()
     return(
-        <article className='edit-profile-article'>
-            <div className='edit-profile-panel'>
-                <div className='edit-profile-cancel'>
-                    <button onClick={()=>state(false)}>X</button>
+    <div>
+        <Button onClick={onOpen}>Edytuj</Button>
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent padding='5px 10px 15px 10px'>
+            <ModalHeader margin='auto'>Ustawienia</ModalHeader>
+            <Divider />
+            <ModalCloseButton />
+            <ModalBody>
+                <div style={{marginBottom: '10px'}}>
+                    <Text fontWeight='600'>Zdjęcie profilowe</Text>
+                    <AddPhoto img={img}/>
                 </div>
-                <div className='edit-profile-photo'>
-                    <span>Zdjęcie profilowe</span>
-                    <img src={`${url.serverUrl}/static/profile/${img}`} alt='zdjęcie profilowe' style={{width: '150px', borderRadius: '50%', objectFit: 'cover'}}/>
-                    <AddPhoto/>
-                    <img src={`${url.serverUrl}/static/banner/${banner}`} alt='banner' style={{width: '100%', objectFit: 'cover'}}/>
-                    <AddBanner/>
+                <div style={{marginBottom: '10px'}}>
+                    <Text fontWeight='600'>Banner</Text>
+                    <AddBanner banner={banner}/>
                 </div>
-                <div className='edit-profile-desc'>
-                    <span>Opis</span>
+                <div style={{marginBottom: '10px'}}>
+                    <Text fontWeight='600'>Opis</Text>
                     <Desc/>
                 </div>
-                <div className='edit-profile-category'>
-                <AddCategory hobby={hobby}/>
+                <div style={{marginBottom: '10px'}}>
+                    <AddPriv/>
                 </div>
-            </div>
-        </article>
+                <div style={{marginBottom: '10px'}}>
+                    <AddCategory hobby={hobby}/>
+                </div>
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+    </div>
     )
 }
 

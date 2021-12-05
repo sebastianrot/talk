@@ -2,11 +2,17 @@
     border-bottom: 1px solid #ddd;
     display: flex;
     flex-direction: column;
+    padding: 10px 15px;
+}
+
+.post-page-user{
+    display: flex;
 }
 
 .post-page-post {
     display: flex;
     flex-direction: column;
+    padding: 6px 0 0 8px;
 }
 
 .post-image {
