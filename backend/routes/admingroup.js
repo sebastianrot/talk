@@ -15,7 +15,7 @@ const router = express.Router();
 router.get('/:id/accept', verify, access, async(req, res)=> {
     const id = req.params.id
     try{
-        const join = await Join.find({group: id, status: 'pending'}).populate('user', 'username img verified').sort({date: -1})
+        const join = await Join.find({group: id, status: 'pending'}).populate('user', 'username img verified desc').sort({date: -1})
         return res.json(join)
     }catch(err) {
         res.status(500).send()
@@ -62,7 +62,7 @@ try{
 router.get('/:id/block', verify, access, async(req, res)=> {
     const id = req.params.id
  try{
-    const block = await Join.find({group: id, status: 'block'}).populate('user', 'username img verified').sort({date: -1})
+    const block = await Join.find({group: id, status: 'block'}).populate('user', 'username img verified desc').sort({date: -1})
     return res.json(block)
  }catch(err){
     res.status(500).send()
@@ -131,6 +131,54 @@ try{
     return res.json({delete: true})
     }
     return res.status(403).send()
+}catch(err){
+    res.status(500).send()
+}
+})
+
+
+router.post('/:id/category/:category', verify, admin, async(req, res)=>{
+    const id = req.params.id
+    const category = req.params.category
+    const c = ['sport', 'gry', 'nauka', 'muzyka', 'tech', 'auta', 'moda', 'zwierzęta', 'sztuka', 'biznes', 'jedzenie']
+try{
+        if(!c.includes(category)) return res.status(404).send()
+        await Group.updateOne({_id: id}, {category})
+        return res.json({category: true})
+}catch(err){
+    res.status(500).send()
+}
+})
+
+
+router.post('/:id/nsfw', verify, admin, async(req, res)=>{
+    const id = req.params.id
+    const {nsfw} = req.body
+try{
+    await Group.updateOne({_id: id}, {nsfw})
+    return res.json({change: true})
+}catch(err){
+    res.status(500).send()
+}
+})
+
+router.post('/:id/name', verify, admin, async(req, res)=>{
+    const id = req.params.id
+    const {name} = req.body
+try{
+    await Group.updateOne({_id: id}, {name})
+    return res.json({change: true})
+}catch(err){
+    res.status(500).send()
+}
+})
+
+router.post('/:id/priv', verify, admin, async(req, res)=>{
+    const id = req.params.id
+    const {priv} = req.body
+try{
+    await Group.updateOne({_id: id}, {priv})
+    return res.json({change: true})
 }catch(err){
     res.status(500).send()
 }

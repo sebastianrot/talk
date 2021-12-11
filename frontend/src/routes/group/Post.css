@@ -1,0 +1,22 @@
+.post-group-article {
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 15px;
+}
+
+.post-group-page-user{
+    display: flex;
+    margin-right: 0;
+    position: relative;
+}
+
+.post-group-page-post {
+    display: flex;
+    flex-direction: column;
+    padding: 6px 0 0 8px;
+}
+
+.post-group-image {
+    width: 100%;
+}

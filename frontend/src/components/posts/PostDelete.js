@@ -22,7 +22,7 @@ const PostDelete = ({id}) => {
 
     return(
         <div>
-        <Button colorScheme='red' size='sm' onClick={()=>setIsOpen(true)}>Usuń</Button>
+        <Button colorScheme='red' width='100%' size='sm' onClick={()=>setIsOpen(true)}>Usuń</Button>
         <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose} isCentered>
             <AlertDialogOverlay>
             <AlertDialogContent>

@@ -1,3 +1,4 @@
+import { Button } from "@chakra-ui/button"
 import url from "../../components/urlSettings"
 
 const ChangeRole = ({id, user}) => {
@@ -13,9 +14,9 @@ const ChangeRole = ({id, user}) => {
 
     return(
         <>
-        <button onClick={()=>handleClick('admin')}>admin</button>
-        <button onClick={()=>handleClick('mod')}>mod</button>
-        <button onClick={()=>handleClick('user')}>usuń range</button>
+        <Button size='sm' onClick={()=>handleClick('admin')}>admin</Button>
+        <Button size='sm' onClick={()=>handleClick('mod')}>mod</Button>
+        <Button size='sm' onClick={()=>handleClick('user')}>usuń range</Button>
         </>
     )
 }

@@ -1,11 +1,10 @@
-import Like from "./Like"
+import Comment from './Comment'
 
-const Replied = ({val}) => {
+const Replied = ({value, id}) => {
+  
     return(
-        <div style={{marginLeft: '20px'}}>
-        <span>{val.text}</span>
-        <span>{val.by.username}</span>
-        <Like id={val._id} option={'comment'} liked={val.liked} number={val.like}/>
+        <div style={{paddingLeft: '20px'}}>
+        <Comment value={value} id={id}/>
         </div>
     )
 }

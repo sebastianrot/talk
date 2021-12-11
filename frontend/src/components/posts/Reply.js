@@ -1,15 +1,11 @@
-import Like from "./Like"
 import Replied from './Replied'
-import AddComment from "./AddComment"
+import Comment from './Comment'
 
 const Reply = ({value}) => {
-    const result = value.replies.map(val=><Replied key={val._id} val={val}/>)
+    const result = value.replies.map(val=><Replied key={val._id} value={val} id={value._id}/>)
     return(
-        <div style={{marginLeft: '20px'}}>
-        <span>{value.text}</span>
-        <span>{value.by.username}</span>
-        <Like id={value._id} option={'comment'} liked={value.liked} number={value.like}/>
-        <AddComment id={value.post} parent={value._id}/>
+        <div style={{paddingLeft: '20px'}}>
+        <Comment value={value} id={value._id}/>
         {result}
         </div>
     )

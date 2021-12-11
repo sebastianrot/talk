@@ -1,3 +1,4 @@
+import { Button } from '@chakra-ui/button'
 import url from '../../../components/urlSettings'
 
 const Block = ({id, user}) => {
@@ -14,7 +15,7 @@ const Block = ({id, user}) => {
     }
 
     return(
-        <button onClick={handleClick}>Zablokuj</button>
+        <Button size='sm' colorScheme='red' onClick={handleClick}>Zablokuj</Button>
     )
 }
 

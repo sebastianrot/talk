@@ -1,6 +1,6 @@
 import './PostPage.css'
 import { useState, useEffect } from "react"
-import { useParams, Redirect } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import Post from './Post'
 import AddComment from './AddComment'
 import Comments from './Comments'

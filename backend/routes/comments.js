@@ -30,7 +30,6 @@ try{
                 Object.assign(val, {replies: []})
                 sort(val)
                 })
-            console.log(comment)
             return res.json(comment)
 }catch (err) {
     res.status(500).send()
@@ -49,6 +48,8 @@ router.post('/:id/comment/add', verify, async(req, res) => {
         parent: parent
     })
 try {
+    const length = comment.split(" ").join("").length
+    if(length > 0 && comment.length < 150){
         await commentData.save()
         const user = await Comment.find({post: id}).select({by: 1, post: 1})
         if(user[0].by.toString() === req.userId) return res.json({add: true})
@@ -61,6 +62,7 @@ try {
     })
         await notificationData.save()
         return res.json({add: true})
+    }
 }catch (err) {
     res.status(500).send()
 }
@@ -73,8 +75,11 @@ router.post('/:post/comment/:id/edit', verify, async(req,res)=> {
     const post = req.params.post
     const {text} = req.body
 try{
+    const length = text.split(" ").join("").length
+    if(length > 0 && text.length < 150){
     await Comment.updateOne({_id: id, by: req.userId, post}, {text})
     res.json({edit: true})
+    }
 }catch (err) {
     res.status(500).send()
 }

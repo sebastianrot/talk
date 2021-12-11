@@ -34,7 +34,9 @@ const GroupPost = () => {
     if(!isExist) return <span>Taki post nie istnieje</span>
 
     return(
-        <main>
+        <main style={{display: 'flex', flexDirection: 'column',
+            maxWidth: '600px', margin: 'auto',
+            borderLeft: '1px solid #eff3f4', borderRight: '1px solid #eff3f4'}}>
             <Post key={post._id} value={post}/>
             <AddComment id={post._id} parent={'0'}/>
             <Comments id={post._id}/>

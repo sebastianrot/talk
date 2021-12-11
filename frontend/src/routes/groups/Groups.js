@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react'
+import { Select, Text } from '@chakra-ui/react'
 import GroupsResults from './GroupsResults'
 import Loading from '../../components/Loading'
 import url from '../../components/urlSettings'
@@ -28,14 +29,10 @@ const Groups = () => {
     const result = cate.map(val=><option value={val} key={val}>{val}</option>)
 
     return(
-        <main>
-            <label>
-                Wybierz kategorie
-                <select value={category} onChange={(e)=>setCategory(e.target.value)}>
+        <main style={{maxWidth: '660px', margin: 'auto', height: 'calc(100% - 197px)', borderLeft: '1px solid #f0f2f5',borderRight: '1px solid #f0f2f5'}}>
+                <Select placeholder='Wybierz' value={category} onChange={(e)=>setCategory(e.target.value)}>
                      {result}
-                </select>
-        </label>
-            tu są grupy
+                </Select>
             <GroupsResults value={groups} error={error}/>
         </main>
     )

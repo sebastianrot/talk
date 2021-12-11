@@ -1,9 +1,9 @@
 import './Search.css'
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useHistory } from "react-router-dom"
-import { InputGroup, InputLeftElement, Input} from '@chakra-ui/input'
+import { InputGroup, InputLeftElement, Input, useOutsideClick } from '@chakra-ui/react'
 import { FaSearch } from "react-icons/fa";
-import SearchPanel from './SearchPanel'
+import SearchResults from './SearchResults'
 import url from '../urlSettings'
 
 const Search = () => {
@@ -14,6 +14,11 @@ const Search = () => {
     const [loading, setLoading] = useState(true)
     const [isData, setIsData] = useState(true)
     const [isStart, setIsStart] = useState(true)
+    const ref = useRef()
+    useOutsideClick({
+        ref: ref,
+        handler: () => setClick(false)
+      })
 
     useEffect(()=>{
         if(value.length > 0) {
@@ -54,9 +59,11 @@ const Search = () => {
         <div className='search-box'>
         <InputGroup size="md">
         <InputLeftElement pointerEvents="none" children={<FaSearch/>}/>
-        <Input type="search" placeholder="Szukaj..." value={value} onChange={handleChange} onKeyUp={handleKey} onFocus={()=>setClick(true)} onBlur={()=>setTimeout(()=>setClick(false), 300)} />
+        <Input type="search" placeholder="Szukaj..." value={value} onChange={handleChange} onKeyUp={handleKey} onClick={()=>setClick(true)} />
         </InputGroup>
-        {click && <SearchPanel results={results} load={loading} isdata={isData} start={isStart}/>}
+        {click && <div ref={ref} className='search-panel'>
+        <SearchResults results={results} load={loading} isdata={isData} start={isStart}/>
+        </div>}
         </div>
     )
 }

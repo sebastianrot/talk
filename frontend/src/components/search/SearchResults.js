@@ -1,23 +1,20 @@
-import './SearchResults.css'
-import {Link} from 'react-router-dom'
+import SearchResult from './SearchResult'
 import Loading from '../Loading'
 
 const SearchResults = ({results, load, isdata, start}) => {
-
+    
     if(start) return(
-        <span>Wyszukaj użytkownika albo grupe</span>
+        <div style={{padding: '5px 0px 10px 6px', width: '100%'}}><span style={{fontWeight: '600'}}>Wyszukaj użytkownika albo grupe</span></div>
     )
 
     if(load) return <Loading/>
 
     if(!isdata) return(
-    <span>brak wyników</span>
+        <div style={{padding: '5px 0px 10px 6px', width: '100%'}}><span style={{fontWeight: '600'}}>Brak wyników</span></div>
     )
 
     let result = results.map((data)=> (
-    <div className='search-result' key={data._id}>
-        <Link to={`/user/${data.username}`}>{data.username}</Link>
-    </div>
+    <SearchResult val={data} key={data._id}/>
     ))
 
     return(

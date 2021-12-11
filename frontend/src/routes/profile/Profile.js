@@ -85,7 +85,7 @@ const Profile = () => {
         </div>
         </div>
         </section>
-        <Tabs width='100%' isFitted index={tabs()}>
+        <Tabs width='100%' isFitted index={tabs()} marginBottom='15px'>
         <TabList>
             <Tab onClick={()=>history.push(`/user/${user.username}/posts`)}>Posty</Tab>
             <Tab onClick={()=>history.push(`/user/${user.username}/groups`)}>Grupy</Tab>

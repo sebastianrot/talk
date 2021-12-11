@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react"
-import { useParams } from "react-router"
-import SearchUser from "./SearchUser"
-import SearchGroup from "./SearchGroup"
+import { useParams } from "react-router-dom"
+import SearchUsersPage from "./SearchUsersPage"
+import SearchGroupsPage from "./SearchGroupsPage"
 import Loading from "../../components/Loading"
 import url from "../../components/urlSettings"
 
-const SearchResult = ({location}) => {
+const SearchResultsPage = ({location}) => {
     let { action } = useParams()
     const [data, setData] = useState()
     const [error, setError] = useState(false)
@@ -26,9 +26,9 @@ const SearchResult = ({location}) => {
 
     if(error) return <span>404</span>
 
-    if(action === 'users') return <SearchUser value={data}/>
+    if(action === 'users') return <SearchUsersPage value={data}/>
 
-    if(action === 'groups') return <SearchGroup value={data}/>
+    if(action === 'groups') return <SearchGroupsPage value={data}/>
 
     return(
         <section>
@@ -37,4 +37,4 @@ const SearchResult = ({location}) => {
     )
 }
 
-export default SearchResult
+export default SearchResultsPage

@@ -3,6 +3,7 @@ import {useParams, Redirect} from 'react-router-dom'
 import Accept from './Accept'
 import Reject from './Reject'
 import Block from './Block'
+import UserGroup from '../UserGroup'
 import Loading from '../../../components/Loading'
 import url from '../../../components/urlSettings'
 
@@ -31,10 +32,16 @@ const GroupAccept = () => {
 
     if(!admin) return <Redirect to='/'/>
 
-    const result = accept.map(current=><div key={current._id}>{current.user.username}<Accept id={current.group} user={current.user._id}/><Reject id={current.group} user={current.user._id}/><Block id={current.group} user={current.user._id}/></div>)
-
+    const result = accept.map(val=>(
+    <div key={val._id}>
+    <UserGroup val={val}/>
+    <Accept id={val.group} user={val.user._id}/>
+    <Reject id={val.group} user={val.user._id}/>
+    <Block id={val.group} user={val.user._id}/>
+    </div>))
+    
     return(
-        <section>
+        <section style={{width: '100%'}}>
             {result}
         </section>
     )

@@ -1,12 +1,14 @@
 import './Post.css'
 import { useState, useContext } from 'react'
 import {Link, useHistory} from 'react-router-dom'
-import {useDisclosure, Modal, ModalContent, ModalCloseButton, ModalOverlay, Tooltip, Text, IconButton} from '@chakra-ui/react'
+import {useDisclosure, Modal, ModalContent, ModalCloseButton, ModalOverlay, Tooltip, Text} from '@chakra-ui/react'
 import {FaComment} from 'react-icons/fa'
-import PostDelete from './PostDelete'
+import { Carousel } from 'react-responsive-carousel'
+import "react-responsive-carousel/lib/styles/carousel.min.css"
 import Like from './Like'
 import Share from './Share'
 import Date from './Date'
+import PostOptions from './PostOptions'
 import AuthContext from '../../context/AuthContext'
 import {ReactComponent as VerifiedLogo} from '../svg/verified.svg'
 import url from '../urlSettings'
@@ -22,7 +24,7 @@ const Post = ({value}) => {
         onOpen()
     }
 
-    const image = value.img.map(el => <img src={`${url.serverUrl}/static/posts/${el}`} key={Math.floor(1000 + Math.random() * 9000)} onClick={()=>handleClick(el)} alt='zdjęcie' className='post-image'/>)
+    const image = value.img.map(el =><div key={Math.floor(1000 + Math.random() * 9000)} onClick={()=>handleClick(el)}><img src={`${url.serverUrl}/static/posts/${el}`} alt='zdjęcie' className='post-image'/></div>)
 
     return(
         <article className='post-article'>
@@ -45,11 +47,14 @@ const Post = ({value}) => {
                 </div>
                 <Date value={value.date}/>
             </div>
+            <PostOptions value={value} user={myUser}/>
             </div>
             <div className='post-page-post'>
-                <span>{value.text}</span>
+                <Text fontSize='lg'>{value.text}</Text>
                 <div>
+                <Carousel dynamicHeight emulateTouch showArrows showThumbs={false} showStatus={false}>
                 {image}
+                </Carousel>
                 </div>
                 <div style={{display: 'flex', justifyContent: 'space-around', alignItems: 'center', marginTop: '10px'}}>
                 <Like id={value._id} option={'post'} liked={value.liked} number={value.like}/>
@@ -57,7 +62,6 @@ const Post = ({value}) => {
                 <Share id={value._id}/>
                 </div>
             </div>
-            {myUser.id === value.by._id && <PostDelete id={value._id}/>}
         </article>
     )
 }

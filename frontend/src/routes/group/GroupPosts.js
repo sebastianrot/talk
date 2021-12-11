@@ -2,10 +2,11 @@ import { useState, useEffect } from "react"
 import { useParams } from "react-router"
 import GroupPostAdd from "./GroupPostAdd"
 import Post from "./Post"
+import SectionGroupHashtags from "./SectionGroupHashtags"
 import Loading from "../../components/Loading"
 import url from "../../components/urlSettings"
 
-const GroupPosts = () => {
+const GroupPosts = ({role}) => {
     let { id } = useParams()
     const [posts, setPosts] = useState()
     const [isExist, setIsExist] = useState(true)
@@ -30,16 +31,17 @@ const GroupPosts = () => {
     if(loading) return <Loading/>
 
     if(!isExist) return(
-    <>
+    <section style={{width: '100%'}}>
     <GroupPostAdd id={id}/>
-    <span>Tu nie ma postów</span>
-    </>
+    <span>Ta grupa jest prywatna albo jeszcze nie ma na niej postów</span>
+    </section>
     )
 
-    const result = posts.map(val=><Post key={val._id} value={val}/>)
+    const result = posts.map(val=><Post key={val._id} value={val} role={role}/>)
     return(
-        <section>
+        <section style={{width: '100%'}}>
             <GroupPostAdd id={id}/>
+            <SectionGroupHashtags id={id}/>
             {result}
         </section>
     )

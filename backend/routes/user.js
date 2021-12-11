@@ -26,7 +26,7 @@ try{
 router.get('/:id/groups', verify, async(req, res) => {
     let id = req.params.id
 try{
-    const group = await Join.find({user: id, status: 'accept'}).populate('group')
+    const group = await Join.find({user: id, status: 'accept'}).populate('group').sort({date: -1})
     return res.json(group)
 }catch(err){
     res.status(500).send()
@@ -36,7 +36,7 @@ try{
 router.get('/:id/follow', verify, async(req, res) => {
     let id = req.params.id
 try{
-    const follows = await Follow.find({follower: id}).populate('user')
+    const follows = await Follow.find({follower: id}).populate('user', 'username img desc verified date priv').sort({date: -1})
     return res.json(follows)
 }catch(err){
     res.status(500).send()

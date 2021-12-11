@@ -4,7 +4,7 @@ import url from "../../components/urlSettings"
 
 const AddCategory = ({hobby}) => {
     const [category, setCategory] = useState(hobby !== undefined?hobby:'wybierz')
-    const cate = ['wybierz', 'sport', 'gry', 'nauka', 'muzyka', 'tech', 'auta', 'moda', 'zwierzęta', 'sztuka', 'biznes', 'jedzenie']
+    const cate = ['sport', 'gry', 'nauka', 'muzyka', 'tech', 'auta', 'moda', 'zwierzęta', 'sztuka', 'biznes', 'jedzenie']
     const result = cate.map(val=><option value={val} key={val}>{val}</option>)
 
     const handleClick = () => {

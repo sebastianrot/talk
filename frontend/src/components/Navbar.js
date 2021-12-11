@@ -1,10 +1,8 @@
 import './Navbar.css';
 import { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Menu, MenuButton, MenuList, MenuItem, MenuGroup} from '@chakra-ui/menu';
-import { Button } from '@chakra-ui/button';
-import { Stack } from "@chakra-ui/react"
-import { FaBell } from "react-icons/fa";
+import { Menu, MenuButton, MenuList, MenuItem, MenuGroup, Button, Stack, IconButton} from '@chakra-ui/react';
+import { FaBell, FaCompass, FaUserAlt } from "react-icons/fa";
 import Search from './search/Search'
 import AuthContext from '../context/AuthContext';
 import LogOut from './LogOut';
@@ -31,15 +29,15 @@ const Navbar = () => {
     const iflogin = (logged) => {
         if(logged) return(
             <Stack direction="row" spacing={4} align="center">
-            <Button variant='ghost' size="md" onClick={()=>history.push('/notifications')}><FaBell/>{count}</Button>
+            <IconButton variant='ghost' size="md" icon={<FaBell fontSize='18px'/>} onClick={()=>history.push('/notifications')}/>
+            <IconButton variant="ghost" icon={<FaCompass fontSize='18px'/>} onClick={()=>history.push('/groups/discover')}/>
             <Menu>
-                <MenuButton as={Button} bg='#1071fe' color='#fff' _hover={{background: '#0c5bce'}} _active={{background: '#0c5bce'}}>
-                    Profile
-                </MenuButton>
+                <MenuButton as={IconButton} icon={<FaUserAlt fontSize='18px'/>} backgroundColor='#fff'/>
                 <MenuList>
                     <MenuGroup>
                     <MenuItem onClick={()=>history.push(`/user/${myUser.username}`)}>Konto</MenuItem>
                     <MenuItem onClick={()=>history.push(`/user/${myUser.username}/groups`)}>Grupy</MenuItem>
+                    <MenuItem onClick={()=>history.push(`/groups/create`)}>Stwórz grupe</MenuItem>
                     <MenuItem>Ustawienia</MenuItem>
                     <MenuItem><LogOut/></MenuItem>
                     </MenuGroup>

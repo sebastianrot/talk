@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
+import UserGroup from "./UserGroup"
 import AdminAction from "./admin/AdminAction"
 import ChangeRole from "./ChangeRole"
 import Loading from "../../components/Loading"
 import url from "../../components/urlSettings"
 
-const GroupMembers = () => {
+const GroupMembers = ({role}) => {
     let { id } = useParams()
     const [users, setUsers] = useState()
     const [isExist, setIsExist] = useState(true)
@@ -29,9 +30,18 @@ const GroupMembers = () => {
 
     if(!isExist) return <span>Taka grupa nie istnieje</span>
 
-    const result = users.map(val=><div key={val._id}><span>{val.user.username}</span><span>{val.role}</span><AdminAction id={val.group} user={val.user._id}/><ChangeRole id={val.group} user={val.user._id}/></div>)
+    const result = users.map(val=>(
+    <div key={val._id}>
+    <UserGroup val={val}/>
+    {(role.admin || role.mod) && (
+    <>
+    <AdminAction id={val.group} user={val.user._id}/>
+    <ChangeRole id={val.group} user={val.user._id}/>
+    </>)}
+    </div>))
+    
     return(
-        <main>
+        <main style={{width: '100%'}}>
             {result}
         </main>
     )

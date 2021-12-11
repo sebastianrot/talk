@@ -28,12 +28,12 @@ const GroupHashtags = () => {
 
     if(loading) return <Loading/>
 
-    if(error) return <span>nie ma takich wyników</span>
+    if(error) return <span>nie ma takich hashtagów</span>
 
     const results = hashtag.map(val=><Post key={val._id} value={val}/>)
 
     return(
-     <main>
+     <main style={{width: '100%'}}>
          {results}
      </main>
     )

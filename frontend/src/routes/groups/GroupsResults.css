@@ -1,0 +1,14 @@
+.groupsresults-article {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+}
+
+.groupsresults-div {
+    display: flex;
+    width: 100%;
+    padding: 10px 0px 10px 15px;
+    margin-right: 0;
+    position: relative;
+    cursor: pointer;
+}

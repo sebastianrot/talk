@@ -1,12 +1,15 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useContext} from 'react'
 import Post from '../../components/posts/Post'
+import AddPosts from './AddPosts'
 import Loading from '../../components/Loading'
+import AuthContext from '../../context/AuthContext'
 import url from '../../components/urlSettings'
 
 const PostsProfile = ({id}) => {
     const [post, setPost] = useState()
     const [status, setStatus] = useState()
     const [loading, setLoading] = useState(true)
+    const {myUser} = useContext(AuthContext)
 
     useEffect(()=> {
         fetch(`${url.serverUrl}/api/user/${id}/posts`, {
@@ -34,6 +37,7 @@ const PostsProfile = ({id}) => {
 
     return(
         <section className='posts-profile-section'>
+           {myUser.id === id && <AddPosts/>}
             {posts}
         </section>
     )

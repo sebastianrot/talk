@@ -6,7 +6,6 @@ import AddBanner from './AddBanner'
 import Desc from './Desc'
 import AddPriv from './AddPriv'
 import AddCategory from './AddCategory'
-import url from '../../components/urlSettings'
 
 const EditProfile = ({img, banner, hobby}) => {
     const { isOpen, onOpen, onClose } = useDisclosure()

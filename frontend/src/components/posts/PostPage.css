@@ -3,6 +3,8 @@
     flex-direction: column;
     max-width: 600px;
     margin: auto;
+    border-left: 1px solid #eff3f4;
+    border-right: 1px solid #eff3f4;
 }
 
 .post-page-user {

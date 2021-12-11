@@ -2,18 +2,17 @@
     flex-grow: 1;
     margin: 0 auto;
     max-width: 690px;
+    position: relative;
 }
 
-.search {
-    border: 1px solid #edeff1;
-    background-color: #f6f7f8;
-   color:#22303c;
-   border-radius: 4px;
-   height: 36px;
-   width: 100%;
-   padding: 0 16px 0 35px;
-}
-
-.search:focus {
-    outline: none;
+.search-panel{
+    position: absolute; 
+    width: 100%;
+    z-index: 1;
+    background: #fff;
+    height: auto;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 1px;
 }

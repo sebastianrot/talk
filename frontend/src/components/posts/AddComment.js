@@ -1,4 +1,6 @@
 import {useState} from 'react'
+import { Input, InputGroup, InputRightElement } from '@chakra-ui/react'
+import { FaPaperPlane } from 'react-icons/fa'
 import url from '../urlSettings'
 
 const AddComment = ({id, parent}) => {
@@ -18,9 +20,11 @@ const AddComment = ({id, parent}) => {
     }
 
     return(
-    <div>
-        <input type='text' placeholder='Dodaj komentarz...' onChange={e => setComment(e.target.value)} value={comment}/>
-        <button onClick={handleClick}>Opublikuj</button>
+    <div style={{padding: '10px 10px 3px 10px'}}>
+        <InputGroup>
+        <Input type='text' placeholder='Dodaj komentarz' onChange={e => setComment(e.target.value)} value={comment}/>
+        <InputRightElement children={<FaPaperPlane/>} onClick={handleClick}/>
+        </InputGroup>
     </div>    
     )
 }

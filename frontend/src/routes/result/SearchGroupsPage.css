@@ -1,0 +1,18 @@
+.searchgroupspage-section {
+    max-width: 660px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-left: 1px solid #f0f2f5;
+    border-right: 1px solid #f0f2f5;
+}
+
+.searchgrouppage-div{
+display: flex;
+width: 100%;
+padding: 10px 0px 10px 15px;
+margin-right: 0;
+position: relative;
+cursor: pointer;
+}

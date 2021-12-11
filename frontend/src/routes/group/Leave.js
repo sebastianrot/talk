@@ -1,3 +1,4 @@
+import { Button } from '@chakra-ui/button'
 import url from '../../components/urlSettings'
 
 const Leave = ({id}) => {
@@ -13,7 +14,7 @@ const Leave = ({id}) => {
     }
 
     return(
-        <button onClick={handleClick}>Wyjdź</button>
+        <Button size='sm' colorScheme='red' onClick={handleClick}>Wyjdź</Button>
     ) 
 }
 

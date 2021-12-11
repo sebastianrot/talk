@@ -1,8 +1,10 @@
 import { useState } from "react"
+import { Button } from "@chakra-ui/button"
+import { FaCamera } from "react-icons/fa"
 import PhotoPreview from "../profile/PhotoPreview"
 import url from "../../components/urlSettings"
 
-const AddPhoto = ({id}) => {
+const AddPhoto = ({id, img}) => {
     const[image, setImage] = useState('')
     const[prevImageUrl, setPrevImageUrl] = useState('')
     const[choose, setChoose] = useState(false)
@@ -48,15 +50,25 @@ const AddPhoto = ({id}) => {
     }
 
     return(
+        <>
+        {choose && <PhotoPreview prev={prevImageUrl} setCropped={setCropped} show={show} setShow={setShow} aspect={aspect}/>}
        <div>
-           {choose && <PhotoPreview prev={prevImageUrl} cropped={cropped} setCropped={setCropped} show={show} setShow={setShow} aspect={aspect}/>}
-           {image !== '' && <img src={`${url.serverUrl}/static/${image}`} alt='zdjecie profilowe' style={{width: '250px'}}/>}
            <form onSubmit={handleSubmit}>
-           <input type='file' onChange={(e)=>handleChange(e)}/>
-           <input type='submit' value='Zapisz'/>
+           <input type='file' onChange={(e)=>handleChange(e)} id='file-input-profile' style={{display: 'none'}}/>
+           <label htmlFor='file-input-profile' style={{display: 'flex', justifyContent: 'center', position: 'relative'}}>
+            <div style={{background: 'rgba(0, 0, 0, 0.5)', width: '120px', height: '120px', borderRadius: '50%', position: 'absolute'}}></div>
+           {!choose ? <img src={`${url.serverUrl}/static/profilegroup/${img==='' ? 'default.jpeg' : img}`} alt='zdjęcie profilowe' style={{width: '120px', height: '120px', objectFit: 'cover', borderRadius: '50%'}}/> : (
+               <img src={cropped} style={{width: '120px', objectFit: 'cover', borderRadius: '50%'}} alt='Zdjecie profilowe'/>
+           )} 
+            <div style={{position: 'absolute', zIndex: 1, top: '50%'}}>
+           <FaCamera fontSize='18px' color='#edf2f7'/>
+           </div>
+           </label>
+           <Button type='submit' size='sm' marginTop='10px'>Zapisz</Button>
            </form>
            {error && <span style={{color: 'red'}}>Zdjęcie jest nie prawidłowe</span>}
        </div>
+       </>
     )
 }
 

@@ -1,4 +1,6 @@
 import { useState } from "react"
+import { InputGroup, Input, InputRightElement, IconButton } from "@chakra-ui/react"
+import { FaPaperclip, FaPaperPlane } from "react-icons/fa"
 import url from "../../components/urlSettings"
 
 
@@ -21,7 +23,7 @@ const GroupPostAdd = ({id}) => {
         reader.readAsDataURL(files)
         setChoose(true)
         }   
-    }
+    }    
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -44,22 +46,32 @@ const GroupPostAdd = ({id}) => {
         .catch(err=> {
             setError(true)
         })
+        setText('')
+        setFile([])
+        setPrevImageUrl([])
     }
     const prev = prevImageUrl.map(val=> <img src={val} alt='zdjęcie'/>)
     return(
-        <div>
-            {choose && prev}
-            <form onSubmit={handleSubmit}>
-            <input type='text' placeholder='Napisz' onChange={e=>setText(e.target.value)} value={text}/>
-            <div className='div-upload-file'>
-            <input type='file' placeholder='upload' id='file' className='post-file' onChange={(e)=>handleChange(e)}/>
-            <label htmlFor='file'>Wybierz plik</label>
-            </div>
-           <input type='submit' value='Wyślij'/>
-           </form>
-           {error && <span style={{color: 'red'}}>Zdjęcia są nie prawidłowe</span>}
+        <div style={{padding: '5px 15px'}}>
+        <form onSubmit={handleSubmit} style={{display: 'flex'}}>
+        <InputGroup>
+        <Input type='text' placeholder='Napisz' borderLeftRadius='18px' borderRightRadius='0px' onChange={e=>setText(e.target.value)} value={text}/>
+        <InputRightElement children={
+            <label htmlFor='file-post'>
+            <FaPaperclip fontSize='18px'/>
+            </label>} />
+        </InputGroup>
+        <div className='div-upload-file'>
+        <input type='file' placeholder='upload' id='file-post' className='post-file' onChange={(e)=>handleChange(e)}/>
         </div>
+        <IconButton type='submit' icon={<FaPaperPlane/>} borderRightRadius='18px' borderLeftRadius='0px'/>
+       </form>
+       {error && <span style={{color: 'red'}}>Zdjęcia są nie prawidłowe</span>}
+       {choose && prev}
+    </div>
     )
 }
 
 export default GroupPostAdd
+
+

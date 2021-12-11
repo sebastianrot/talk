@@ -44,7 +44,8 @@ router.post('/post', verify, upload.array('images', 4), async(req, res) => {
         by: req.userId
     })
 try{
-    if(text.length < 10000 && (text.length > 0 || files.length > 0)){
+    const length = text.split(" ").join("").length
+    if(text.length < 10000 && (length > 0 || files.length > 0)){
     await postData.save()
     res.json({add: true})
     }

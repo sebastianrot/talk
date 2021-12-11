@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react"
-import Loading from "../../components/Loading"
 import {Link} from 'react-router-dom'
+import { Text, Accordion, AccordionItem, AccordionButton, 
+    AccordionPanel, AccordionIcon, Box} from "@chakra-ui/react"
+import Loading from "../../components/Loading"
 import url from "../../components/urlSettings"
 
 const SectionGroupHashtags = ({id}) => {
@@ -28,8 +30,22 @@ const SectionGroupHashtags = ({id}) => {
 
     const result = hashtags.map(val=><div key={val._id}><Link to={`/group/${id}/search?q=%23${val._id.slice(1)}`}>{val._id}: {val.count}</Link></div>)
     return(
-        <article>
-            {result}
+        <article style={{padding: '10px 20px'}}>
+            <Accordion defaultIndex={[0]} allowMultiple>
+            <AccordionItem border='none'>
+                <h2>
+                <AccordionButton>
+                    <Box flex='1' textAlign='left'>
+                    <Text fontWeight='600'>Popularne hashtagi</Text>
+                    </Box>
+                    <AccordionIcon />
+                </AccordionButton>
+                </h2>
+                <AccordionPanel pb={4}>
+                {result}
+                </AccordionPanel>
+            </AccordionItem>
+            </Accordion>
         </article>
     )
 }

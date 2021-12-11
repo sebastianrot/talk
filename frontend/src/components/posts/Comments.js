@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import Comment from './Comment'
+import TopComment from './TopComment'
 import Loading from "../Loading"
 import url from "../urlSettings"
 
@@ -26,7 +26,7 @@ const Comments = ({id}) => {
 
     if(!isComment) return <span>Nie ma komentarzy</span>
 
-    const result = comments.map(current=> <Comment key={current._id} value={current} id={id}/>)
+    const result = comments.map(current=><TopComment key={current._id} value={current}/>)
 
     return(
     <section>

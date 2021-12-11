@@ -114,7 +114,7 @@ try{
 router.get('/:id/members', verify, async(req, res)=> {
     const id = req.params.id
  try{
-    const result = await Join.find({group: id, status: 'accept'}).populate('user', 'username img verified')
+    const result = await Join.find({group: id, status: 'accept'}).populate('user', 'username img verified desc')
     return res.json(result)
  }catch(err) {
     res.status(500).send()
@@ -143,7 +143,6 @@ try {
 
 router.post('/:id/join', verify, async(req, res)=> {
     const id = req.params.id
-    console.log(`Dołaczono ${id}`)
     try{
         const result = await Join.find({user: req.userId, group: id})
         if(result.length > 0) return res.json({join: true})
@@ -160,7 +159,7 @@ router.post('/:id/join', verify, async(req, res)=> {
         type: 'group',
         ref: val.group}))
         await Notification.insertMany(notificationData)
-      return res.json({add: true})
+      return res.json({join: status})
     }catch(err) {
         res.status(500).send()
     }

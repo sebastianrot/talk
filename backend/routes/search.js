@@ -8,7 +8,6 @@ router.get('/', async(req, res) => {
     console.log(query)
     try {
        const result = await User.find({username: {$regex: new RegExp(`${query.q}.*`, 'i')}}).select({password: 0}).sort({verified: -1}).limit(4)
-        console.log(result)
         res.json(result)
     } catch (err) {
         res.status(500).send()
@@ -20,8 +19,7 @@ router.get('/users', async(req, res) => {
     console.log(query)
     try {
         if(query.q === '' || query.q === '.') return res.json([])
-       const result = await User.find({username: {$regex: new RegExp(`${query.q}.*`, 'i')}}).select('username img verified').sort({verified: -1})
-        console.log(result)
+       const result = await User.find({username: {$regex: new RegExp(`${query.q}.*`, 'i')}}).select('username img desc verified').sort({verified: -1})
         res.json(result)
     } catch (err) {
         res.status(500).send()
@@ -34,7 +32,6 @@ router.get('/groups', async(req, res) => {
     try {
         if(query.q === '' || query.q === '.') return res.json([])
        const result = await Group.find({name: {$regex: new RegExp(`${query.q}.*`, 'i')}, hide: false}).sort({verified: -1})
-        console.log(result)
         res.json(result)
     } catch (err) {
         res.status(500).send()

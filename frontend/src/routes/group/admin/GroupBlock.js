@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import { useParams, Redirect } from "react-router-dom"
 import AdminUnblock from "./AdminUnblock"
+import UserGroup from "../UserGroup"
 import Loading from "../../../components/Loading"
 import url from "../../../components/urlSettings"
 
@@ -28,12 +29,16 @@ const GroupBlock = () => {
 
     if(!admin) return <Redirect to='/'/>
 
-    const result = block.map(val=><div key={val._id}>{val.user.username}<AdminUnblock id={val.group} user={val.user._id}/></div>)
+    const result = block.map(val=>(
+    <div key={val._id}>
+    <UserGroup val={val}/>
+    <AdminUnblock id={val.group} user={val.user._id}/>
+    </div>))
 
     return(
-        <main>
+        <section style={{width: '100%'}}>
             {result}
-        </main>
+        </section>
     )
 }
 
