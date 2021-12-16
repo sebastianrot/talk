@@ -1,0 +1,27 @@
+.create-group-section {
+    display: flex;
+    align-items: center;
+    padding-top: 60px;
+}
+
+.create-group-article {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    padding: 25px 50px 30px 50px;
+    background: #fff;
+    box-shadow: 0 4px 40px rgba(0,0,0,.15);
+    width: 600px;
+    border-radius: 10px;
+}
+
+@media (max-width: 576px) {
+    .create-group-section{
+        padding-top: 20px;
+    }
+
+    .create-group-article{
+        padding: 10px 18px;
+        box-shadow: none;
+    }
+}

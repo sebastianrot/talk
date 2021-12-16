@@ -38,3 +38,10 @@
     cursor: pointer;
     height: 35px;
 }
+
+@media (max-width: 576px) {
+    .section-signin{
+        padding: 25px 14px;
+        box-shadow: none;
+    }
+}

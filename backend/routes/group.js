@@ -153,11 +153,11 @@ router.post('/:id/join', verify, async(req, res)=> {
 
         const admin = await Join.find({group: id, $or: [{role: 'admin'}, {role: 'mod'}]}).lean()
         const notificationData = admin.map(val=>({
-        message: 'Nowa osoba dołączyła do grupy',
+        message: 'dołączył do grupy',
         sender: req.userId,
         receiver: val.user,
-        type: 'group',
-        ref: val.group}))
+        ref: val.group,
+        onModel: 'Group'}))
         await Notification.insertMany(notificationData)
       return res.json({join: status})
     }catch(err) {
@@ -186,11 +186,11 @@ try {
      const user = await GroupPost.find({_id: id}).select({by: 1})
      if(user[0].by.toString() === req.userId) return res.json({like: true})
      const notificationData = new Notification({
-        message: 'Twój post został polubiony',
+        message: 'polubił post',
         sender: req.userId,
         receiver: user[0].by,
-        type: 'post',
-        ref: user[0]._id
+        ref: user[0]._id,
+        onModel: 'GroupPost'
     })
         await notificationData.save()
         res.json({like: true})

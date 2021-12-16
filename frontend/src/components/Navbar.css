@@ -6,6 +6,7 @@
     border-top: 1px solid #ddd;
     top: 0;
     z-index: 99;
+    position: relative;
 }
 
 nav {
@@ -19,4 +20,10 @@ nav {
 .account-dropdown {
     display: flex;
     flex-direction: column;
+}
+
+@media (max-width: 576px)  {
+    .nav-header{
+        height: auto;
+    }
 }

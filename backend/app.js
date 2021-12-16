@@ -2,9 +2,15 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const rateLimit = require('express-rate-limit');
 
 const app = express();
 const PORT = process.env.PORT || 5000
+
+const limiter = rateLimit({
+    windowMs: 60000,
+    max: 30
+})
 
 const userRouter = require('./routes/user');
 const registerRoute = require('./routes/register');
@@ -40,6 +46,7 @@ app.use(cors({
     methods: ['GET', 'POST']
 }))
 app.use(cookieParser())
+app.use('/api/', limiter)
 app.disable('x-powered-by');  
 
 app.listen(PORT)

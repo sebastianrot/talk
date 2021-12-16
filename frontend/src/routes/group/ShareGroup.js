@@ -20,7 +20,7 @@ const ShareGroup = ({group, admin}) => {
           <DrawerHeader borderBottomWidth='1px'><div style={{display: 'flex', justifyContent:'center'}}>Opcje</div></DrawerHeader>
           <DrawerBody display='flex' flexDirection='column' margin='auto'>
             {admin && <div style={{marginBottom: '10px'}}><EditGroup group={group}/></div>}
-            <div style={{marginBottom: '10px'}}><Button onClick={handleClick} size='sm'>Kopiuj link</Button></div>
+            <div style={{marginBottom: '10px'}}><Button onClick={handleClick} size='sm' width='100%'>Kopiuj link</Button></div>
             <div style={{marginBottom: '10px'}}><Leave id={group._id}/></div>
           </DrawerBody>
         </DrawerContent>

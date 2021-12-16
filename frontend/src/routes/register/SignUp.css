@@ -42,3 +42,10 @@
     opacity: 0.7;
     cursor: not-allowed;
 }
+
+@media (max-width: 576px) {
+    .section-signup{
+        padding: 25px 14px;
+        box-shadow: none;
+    }
+}

@@ -16,11 +16,11 @@ try{
             await followData.save()
 
             const notificationData = new Notification({
-               message: 'Zostałeś zaobserwowany',
+               message: 'zaobserwował cię',
                sender: req.userId,
                receiver: id,
-               type: 'user',
-               ref: req.userId
+               ref: req.userId,
+               onModel: 'User'
            })
             await notificationData.save()
             
@@ -31,7 +31,6 @@ try{
 })
 
 router.post('/:id/unfollow', verify, async(req, res) => {
-    console.log('unfollow')
     const id = req.params.id
 try{
     await Follow.deleteOne({user: id, follower: req.userId})

@@ -13,11 +13,11 @@ try {
      const user = await Post.find({_id: id}).select({by: 1})
      if(user[0].by.toString() === req.userId) return res.json({like: true})
      const notificationData = new Notification({
-        message: 'Twój post został polubiony',
+        message: 'polubił post',
         sender: req.userId,
         receiver: user[0].by,
-        type: 'post',
-        ref: user[0]._id
+        ref:  user[0]._id,
+        onModel: 'Post'
     })
         await notificationData.save()
         console.log(like)

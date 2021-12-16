@@ -1,6 +1,6 @@
 import './Post.css'
 import { useState, useContext } from 'react'
-import {Link, useHistory} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import {useDisclosure, Modal, ModalContent, ModalCloseButton, ModalOverlay, Tooltip, Text} from '@chakra-ui/react'
 import { FaComment, FaCaretRight } from 'react-icons/fa'
 import { Carousel } from 'react-responsive-carousel'
@@ -34,7 +34,7 @@ const Post = ({value, role}) => {
            </ModalContent>
        </Modal>
        <div className='post-group-page-user'>
-           <Link to={`/user/${value.by.username}`} style={{width: '48px', height: '48px'}}><img src={`${url.serverUrl}/static/profile/${value.by.img !== '' ? value.by.img : 'default.jpeg'}`}
+           <Link to={`/user/${value.by.username}`} className='post-div-img'><img src={`${url.serverUrl}/static/profile/${value.by.img !== '' ? value.by.img : 'default.jpeg'}`}
                alt='zdjęcie profilowe' style={{width: '100%', borderRadius: '999px', objectFit: 'cover'}}/></Link>
        <div style={{display: 'flex', flexDirection: 'column', marginLeft: '10px', justifyContent: 'center'}}>
            <div style={{display: 'flex', alignItems: 'center'}}>
@@ -52,8 +52,8 @@ const Post = ({value, role}) => {
        <PostOptionsGroup value={value} user={myUser} role={role}/>
        </div>
        <div className='post-group-page-post'>
-           <Text fontSize='lg'>{value.text}</Text>
-           <div>
+           <Text fontSize='md'>{value.text}</Text>
+           <div style={{marginTop: '5px'}}>
            <Carousel dynamicHeight emulateTouch showArrows showThumbs={false} showStatus={false}>
            {image}
            </Carousel>

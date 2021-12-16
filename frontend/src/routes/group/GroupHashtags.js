@@ -4,7 +4,7 @@ import Post from './Post'
 import Loading from '../../components/Loading'
 import url from '../../components/urlSettings'
 
-const GroupHashtags = () => {
+const GroupHashtags = ({role}) => {
     let { id } = useParams()
     const location = useLocation()
     const [hashtag, setHashtags] = useState()
@@ -30,7 +30,7 @@ const GroupHashtags = () => {
 
     if(error) return <span>nie ma takich hashtagów</span>
 
-    const results = hashtag.map(val=><Post key={val._id} value={val}/>)
+    const results = hashtag.map(val=><Post key={val._id} value={val} role={role}/>)
 
     return(
      <main style={{width: '100%'}}>

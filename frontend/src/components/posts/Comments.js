@@ -24,7 +24,7 @@ const Comments = ({id}) => {
 
     if(loading) return <Loading/>
 
-    if(!isComment) return <span>Nie ma komentarzy</span>
+    if(!isComment) return <span style={{padding: '5px 0px 0px 10px', fontSize: '14px'}}>Nie ma komentarzy</span>
 
     const result = comments.map(current=><TopComment key={current._id} value={current}/>)
 

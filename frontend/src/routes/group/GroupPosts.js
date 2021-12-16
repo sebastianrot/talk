@@ -32,7 +32,7 @@ const GroupPosts = ({role}) => {
 
     if(!isExist) return(
     <section style={{width: '100%'}}>
-    <GroupPostAdd id={id}/>
+    <GroupPostAdd id={id} role={role}/>
     <span>Ta grupa jest prywatna albo jeszcze nie ma na niej postów</span>
     </section>
     )
@@ -40,8 +40,8 @@ const GroupPosts = ({role}) => {
     const result = posts.map(val=><Post key={val._id} value={val} role={role}/>)
     return(
         <section style={{width: '100%'}}>
-            <GroupPostAdd id={id}/>
             <SectionGroupHashtags id={id}/>
+            <GroupPostAdd id={id} role={role}/>
             {result}
         </section>
     )

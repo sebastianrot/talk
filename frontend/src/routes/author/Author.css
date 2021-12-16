@@ -1,0 +1,10 @@
+.author-section{
+    max-width: 660px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    border-left: 1px solid #eff3f4;
+    border-right: 1px solid #eff3f4;
+    min-height: 100%;
+}

@@ -20,3 +20,15 @@
 .post-image {
     width: 100%;
 }
+
+.post-div-img {
+    width: 48px;
+    height: 48px;
+}
+
+@media (max-width: 767px)  {
+    .post-div-img {
+        width: 42px;
+        height: 42px;
+    }
+}

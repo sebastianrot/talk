@@ -1,6 +1,6 @@
+import './Notifications.css'
 import { useState, useEffect } from "react"
-import {Link} from 'react-router-dom'
-import Date from '../../components/posts/Date'
+import Notification from './Notification'
 import Loading from "../../components/Loading"
 import url from "../../components/urlSettings"
 
@@ -37,21 +37,22 @@ const Notifications = () => {
     },[])
 
     const type = (val) => {
-        if(val.type==='post') return `/p/${val.ref}`
-        if(val.type==='user') return `/user/${val.sender.username}`
-        return `/${val.type}/${val.ref}`
+        if(val.onModel==='Post') return `/p/${val.ref._id}`
+        if(val.onModel==='User') return `/user/${val.ref.username}`
+        if(val.onModel==='Group') return `/group/${val.ref._id}`
+        if(val.onModel==='GroupPost') return `/group/${val.ref.group}/p/${val.ref._id}`
     }
 
     if(loading) return <Loading/>
 
     if(err) return <span>Nie ma żadnych powiadomień</span>
 
-    const result = data.map(val=><div key={val._id}><Link to={type(val)}>{val.message}-{val.sender.username} {val.read ? 'przeczytane' : 'nieodczytane'} <Date value={val.date}/></Link></div>)
+    const result = data.map(val=><div key={val._id} style={val.read ? {width: '100%', padding: '10px'} : {background: '#f6f6f6', width: '100%', padding: '10px'}}><Notification val={val} type={type}/></div>)
 
     return(
-        <main>
+        <section className="notifications-section">
            {result}
-        </main>
+        </section>
     )
 }
 

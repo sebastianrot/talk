@@ -14,7 +14,7 @@ const Leave = ({id}) => {
     }
 
     return(
-        <Button size='sm' colorScheme='red' onClick={handleClick}>Wyjdź</Button>
+        <Button size='sm' colorScheme='red' width='100%' onClick={handleClick}>Wyjdź</Button>
     ) 
 }
 

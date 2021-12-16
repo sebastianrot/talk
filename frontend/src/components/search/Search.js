@@ -1,9 +1,11 @@
 import './Search.css'
 import { useState, useEffect, useRef } from "react"
 import { useHistory } from "react-router-dom"
-import { InputGroup, InputLeftElement, Input, useOutsideClick } from '@chakra-ui/react'
+import { InputGroup, InputLeftElement, Input, useOutsideClick, IconButton } from '@chakra-ui/react'
+import useWindowSize from '../hook/useWindowSize'
 import { FaSearch } from "react-icons/fa";
 import SearchResults from './SearchResults'
+import SearchMobile from './SearchMobile'
 import url from '../urlSettings'
 
 const Search = () => {
@@ -14,6 +16,7 @@ const Search = () => {
     const [loading, setLoading] = useState(true)
     const [isData, setIsData] = useState(true)
     const [isStart, setIsStart] = useState(true)
+    const {width} = useWindowSize()
     const ref = useRef()
     useOutsideClick({
         ref: ref,
@@ -57,10 +60,10 @@ const Search = () => {
 
     return(
         <div className='search-box'>
-        <InputGroup size="md">
+        {width >= '768' ? <InputGroup size="md">
         <InputLeftElement pointerEvents="none" children={<FaSearch/>}/>
         <Input type="search" placeholder="Szukaj..." value={value} onChange={handleChange} onKeyUp={handleKey} onClick={()=>setClick(true)} />
-        </InputGroup>
+        </InputGroup> :  <SearchMobile value={value} handleChange={handleChange} handleKey={handleKey}/>}
         {click && <div ref={ref} className='search-panel'>
         <SearchResults results={results} load={loading} isdata={isData} start={isStart}/>
         </div>}

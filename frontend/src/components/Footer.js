@@ -1,10 +1,9 @@
 import './Footer.css'
 import { Text } from '@chakra-ui/layout'
-import { useHistory, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import {FaTwitter, FaYoutube, FaInstagram} from 'react-icons/fa'
 
 const Footer = () => {
-    let history = useHistory()
     const twitter = 'https://twitter.com/linnkgroup'
     const yt = 'https://www.youtube.com/channel/UCZ599vSZSCHC-eDBo9xcHAg'
     const insta = 'https://www.instagram.com/linnkofficial/'
@@ -21,9 +20,8 @@ const Footer = () => {
             </div>
             <div>
                 <Text fontWeight='700'>Firma</Text>
-                <Text>Twórca</Text>
-                <Text>O nas</Text>
-                <Text>Kontakt</Text>
+                <Text><Link to={`/author`}>Twórca</Link></Text>
+                <Text><Link to={`/contact`}>Kontakt</Link></Text>
             </div>
             <div>
                 <Text fontWeight='700'>Polityka</Text>

@@ -46,8 +46,9 @@ router.post('/post', verify, upload.array('images', 4), async(req, res) => {
 try{
     const length = text.split(" ").join("").length
     if(text.length < 10000 && (length > 0 || files.length > 0)){
-    await postData.save()
-    res.json({add: true})
+    const add = await postData.save()
+    await add.populate('by', 'username img verified')
+    res.json(add)
     }
 }catch (err) {
     res.status(500).send()
@@ -73,8 +74,10 @@ router.post('/group/:id/post', verify, upload.array('images', 4), async(req,res)
         let hashtag = [...new Set(change)]
         hashtag = hashtag===null?[]:hashtag
         const postData = new GroupPost({text: text, group: id, by: req.userId, img: filesArray, hashtag})
-        await postData.save()
-        res.json({add: true})
+        const add = await postData.save()
+        await add.populate('by', 'username img verified')
+        await add.populate('group')
+        res.json(add)
     }
    }
     return res.status(401).send()

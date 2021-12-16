@@ -36,7 +36,7 @@ const Post = ({value}) => {
                 </ModalContent>
             </Modal>
             <div className='post-page-user'>
-                <Link to={`/user/${value.by.username}`} style={{width: '48px', height: '48px'}}><img src={`${url.serverUrl}/static/profile/${value.by.img !== '' ? value.by.img : 'default.jpeg'}`}
+                <Link to={`/user/${value.by.username}`} className='post-div-img'><img src={`${url.serverUrl}/static/profile/${value.by.img !== '' ? value.by.img : 'default.jpeg'}`}
                     alt='zdjęcie profilowe' style={{width: '100%', borderRadius: '999px', objectFit: 'cover'}}/></Link>
             <div style={{display: 'flex', flexDirection: 'column', marginLeft: '10px', justifyContent: 'center'}}>
                 <div style={{display: 'flex', alignItems: 'center'}}>
@@ -50,8 +50,8 @@ const Post = ({value}) => {
             <PostOptions value={value} user={myUser}/>
             </div>
             <div className='post-page-post'>
-                <Text fontSize='lg'>{value.text}</Text>
-                <div>
+                <Text fontSize='md'>{value.text}</Text>
+                <div style={{marginTop: '5px'}}>
                 <Carousel dynamicHeight emulateTouch showArrows showThumbs={false} showStatus={false}>
                 {image}
                 </Carousel>

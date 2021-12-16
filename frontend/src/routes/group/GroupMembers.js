@@ -34,10 +34,10 @@ const GroupMembers = ({role}) => {
     <div key={val._id}>
     <UserGroup val={val}/>
     {(role.admin || role.mod) && (
-    <>
+    <div style={{display: 'flex'}}>
     <AdminAction id={val.group} user={val.user._id}/>
     <ChangeRole id={val.group} user={val.user._id}/>
-    </>)}
+    </div>)}
     </div>))
     
     return(

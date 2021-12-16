@@ -15,7 +15,7 @@ const Reject = ({id, user}) => {
     }
 
     return(
-        <Button size='sm' onClick={handleClick}>Usuń</Button>
+        <Button size='sm' marginTop='10px' onClick={handleClick}>Usuń</Button>
     )
 }
 

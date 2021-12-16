@@ -1,3 +1,4 @@
+import './CreateGroup.css'
 import { useState, useContext } from "react"
 import { Input, Checkbox, Select, Button, Text, Textarea } from "@chakra-ui/react"
 import { Redirect } from "react-router-dom"
@@ -26,6 +27,7 @@ const CreateGroup = () => {
         })
         .then(res=>res.json())
         .then(data=>setCreate(data.add))
+        .catch(err=>setCategory())
     }
 
     if(create) return <Redirect to={`/user/${myUser.username}/groups`}/>
@@ -33,11 +35,8 @@ const CreateGroup = () => {
     const cate = ['sport', 'gry', 'nauka', 'muzyka', 'tech', 'auta', 'moda', 'zwierzęta', 'sztuka', 'biznes', 'jedzenie']
     const result = cate.map(val=><option value={val} key={val}>{val}</option>)
     return(
-        <main style={{display: 'flex',
-            alignItems: 'center',
-            paddingTop: '60px'}}>
-        <article style={{display: 'flex', flexDirection: 'column',margin: 'auto', padding: '25px 50px 30px 50px', background: '#fff',
-        boxShadow: '0 4px 40px rgba(0,0,0,.15)', width: '600px', borderRadius: '10px'}}> 
+        <section className='create-group-section'>
+        <article className='create-group-article'> 
             <Text fontSize='lg' fontWeight='600' margin='auto'>Stwórz grupe</Text> 
             <Text fontSize='md' fontWeight='600' marginTop='10px'>Nazwa</Text>
             <Input type='text' placeholder='Podaj nazwe' value={name} onChange={(e)=>setName(e.target.value)}/>
@@ -54,7 +53,7 @@ const CreateGroup = () => {
         </label>
         <Button onClick={handleClick} marginTop='15px' style={{background: '#1071fe', color: '#fff'}}>Stwórz</Button>
         </article>
-        </main>
+        </section>
     )
 }
 

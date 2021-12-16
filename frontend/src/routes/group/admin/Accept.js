@@ -15,7 +15,7 @@ const Accept = ({id, user}) => {
     }
 
     return(
-        <Button size='sm' colorScheme='green' onClick={handleClick}>Zaakceptuj</Button>
+        <Button size='sm' colorScheme='green' marginTop='10px' onClick={handleClick}>Zaakceptuj</Button>
     )
 }
 

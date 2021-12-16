@@ -1,9 +1,7 @@
 import {useState, useEffect} from 'react'
 import {useParams, Redirect} from 'react-router-dom'
-import Accept from './Accept'
-import Reject from './Reject'
-import Block from './Block'
 import UserGroup from '../UserGroup'
+import AdminAccept from './AdminAccept'
 import Loading from '../../../components/Loading'
 import url from '../../../components/urlSettings'
 
@@ -35,9 +33,7 @@ const GroupAccept = () => {
     const result = accept.map(val=>(
     <div key={val._id}>
     <UserGroup val={val}/>
-    <Accept id={val.group} user={val.user._id}/>
-    <Reject id={val.group} user={val.user._id}/>
-    <Block id={val.group} user={val.user._id}/>
+    <AdminAccept id={val.group} user={val.user._id}/>
     </div>))
     
     return(

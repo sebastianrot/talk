@@ -4,6 +4,7 @@ import {useParams,Link, Route, useRouteMatch, BrowserRouter as Router, Switch, u
 import { Tabs, TabList, Tab, Text, Tooltip, Badge } from '@chakra-ui/react'
 import { FaLock } from 'react-icons/fa'
 import JoinGroup from './JoinGroup'
+import GroupPost from '../grouppost/GroupPost'
 import GroupMembers from './GroupMembers'
 import GroupPosts from './GroupPosts'
 import Loading from '../../components/Loading'
@@ -93,7 +94,7 @@ const Group = () => {
         </div>
         </div>
         </section>
-        <Tabs width='100%' isFitted index={tabs()} marginBottom='15px'>
+        <Tabs width='100%' isFitted index={tabs()} marginBottom='15px' style={{overflowY:'hidden', scrollbarWidth:'none'}}>
         <TabList>
             <Tab onClick={()=>history.push(`/group/${group._id}/posts`)}>Posty</Tab>
             <Tab onClick={()=>history.push(`/group/${group._id}/members`)}>Użytkownicy</Tab>
@@ -109,7 +110,12 @@ const Group = () => {
             <Route path={`${path}/members`}>
                 <GroupMembers role={role}/>
             </Route>
-            <Route path={`${path}/search`} component={GroupHashtags}/>
+            <Route path='/group/:id/p/:postid'>
+                <GroupPost role={role}/>
+            </Route>
+            <Route path={`${path}/search`}>
+                <GroupHashtags role={role}/>
+            </Route>
             {(role.admin || role.mod) && <Route path={`${path}/accept`} component={GroupAccept}/>}
             {(role.admin || role.mod) && <Route path={`${path}/block`} component={GroupBlock}/>}
             <Route render={() => <span>404</span>} />

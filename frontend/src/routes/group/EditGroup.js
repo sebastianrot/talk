@@ -12,7 +12,7 @@ const EditGroup = ({group}) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     return(
     <div>
-        <Button onClick={onOpen} size='sm'>Edytuj</Button>
+        <Button onClick={onOpen} size='sm' width='100%'>Edytuj</Button>
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent padding='5px 10px 15px 10px'>

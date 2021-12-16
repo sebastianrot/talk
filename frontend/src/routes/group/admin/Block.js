@@ -15,7 +15,7 @@ const Block = ({id, user}) => {
     }
 
     return(
-        <Button size='sm' colorScheme='red' onClick={handleClick}>Zablokuj</Button>
+        <Button size='sm' colorScheme='red' marginTop='10px' onClick={handleClick}>Zablokuj</Button>
     )
 }
 

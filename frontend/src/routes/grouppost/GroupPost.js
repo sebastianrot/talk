@@ -6,7 +6,7 @@ import Post from "../group/Post"
 import Loading from "../../components/Loading"
 import url from "../../components/urlSettings"
 
-const GroupPost = () => {
+const GroupPost = ({role}) => {
     let { id } = useParams()
     let { postid } = useParams()
     const [post, setPost] = useState()
@@ -34,13 +34,11 @@ const GroupPost = () => {
     if(!isExist) return <span>Taki post nie istnieje</span>
 
     return(
-        <main style={{display: 'flex', flexDirection: 'column',
-            maxWidth: '600px', margin: 'auto',
-            borderLeft: '1px solid #eff3f4', borderRight: '1px solid #eff3f4'}}>
-            <Post key={post._id} value={post}/>
+        <section style={{width: '100%', marginBottom: '10px'}}>
+            <Post key={post._id} value={post} role={role}/>
             <AddComment id={post._id} parent={'0'}/>
             <Comments id={post._id}/>
-        </main>
+        </section>
     )
 }
 

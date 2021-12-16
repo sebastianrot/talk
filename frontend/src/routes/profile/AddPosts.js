@@ -2,12 +2,14 @@ import './AddPosts.css'
 import { useState } from "react"
 import { Input, IconButton, InputGroup, InputRightElement } from '@chakra-ui/react'
 import { FaPaperclip, FaPaperPlane } from 'react-icons/fa'
+import Post from '../../components/posts/Post'
 import url from "../../components/urlSettings"
 
 const AddPosts = () => {
     const [text, setText] = useState('')
     const[file, setFile] = useState([])
-    const[image, setImage] = useState('')
+    const[posts, setPosts] = useState([])
+    const [added, setAdded] = useState(false)
     const[prevImageUrl, setPrevImageUrl] = useState([])
     const[choose, setChoose] = useState(false)
     const[error, setError] = useState(false)
@@ -41,7 +43,8 @@ const AddPosts = () => {
         }).then(res=> res.json())
         .then(data=> {
             setError(false)
-            setImage(data.path)
+            setPosts(prev=>[...prev, data])
+            setAdded(true)
         })
         .catch(err=> {
             setError(true)
@@ -50,8 +53,11 @@ const AddPosts = () => {
         setFile([])
         setPrevImageUrl([])
     }
-    const prev = prevImageUrl.map(val=> <img src={val} alt='zdjęcie'/>)
+    const prev = prevImageUrl.map(val=><div key={Math.floor(1000 + Math.random() * 9000)}><img src={val} alt='zdjęcie' style={{objectFit: 'cover', float: 'left', width: '100%', height: '200px'}}/></div>)
+
+    const result = posts.map(val=><Post key={val._id} value={val}/>).reverse()
     return(
+        <div>
         <div style={{padding: '5px 15px'}}>
             <form onSubmit={handleSubmit} style={{display: 'flex'}}>
             <InputGroup>
@@ -67,7 +73,11 @@ const AddPosts = () => {
             <IconButton type='submit' icon={<FaPaperPlane/>} borderRightRadius='18px' borderLeftRadius='0px'/>
            </form>
            {error && <span style={{color: 'red'}}>Zdjęcia są nie prawidłowe</span>}
+           <div className='prev-image-div'>
            {choose && prev}
+           </div>
+        </div>
+           {added && result}
         </div>
     )
 }
