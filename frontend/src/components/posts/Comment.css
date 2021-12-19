@@ -1,7 +1,6 @@
 .comment-article {
     display: flex;
     flex-direction: row;
-    padding: 10px 15px;
     position: relative;
 }
 

@@ -60,7 +60,7 @@ const Profile = () => {
         <img src={`${urlSettings.serverUrl}/static/banner/${user.banner!== '' ? user.banner : 'default.jpg'}`} alt='banner' style={{width: '100%',objectFit: 'cover'}}/>
         <div className='profile-info'>
         <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'end'}}>
-        <img src={user.img !== '' ? `${urlSettings.serverUrl}/static/profile/${user.img}` : `https://avatars.dicebear.com/api/initials/${user.username}.svg`} alt='zdjęcie profilowe' className='img-user'/>
+        <img src={`${urlSettings.serverUrl}/static/profile/${user.img !== '' ? user.img : 'default.jpeg'}`} alt='zdjęcie profilowe' className='img-user'/>
         {logged && myUser.id === user._id ? <EditProfile img={user.img} banner={user.banner} hobby={user.category}/> : <Follow id={user._id} followed={user.followed} key={user._id}/>}
         </div>
         <div style={{display: 'flex', alignItems: 'center'}}>

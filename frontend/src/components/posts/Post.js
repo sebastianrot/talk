@@ -1,6 +1,6 @@
 import './Post.css'
 import { useState, useContext } from 'react'
-import {Link, useHistory} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import {useDisclosure, Modal, ModalContent, ModalCloseButton, ModalOverlay, Tooltip, Text} from '@chakra-ui/react'
 import {FaComment} from 'react-icons/fa'
 import { Carousel } from 'react-responsive-carousel'
@@ -17,14 +17,13 @@ const Post = ({value}) => {
     const {myUser} = useContext(AuthContext)
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [imgName, setImgName] = useState()
-    let history = useHistory()
 
     const handleClick = (el) => {
         setImgName(el)
         onOpen()
     }
 
-    const image = value.img.map(el =><div key={Math.floor(1000 + Math.random() * 9000)} onClick={()=>handleClick(el)}><img src={`${url.serverUrl}/static/posts/${el}`} alt='zdjęcie' className='post-image'/></div>)
+    const image = value.img.map(el =><div key={Math.floor(1000 + Math.random() * 9000)} onClick={()=>handleClick(el)}><img alt='zdjęcie' src={`${url.serverUrl}/static/posts/${el}`} className='post-image' /></div>)
 
     return(
         <article className='post-article'>

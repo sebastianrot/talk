@@ -6,8 +6,10 @@ const router = express.Router();
 
 router.get('/:id/posts', verify, async(req, res) => {
     const id = req.params.id
+    const page = req.query.page
+    const skip = (page-1)*15
     try {
-    const post = await Post.find({by: id}).populate('by', 'username img verified priv ban').sort({date: -1}).lean()
+    const post = await Post.find({by: id}).populate('by', 'username img verified priv ban').skip(skip).limit(15).sort({date: -1}).lean()
     if(post.length === 0 || post[0].by.ban) return res.status(404).send()
     const followed = await isfollowing(post[0].by._id, req.userId)
     const myprofile = req.userId === post[0].by._id.toString()

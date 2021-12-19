@@ -42,7 +42,7 @@ const ProfileGroups = ({id}) => {
 
     const result = group.map(val=><div className='usergroup-div' key={val._id} onClick={()=>history.push(`/group/${val.group._id}`)}>
     <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'end'}}>
-    <img src={val.group.img !== '' ? `${url.serverUrl}/static/profilegroup/${val.group.img}` : `https://avatars.dicebear.com/api/initials/${val.group.name}.svg`} alt='profile' style={{width: '42px', borderRadius: '50%'}}/>
+    <img src={`${url.serverUrl}/static/profilegroup/${val.group.img !== '' ? val.group.img : 'default.jpeg'}`} alt='profile' style={{width: '42px', borderRadius: '50%'}}/>
     </div>
     <div style={{display: 'flex', flexDirection: 'column', marginLeft: '10px', justifyContent: 'center'}}>
     <div style={{display: 'flex', alignItems: 'center'}}>

@@ -29,7 +29,7 @@ const Comments = ({id}) => {
     const result = comments.map(current=><TopComment key={current._id} value={current}/>)
 
     return(
-    <section>
+    <section style={{padding: '10px 15px'}}>
         {result}
     </section>
     )

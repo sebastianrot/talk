@@ -26,7 +26,7 @@ const Footer = () => {
             <div>
                 <Text fontWeight='700'>Polityka</Text>
                 <Text>Warunki</Text>
-                <Text>Polityka</Text>
+                <Text><Link to={`/privacy`}>Polityka</Link></Text>
             </div>
         </div>
         </section>

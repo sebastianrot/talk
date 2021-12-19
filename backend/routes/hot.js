@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const router = express.Router();
 
 router.get('/hot', verify ,async(req, res)=> {
+    const page = req.query.page
+    const skip = (page-1)*15
 try{
     const trend = await Post.aggregate([
         {$addFields: {long: {$divide: [{$subtract: [ "$$NOW", "$date" ]}, 3600000]}}},
@@ -16,7 +18,9 @@ try{
                     },
         {$addFields: {like: {$size: "$like"}}},
         { $unset: ['by.password', 'by.email']},
-        { $sort: {total: -1}} 
+        { $sort: {total: -1}},
+        {$skip: skip},
+        {$limit: 15}
         ]);
         
         res.json(trend)
@@ -26,6 +30,8 @@ try{
 })
 
 router.get('/best', verify, async(req, res)=> {
+    const page = req.query.page
+    const skip = (page-1)*15
 try{
     const best = await Post.aggregate([
         {$lookup: {from: 'users', localField: 'by', foreignField: '_id', as: 'by'}},
@@ -33,7 +39,9 @@ try{
         {$project: {text:1,like:1, img:1, date:1,by: {$arrayElemAt:["$by",0]}, liked: {$in: [new mongoose.Types.ObjectId(req.userId), '$like']}}},
         {$addFields: {like: {$size: "$like"}}},
         { $unset: ['by.password', 'by.email']},
-        {$sort: {like: -1}}
+        {$sort: {like: -1}},
+        {$skip: skip},
+        {$limit: 15}
     ])
 
     res.json(best)

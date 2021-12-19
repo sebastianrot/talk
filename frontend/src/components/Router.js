@@ -12,6 +12,7 @@ import CreateGroup from '../routes/group/CreateGroup';
 import Notifications from '../routes/Notifications/Notifications';
 import Author from '../routes/author/Author';
 import Contact from '../routes/contact/Contact';
+import Privacy from '../routes/privacy/Privacy';
 import PublicRoute from './PublicRoute';
 import PrivateRoute from './PrivateRoute';
 
@@ -32,6 +33,7 @@ const Router = () => {
             <PrivateRoute path='/notifications' component={Notifications}/>
             <Route path='/author' component={Author}/> 
             <Route path='/contact' component={Contact}/> 
+            <Route path='/privacy' component={Privacy}/> 
             <Route render={() => <span>404</span>} />
         </Switch>
         </main>
