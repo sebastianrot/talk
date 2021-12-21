@@ -1,6 +1,6 @@
 import './ProfileGroups.css'
 import { useState, useEffect } from "react"
-import { useHistory } from "react-router"
+import { useNavigate } from "react-router"
 import { Text, Tooltip } from "@chakra-ui/react"
 import Loading from "../../components/Loading"
 import { ReactComponent as VerifiedLogo} from '../../components/svg/verified.svg'
@@ -10,7 +10,7 @@ const ProfileGroups = ({id}) => {
     const [group, setGroup] = useState()
     const [loading, setLoading] = useState(true)
     const [err, setErr] = useState(false)
-    let history = useHistory()
+    let navigate = useNavigate()
 
     useEffect(()=>{
         fetch(`${url.serverUrl}/api/user/${id}/groups`, {
@@ -40,7 +40,7 @@ const ProfileGroups = ({id}) => {
         }
     }
 
-    const result = group.map(val=><div className='usergroup-div' key={val._id} onClick={()=>history.push(`/group/${val.group._id}`)}>
+    const result = group.map(val=><div className='usergroup-div' key={val._id} onClick={()=>navigate(`/group/${val.group._id}`)}>
     <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'end'}}>
     <img src={`${url.serverUrl}/static/profilegroup/${val.group.img !== '' ? val.group.img : 'default.jpeg'}`} alt='profile' style={{width: '42px', borderRadius: '50%'}}/>
     </div>

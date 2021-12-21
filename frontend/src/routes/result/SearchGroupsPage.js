@@ -1,12 +1,12 @@
 import './SearchGroupsPage.css'
 import NavSearch from "./NavSearch"
-import {useHistory} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import { Tooltip, Text } from '@chakra-ui/react'
 import { ReactComponent as VerifiedLogo} from '../../components/svg/verified.svg'
 import url from "../../components/urlSettings"
 
 const SearchGroupsPage = ({value}) => {
-    let history = useHistory()
+    let navigate = useNavigate()
 
     const partText = (str) => {
         if (str.length > 40) {
@@ -17,7 +17,7 @@ const SearchGroupsPage = ({value}) => {
         }
     }
 
-    const result = value.map(val=>(<div className='searchgrouppage-div' key={val._id} onClick={()=>history.push(`/group/${val._id}`)}>
+    const result = value.map(val=>(<div className='searchgrouppage-div' key={val._id} onClick={()=>navigate(`/group/${val._id}`)}>
     <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'end'}}>
     <img src={`${url.serverUrl}/static/profilegroup/${val.img !== '' ? val.img : 'default.jpeg'}`} alt='profile' style={{width: '42px', borderRadius: '50%'}}/>
     </div>

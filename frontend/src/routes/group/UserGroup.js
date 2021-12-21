@@ -1,11 +1,11 @@
 import './UserGroup.css'
 import { Tooltip, Text, Tag } from "@chakra-ui/react"
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 import { ReactComponent as VerifiedLogo} from '../../components/svg/verified.svg'
 import url from "../../components/urlSettings";
 
 const UserGroup = ({val}) => {
-    let history = useHistory()
+    let navigate = useNavigate()
 
     const partText = (str) => {
         if (str.length > 40) {
@@ -18,7 +18,7 @@ const UserGroup = ({val}) => {
 
     return(
     <section className='groupusers-section'>
-    <div className='groupusers-div' key={val.user._id} onClick={()=>history.push(`/user/${val.user.username}`)}>
+    <div className='groupusers-div' key={val.user._id} onClick={()=>navigate(`/user/${val.user.username}`)}>
     <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'end'}}>
     <img src={`${url.serverUrl}/static/profile/${val.user.img !== '' ? val.user.img : 'default.jpeg'}`} alt='profile' style={{width: '42px', borderRadius: '50%'}} />
     </div>

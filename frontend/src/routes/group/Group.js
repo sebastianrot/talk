@@ -1,6 +1,6 @@
 import './Group.css'
 import {useState, useEffect} from 'react'
-import {useParams,Link, Route, useRouteMatch, BrowserRouter as Router, Switch, useHistory, useLocation} from 'react-router-dom'
+import {useParams, Route, Routes, useNavigate, useLocation} from 'react-router-dom'
 import { Tabs, TabList, Tab, Text, Tooltip, Badge } from '@chakra-ui/react'
 import { FaLock } from 'react-icons/fa'
 import JoinGroup from './JoinGroup'
@@ -21,8 +21,7 @@ const Group = () => {
     const [loading, setLoading] = useState(true)
     const [role, setRole] = useState({admin: false, mod: false})
     let location = useLocation()
-    const {path, url} = useRouteMatch()
-    let history = useHistory()
+    let navigate = useNavigate()
 
     useEffect(()=>{
         fetch(`${urlSettings.serverUrl}/api/group/${id}`, {
@@ -52,17 +51,16 @@ const Group = () => {
     if(!isExist) return <span>Taka grupa nie istnieje</span>
 
     const tabs = () =>{
-        if(location.pathname === `${url}/`) return 0
-        if(location.pathname === `${url}/posts`) return 0
-        if(location.pathname === `${url}/search`) return 0
-        if(location.pathname === `${url}/members`) return 1
-        if(location.pathname === `${url}/accept`) return 2
-        if(location.pathname === `${url}/block`) return 3
+        if(location.pathname === `/group/${group._id}/`) return 0
+        if(location.pathname === `/group/${group._id}/posts`) return 0
+        if(location.pathname === `/group/${group._id}/search`) return 0
+        if(location.pathname === `/group/${group._id}/members`) return 1
+        if(location.pathname === `/group/${group._id}/accept`) return 2
+        if(location.pathname === `/group/${group._id}/block`) return 3
     }
 
     const date = new Date(group.date)
     return(
-        <Router>
         <main className='group-main'>
         <section className='profile-section'>
         <img src={`${urlSettings.serverUrl}/static/bannergroup/${group.banner !== '' ? group.banner : 'default.jpg'}`} alt='banner' style={{width: '100%',objectFit: 'cover'}}/>
@@ -96,32 +94,24 @@ const Group = () => {
         </section>
         <Tabs width='100%' isFitted index={tabs()} marginBottom='15px' style={{overflowY:'hidden', scrollbarWidth:'none'}}>
         <TabList>
-            <Tab onClick={()=>history.push(`/group/${group._id}/posts`)}>Posty</Tab>
-            <Tab onClick={()=>history.push(`/group/${group._id}/members`)}>Użytkownicy</Tab>
-            {(role.admin || role.mod) && <Tab onClick={()=>history.push(`/group/${group._id}/accept`)}>Prośby</Tab>}
-            {(role.admin || role.mod) && <Tab onClick={()=>history.push(`/group/${group._id}/block`)}>Zablokowani</Tab>}
+            <Tab onClick={()=>navigate(`/group/${group._id}/posts`)}>Posty</Tab>
+            <Tab onClick={()=>navigate(`/group/${group._id}/members`)}>Użytkownicy</Tab>
+            {(role.admin || role.mod) && <Tab onClick={()=>navigate(`/group/${group._id}/accept`)}>Prośby</Tab>}
+            {(role.admin || role.mod) && <Tab onClick={()=>navigate(`/group/${group._id}/block`)}>Zablokowani</Tab>}
         </TabList>
         </Tabs>
 
-            <Switch>
-            <Route path={[`${path}/`, `${path}/posts`]} exact>
-                <GroupPosts role={role}/>
-            </Route>
-            <Route path={`${path}/members`}>
-                <GroupMembers role={role}/>
-            </Route>
-            <Route path='/group/:id/p/:postid'>
-                <GroupPost role={role}/>
-            </Route>
-            <Route path={`${path}/search`}>
-                <GroupHashtags role={role}/>
-            </Route>
-            {(role.admin || role.mod) && <Route path={`${path}/accept`} component={GroupAccept}/>}
-            {(role.admin || role.mod) && <Route path={`${path}/block`} component={GroupBlock}/>}
-            <Route render={() => <span>404</span>} />
-            </Switch>
+            <Routes>
+            <Route path={`/`} element={<GroupPosts role={role} status={group.status}/>}/>
+            <Route path={`/posts`} element={<GroupPosts role={role} status={group.status}/>}/>
+            <Route path={`/members`} element={<GroupMembers role={role}/>}/>
+            <Route path='/p/:postid' element={<GroupPost role={role}/>}/>
+            <Route path='/search' element={<GroupHashtags role={role}/>}/>
+            {(role.admin || role.mod) && <Route path={`/accept`} element={<GroupAccept/>}/>}
+            {(role.admin || role.mod) && <Route path={`/block`} element={<GroupBlock/>}/>}
+            <Route path='*' element={<span>404</span>} />
+            </Routes>
         </main>
-        </Router>
     )
 }
 

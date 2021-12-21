@@ -1,11 +1,11 @@
 import './GroupsResults.css'
-import { useHistory } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { Text, Tooltip } from "@chakra-ui/react"
 import { ReactComponent as VerifiedLogo} from '../../components/svg/verified.svg'
 import url from "../../components/urlSettings"
 
 const GroupsResults = ({value, error}) => {
-    let history = useHistory()
+    let navigate = useNavigate()
 
     if(error) return <span>Nie ma grup z taką kategorią</span>
 
@@ -18,7 +18,7 @@ const GroupsResults = ({value, error}) => {
         }
     }
 
-    const result = value.map(val=><div className='groupsresults-div' key={val._id} onClick={()=>history.push(`/group/${val._id}`)}>
+    const result = value.map(val=><div className='groupsresults-div' key={val._id} onClick={()=>navigate(`/group/${val._id}`)}>
     <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'end'}}>
     <img src={val.img !== '' ? `${url.serverUrl}/static/profilegroup/${val.img}` : `https://avatars.dicebear.com/api/initials/${val.name}.svg`} alt='profile' style={{width: '42px', borderRadius: '50%'}}/>
     </div>

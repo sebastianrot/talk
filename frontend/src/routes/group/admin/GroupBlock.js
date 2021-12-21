@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { useParams, Redirect } from "react-router-dom"
+import { useParams, Navigate } from "react-router-dom"
 import AdminUnblock from "./AdminUnblock"
 import UserGroup from "../UserGroup"
 import Loading from "../../../components/Loading"
@@ -27,7 +27,7 @@ const GroupBlock = () => {
 
     if(loading) return <Loading/>
 
-    if(!admin) return <Redirect to='/'/>
+    if(!admin) return <Navigate to='/'/>
 
     const result = block.map(val=>(
     <div key={val._id}>

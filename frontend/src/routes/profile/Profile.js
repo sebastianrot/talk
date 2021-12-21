@@ -1,6 +1,6 @@
 import './Profile.css'
 import {useState, useEffect, useContext} from 'react'
-import {useParams,useHistory, Route, useRouteMatch, BrowserRouter as Router, Switch, useLocation, Link} from 'react-router-dom'
+import {useParams,useNavigate, Route, Routes, useLocation, Link} from 'react-router-dom'
 import { Tabs, TabList, Tab, Text, Tooltip } from '@chakra-ui/react'
 import urlSettings from '../../components/urlSettings'
 import AuthContext from '../../context/AuthContext'
@@ -17,12 +17,11 @@ const Profile = () => {
 
     let { username } = useParams()
     let location = useLocation()
-    let history = useHistory()
+    let navigate = useNavigate()
     const {myUser, logged, isLoading} = useContext(AuthContext)
     const [isExist, setIsExist] = useState(true)
     const [user, setUser] = useState()
     const [loading, setLoading] = useState(true)
-    const {path, url} = useRouteMatch()
 
     useEffect(() => {
         fetch(`${urlSettings.serverUrl}/api/user/${username}`, {
@@ -46,15 +45,14 @@ const Profile = () => {
  
 
     const tabs = () =>{
-        if(location.pathname === `${url}/`) return 0
-        if(location.pathname === `${url}/posts`) return 0
-        if(location.pathname === `${url}/groups`) return 1
-        if(location.pathname === `${url}/follow`) return 2
+        if(location.pathname === `/user/${user.username}/`) return 0
+        if(location.pathname === `/user/${user.username}/posts`) return 0
+        if(location.pathname === `/user/${user.username}/groups`) return 1
+        if(location.pathname === `/user/${user.username}/follow`) return 2
     }
 
     const date = new Date(user.date)
-    return(
-        <Router>
+    return( 
         <main className='profile-main'>
         <section className='profile-section'>
         <img src={`${urlSettings.serverUrl}/static/banner/${user.banner!== '' ? user.banner : 'default.jpg'}`} alt='banner' style={{width: '100%',objectFit: 'cover'}}/>
@@ -87,26 +85,20 @@ const Profile = () => {
         </section>
         <Tabs width='100%' isFitted index={tabs()} marginBottom='15px' style={{overflowY:'hidden', scrollbarWidth:'none'}}>
         <TabList>
-            <Tab onClick={()=>history.push(`/user/${user.username}/posts`)}>Posty</Tab>
-            <Tab onClick={()=>history.push(`/user/${user.username}/groups`)}>Grupy</Tab>
-            <Tab onClick={()=>history.push(`/user/${user.username}/follow`)}>Obserwuje</Tab>
+            <Tab onClick={()=>navigate(`/user/${user.username}/posts`)}>Posty</Tab>
+            <Tab onClick={()=>navigate(`/user/${user.username}/groups`)}>Grupy</Tab>
+            <Tab onClick={()=>navigate(`/user/${user.username}/follow`)}>Obserwuje</Tab>
         </TabList>
         </Tabs>
 
-        <Switch>
-            <Route path={[`${path}/`, `${path}/posts`]} exact>
-                <PostsProfile key={user._id} id={user._id}/>
-            </Route>
-            <Route path={`${path}/groups`}>
-                <ProfileGroups id={user._id}/>
-            </Route>
-            <Route path={`${path}/follow`}>
-                <ProfileFollow id={user._id}/>
-            </Route>
-            <Route render={() => <span>404</span>} />
-        </Switch>
+        <Routes>
+            <Route path={`/`} element={<PostsProfile key={user._id} id={user._id}/>}/>
+            <Route path={`/posts`} element={<PostsProfile key={user._id} id={user._id}/>}/>
+            <Route path='/groups' element={<ProfileGroups id={user._id}/>}/>
+            <Route path={`/follow`} element={<ProfileFollow id={user._id}/>}/>
+            <Route path='*' element={<span>404</span>} />
+        </Routes>
         </main>
-        </Router>
     )
 }
 

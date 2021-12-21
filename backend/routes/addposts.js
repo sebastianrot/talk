@@ -1,6 +1,7 @@
 const express = require('express')
 const Post = require('../models/Post')
 const GroupPost = require('../models/GroupPost')
+const Join = require('../models/Join')
 const verify = require('../middlewares/jwt-verify')
 const ingroup = require('../ingroup')
 const multer = require('multer')
@@ -56,7 +57,19 @@ try{
 })
 
 
-router.post('/group/:id/post', verify, upload.array('images', 4), async(req,res)=>{
+
+async function ismember(req, res, next) {
+const group = req.params.id
+try{
+    const result = await Join.find({user: req.userId, group, status: 'accept'})
+    if(result.length === 0) return res.status(401).send()
+    return next()
+}catch(err){
+    res.status(500).send()
+}   
+}
+
+router.post('/group/:id/post', verify, ismember, upload.array('images', 4), async(req,res)=>{
     const id = req.params.id
     const {text} = req.body
     const files = req.files

@@ -1,13 +1,13 @@
 import './SearchResult.css'
-import { useHistory } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { Text, Tooltip } from '@chakra-ui/react'
 import { ReactComponent as VerifiedLogo} from '../svg/verified.svg'
 import url from '../urlSettings'
 
 const SearchResult = ({val}) => {
-    let history = useHistory()
+    let navigate = useNavigate()
     return(
-        <div className='search-result' key={val._id} onClick={()=>history.push(`/user/${val.username}`)}>
+        <div className='search-result' key={val._id} onClick={()=>navigate(`/user/${val.username}`)}>
         <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'end'}}>
         <img src={`${url.serverUrl}/static/profile/${val.img !== '' ? val.img : 'default.jpeg'}`} alt='profile' style={{width: '42px', borderRadius: '50%'}}/>
         </div>

@@ -1,11 +1,11 @@
 import './SignIn.css';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Input, Button, InputGroup, InputLeftElement, Stack, FormLabel, FormControl} from "@chakra-ui/react"
 import { FaEnvelope, FaLock } from "react-icons/fa"
 import { ReactComponent as Logo} from '../../components/svg/logo.svg'
 
 const SignIn = ({ handleClick, loginEmail, setLoginEmail, loginPassword, setLoginPassword, err, loading }) => {
-    let history = useHistory()
+    let navigate = useNavigate()
     return(
         <section className='section-signin'>
             <Stack spacing={4}>
@@ -25,7 +25,7 @@ const SignIn = ({ handleClick, loginEmail, setLoginEmail, loginPassword, setLogi
             </InputGroup>
             </FormControl>
             <Button onClick={handleClick} size="md" isLoading={loading} loadingText="Loading" style={{background: '#1071fe', color: '#fff'}} spinnerPlacement="start">Zaloguj się</Button>
-            <Button variant="link" color='#1071fe' onClick={()=>history.push('/register')}>Nowy na Linnku?</Button>
+            <Button variant="link" color='#1071fe' onClick={()=>navigate('/register')}>Nowy na Linnku?</Button>
             </Stack>
         </section>
     )

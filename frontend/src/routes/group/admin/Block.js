@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
 import { Button, AlertDialog, AlertDialogFooter,
-    AlertDialogHeader, AlertDialogContent, AlertDialogOverlay, } from "@chakra-ui/react"
+    AlertDialogHeader, AlertDialogContent, AlertDialogOverlay} from "@chakra-ui/react"
 import url from '../../../components/urlSettings'
 
 

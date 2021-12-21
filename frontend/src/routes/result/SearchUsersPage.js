@@ -1,12 +1,12 @@
 import './SearchUsersPage.css'
 import NavSearch from "./NavSearch"
-import {useHistory} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import { Tooltip, Text } from '@chakra-ui/react'
 import { ReactComponent as VerifiedLogo} from '../../components/svg/verified.svg'
 import url from '../../components/urlSettings'
 
 const SearchUsersPage = ({value}) => {
-    let history = useHistory()
+    let navigate = useNavigate()
 
     const partText = (str) => {
         if (str.length > 40) {
@@ -17,7 +17,7 @@ const SearchUsersPage = ({value}) => {
         }
     }
 
-    const result = value.map(val=>(<div className='searchuserpage-div' key={val._id} onClick={()=>history.push(`/user/${val.username}`)}>
+    const result = value.map(val=>(<div className='searchuserpage-div' key={val._id} onClick={()=>navigate(`/user/${val.username}`)}>
     <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'end'}}>
     <img src={`${url.serverUrl}/static/profile/${val.img !== '' ? val.img : 'default.jpeg'}`} alt='zdjęcie profilowe' style={{width: '42px', borderRadius: '50%'}}/>
     </div>

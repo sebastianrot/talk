@@ -1,20 +1,17 @@
-import {Route, Redirect} from 'react-router-dom';
+import {Navigate} from 'react-router-dom';
 import { useContext } from 'react';
 import AuthContext from '../context/AuthContext';
 import Loading from './Loading';
 
-const PrivateRoute = ({component: Component, ...rest}) => {
+const PrivateRoute = ({children}) => {
     const {logged, isLoading} = useContext(AuthContext)
 
     if(isLoading) {
     return <Loading/>
     }
 
-   return(
-       <Route {...rest} render={()=>(
-           logged ? <Component/> : <Redirect to='/login'/> 
-       )}/>
-   )
+   return logged ? children : <Navigate to='/login'/> 
+
 }
 
 

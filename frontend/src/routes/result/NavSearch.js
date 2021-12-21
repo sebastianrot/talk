@@ -1,8 +1,8 @@
-import { useHistory, useLocation } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 import {Tabs, TabList, Tab} from '@chakra-ui/react'
 
 const NavSearch = () => {
-    let history = useHistory()
+    let navigate = useNavigate()
     const location = useLocation()
 
     const tabs = () => {
@@ -14,8 +14,8 @@ const NavSearch = () => {
         <article style={{margin: 'auto', marginTop: '10px'}}>
             <Tabs variant='soft-rounded' color='#1071fe' index={tabs()}>
             <TabList>
-                <Tab onClick={()=>history.push(`/search/users${location.search}`)}>Użytkownicy</Tab>
-                <Tab onClick={()=>history.push(`/search/groups${location.search}`)}>Grupy</Tab>
+                <Tab onClick={()=>navigate(`/search/users${location.search}`)}>Użytkownicy</Tab>
+                <Tab onClick={()=>navigate(`/search/groups${location.search}`)}>Grupy</Tab>
             </TabList>
             </Tabs>
         </article>

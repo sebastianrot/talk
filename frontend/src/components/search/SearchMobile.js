@@ -1,5 +1,4 @@
-import {  Modal, ModalOverlay,ModalContent, ModalHeader,
- ModalBody, ModalCloseButton,IconButton, useDisclosure, Input,
+import {  Modal, ModalOverlay,ModalContent,IconButton, useDisclosure, Input,
 InputGroup, InputLeftElement} from '@chakra-ui/react'
 import { FaSearch } from "react-icons/fa";
 

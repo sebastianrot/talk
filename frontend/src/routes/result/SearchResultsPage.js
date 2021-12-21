@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, useLocation } from "react-router-dom"
 import SearchUsersPage from "./SearchUsersPage"
 import SearchGroupsPage from "./SearchGroupsPage"
 import Loading from "../../components/Loading"
 import url from "../../components/urlSettings"
 
-const SearchResultsPage = ({location}) => {
+const SearchResultsPage = () => {
     let { action } = useParams()
+    const location = useLocation()
     const [data, setData] = useState()
     const [error, setError] = useState(false)
     const [loading, setLoading] = useState(true)

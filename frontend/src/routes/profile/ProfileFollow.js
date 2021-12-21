@@ -1,6 +1,6 @@
 import './ProfileFollow.css'
 import { useState, useEffect } from "react"
-import { useHistory } from "react-router"
+import { useNavigate } from "react-router"
 import { Text, Tooltip } from "@chakra-ui/react"
 import Loading from "../../components/Loading"
 import { ReactComponent as VerifiedLogo} from '../../components/svg/verified.svg'
@@ -9,7 +9,7 @@ import url from "../../components/urlSettings"
 const ProfileFollow = ({id}) => {
     const [user, setUser] = useState()
     const [loading, setLoading] = useState(true)
-    let history = useHistory()
+    let navigate = useNavigate()
 
     useEffect(()=>{
         fetch(`${url.serverUrl}/api/user/${id}/follow`, {
@@ -35,7 +35,7 @@ const ProfileFollow = ({id}) => {
         }
     }
 
-    const result = user.map(val=><div className='userfollow-div' key={val._id} onClick={()=>history.push(`/user/${val.user.username}`)}>
+    const result = user.map(val=><div className='userfollow-div' key={val._id} onClick={()=>navigate(`/user/${val.user.username}`)}>
     <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'end'}}>
     <img src={`${url.serverUrl}/static/profile/${val.user.img !== '' ? val.user.img : 'default.jpeg'}`} alt='profile' style={{width: '42px', borderRadius: '50%'}}/>
     </div>

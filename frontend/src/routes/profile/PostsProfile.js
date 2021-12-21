@@ -33,9 +33,14 @@ const PostsProfile = ({id}) => {
 
     if(loading) return <Loading/>
 
-    if(status === '404') return <Text fontSize='sm'>Nie ma postów</Text>
+    if(status === '404') return (
+    <section className='posts-profile-section'>
+    {myUser.id === id && <AddPosts/>}
+    <Text fontSize='sm' display='flex' justifyContent='center'>Nie ma postów</Text>
+    </section>
+    )
 
-    if(status === '401') return <Text fontSize='sm'>Konto jest prywatne</Text>
+    if(status === '401') return <Text fontSize='sm' display='flex' justifyContent='center'>Konto jest prywatne</Text>
 
     const fetchPosts = async () =>{
     try{

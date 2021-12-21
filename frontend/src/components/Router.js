@@ -1,4 +1,4 @@
-import {Route, Switch} from 'react-router-dom';
+import {Routes, Route} from 'react-router-dom';
 import Hot from '../routes/home/Hot';
 import Best from '../routes/home/Best';
 import Login from '../routes/login/ContentLogin';
@@ -19,23 +19,25 @@ import PrivateRoute from './PrivateRoute';
 const Router = () => {
     return(
         <main style={{flex: '1 auto'}}>
-        <Switch>
-            <PrivateRoute path={[`/home`, `/hot`]} exact component={Hot}/>
-            <PrivateRoute path='/best' exact component={Best}/>
-            <PublicRoute path={['/', '/login']} exact component={Login}/>
-            <PublicRoute path='/register' component={Register}/>
-            <Route path='/user/:username' component={Profile}/>
-            <Route path='/p/:id' component={PostPage}/>
-            <Route path='/search/:action' component={SearchResultsPage}/>
-            <Route path='/group/:id' component={Group}/> 
-            <PrivateRoute path='/groups/create' component={CreateGroup}/>
-            <PrivateRoute path='/groups/discover' exact component={Groups}/>
-            <PrivateRoute path='/notifications' component={Notifications}/>
-            <Route path='/author' component={Author}/> 
-            <Route path='/contact' component={Contact}/> 
-            <Route path='/privacy' component={Privacy}/> 
-            <Route render={() => <span>404</span>} />
-        </Switch>
+        <Routes>
+            <Route path={`/home`} element={<PrivateRoute><Hot/></PrivateRoute>}/>
+            <Route path={`/hot`} element={<PrivateRoute><Hot/></PrivateRoute>}/>
+            <Route path='/best' element={<PrivateRoute><Best/></PrivateRoute>}/>
+            <Route path={'/'} element={<PublicRoute><Login/></PublicRoute>}/>
+            <Route path={'/login'} element={<PublicRoute><Login/></PublicRoute>}/>
+            <Route path='/register' element={<PublicRoute><Register/></PublicRoute>}/>
+            <Route path='/user/:username/*' element={<Profile/>}/>
+            <Route path='/p/:id' element={<PostPage/>}/>
+            <Route path='/search/:action' element={<SearchResultsPage/>}/>
+            <Route path='/group/:id/*' element={<Group/>}/> 
+            <Route path='/groups/create' element={<PrivateRoute><CreateGroup/></PrivateRoute>}/>
+            <Route path='/groups/discover' element={<PrivateRoute><Groups/></PrivateRoute>}/>
+            <Route path='/notifications' element={<PrivateRoute><Notifications/></PrivateRoute>}/>
+            <Route path='/author' element={<Author/>}/> 
+            <Route path='/contact' element={<Contact/>}/> 
+            <Route path='/privacy' element={<Privacy/>}/> 
+            <Route path='*' element={<span>404</span>} />
+        </Routes>
         </main>
     )
 }

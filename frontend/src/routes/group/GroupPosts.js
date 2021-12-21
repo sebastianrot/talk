@@ -8,7 +8,7 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import Loading from "../../components/Loading"
 import url from "../../components/urlSettings"
 
-const GroupPosts = ({role}) => {
+const GroupPosts = ({role, status}) => {
     let { id } = useParams()
     const [posts, setPosts] = useState([])
     const [isExist, setIsExist] = useState(true)
@@ -36,8 +36,8 @@ const GroupPosts = ({role}) => {
 
     if(!isExist) return(
     <section style={{width: '100%'}}>
-    <GroupPostAdd id={id} role={role}/>
-    <Text fontSize='sm'>Ta grupa jest prywatna albo jeszcze nie ma na niej postów</Text>
+    {status === 'accept' && <GroupPostAdd id={id} role={role}/>}
+    <Text fontSize='sm' display='flex' justifyContent='center'>Ta grupa jest prywatna albo jeszcze nie ma na niej postów</Text>
     </section>
     )
 
@@ -61,7 +61,7 @@ const GroupPosts = ({role}) => {
     return(
         <section style={{width: '100%'}}>
             <SectionGroupHashtags id={id}/>
-            <GroupPostAdd id={id} role={role}/>
+            {status === 'accept' && <GroupPostAdd id={id} role={role}/>}
             <InfiniteScroll
             dataLength={posts.length}
             next={fetchPosts}

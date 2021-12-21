@@ -1,7 +1,7 @@
 import './Search.css'
 import { useState, useEffect, useRef } from "react"
-import { useHistory } from "react-router-dom"
-import { InputGroup, InputLeftElement, Input, useOutsideClick, IconButton } from '@chakra-ui/react'
+import { useNavigate } from "react-router-dom"
+import { InputGroup, InputLeftElement, Input, useOutsideClick} from '@chakra-ui/react'
 import useWindowSize from '../hook/useWindowSize'
 import { FaSearch } from "react-icons/fa";
 import SearchResults from './SearchResults'
@@ -9,7 +9,7 @@ import SearchMobile from './SearchMobile'
 import url from '../urlSettings'
 
 const Search = () => {
-    let history = useHistory();
+    let navigate = useNavigate()
     const [value, setValue] = useState('')
     const [results, setResults] = useState()
     const [click, setClick] = useState(false)
@@ -54,7 +54,7 @@ const Search = () => {
 
     const handleKey = (e) => {
         if (e.key === 'Enter') {
-            history.push(`/search/users?q=${value}`)
+            navigate(`/search/users?q=${value}`)
         }
     }
 

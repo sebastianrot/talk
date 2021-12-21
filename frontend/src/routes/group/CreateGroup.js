@@ -1,7 +1,7 @@
 import './CreateGroup.css'
 import { useState, useContext } from "react"
 import { Input, Checkbox, Select, Button, Text, Textarea } from "@chakra-ui/react"
-import { Redirect } from "react-router-dom"
+import { Navigate } from "react-router-dom"
 import AuthContext from "../../context/AuthContext"
 import url from "../../components/urlSettings"
 
@@ -30,7 +30,7 @@ const CreateGroup = () => {
         .catch(err=>setCategory())
     }
 
-    if(create) return <Redirect to={`/user/${myUser.username}/groups`}/>
+    if(create) return <Navigate to={`/user/${myUser.username}/groups`}/>
 
     const cate = ['sport', 'gry', 'nauka', 'muzyka', 'tech', 'auta', 'moda', 'zwierzęta', 'sztuka', 'biznes', 'jedzenie']
     const result = cate.map(val=><option value={val} key={val}>{val}</option>)

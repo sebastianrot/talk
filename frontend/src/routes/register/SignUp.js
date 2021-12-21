@@ -1,11 +1,11 @@
 import './SignUp.css';
 import ReCAPTCHA from 'react-google-recaptcha'
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Input, Button, InputGroup, InputLeftElement, Stack, FormLabel, FormControl, Text} from "@chakra-ui/react"
 import { FaUserAlt, FaEnvelope, FaLock } from "react-icons/fa"
 
 const SignUp = ({ states }) => {
-    let history = useHistory()
+    let navigate = useNavigate()
     return(
         <section className='section-signup'>
             <Stack spacing={2}>
@@ -39,7 +39,7 @@ const SignUp = ({ states }) => {
             </div>
             <Text fontSize="xs">Rejestrując się, akceptujesz nasze Zasady użytkowania, Politykę prywatności i Korzystanie z plików cookie.</Text>
             <Button onClick={states.handleClick} size="md" isLoading={states.loading} loadingText="Loading" style={{background: '#1071fe', color: '#fff'}} spinnerPlacement="start">Zarejestruj się</Button>
-            <Button variant="link" color='#1071fe' onClick={()=>history.push('/login')}>Masz już konto?</Button>
+            <Button variant="link" color='#1071fe' onClick={()=>navigate('/login')}>Masz już konto?</Button>
             </Stack>
         </section>
     )

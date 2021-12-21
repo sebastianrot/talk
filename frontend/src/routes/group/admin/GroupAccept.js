@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react'
-import {useParams, Redirect} from 'react-router-dom'
+import {useParams, Navigate} from 'react-router-dom'
 import UserGroup from '../UserGroup'
 import AdminAccept from './AdminAccept'
 import Loading from '../../../components/Loading'
@@ -28,7 +28,7 @@ const GroupAccept = () => {
 
     if(loading) return <Loading/>
 
-    if(!admin) return <Redirect to='/'/>
+    if(!admin) return <Navigate to='/'/>
 
     const result = accept.map(val=>(
     <div key={val._id}>
