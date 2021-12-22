@@ -19,7 +19,7 @@ const SearchGroupsPage = ({value}) => {
 
     const result = value.map(val=>(<div className='searchgrouppage-div' key={val._id} onClick={()=>navigate(`/group/${val._id}`)}>
     <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'end'}}>
-    <img src={`${url.serverUrl}/static/profilegroup/${val.img !== '' ? val.img : 'default.jpeg'}`} alt='profile' style={{width: '42px', borderRadius: '50%'}}/>
+    <img src={`${url.serverUrl}/static/profilegroup/${val.img !== '' ? val.img : 'default.png'}`} alt='profile' style={{width: '42px', borderRadius: '50%'}}/>
     </div>
     <div style={{display: 'flex', flexDirection: 'column', marginLeft: '10px', justifyContent: 'center'}}>
     <div style={{display: 'flex', alignItems: 'center'}}>

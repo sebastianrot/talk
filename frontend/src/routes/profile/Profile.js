@@ -1,6 +1,6 @@
 import './Profile.css'
 import {useState, useEffect, useContext} from 'react'
-import {useParams,useNavigate, Route, Routes, useLocation, Link} from 'react-router-dom'
+import {useParams,useNavigate, Route, Routes, useLocation} from 'react-router-dom'
 import { Tabs, TabList, Tab, Text, Tooltip } from '@chakra-ui/react'
 import urlSettings from '../../components/urlSettings'
 import AuthContext from '../../context/AuthContext'
@@ -58,7 +58,7 @@ const Profile = () => {
         <img src={`${urlSettings.serverUrl}/static/banner/${user.banner!== '' ? user.banner : 'default.jpg'}`} alt='banner' style={{width: '100%',objectFit: 'cover'}}/>
         <div className='profile-info'>
         <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'end'}}>
-        <img src={`${urlSettings.serverUrl}/static/profile/${user.img !== '' ? user.img : 'default.jpeg'}`} alt='zdjęcie profilowe' className='img-user'/>
+        <img src={`${urlSettings.serverUrl}/static/profile/${user.img !== '' ? user.img : 'default.jpg'}`} alt='zdjęcie profilowe' className='img-user'/>
         {logged && myUser.id === user._id ? <EditProfile img={user.img} banner={user.banner} hobby={user.category}/> : <Follow id={user._id} followed={user.followed} key={user._id}/>}
         </div>
         <div style={{display: 'flex', alignItems: 'center'}}>

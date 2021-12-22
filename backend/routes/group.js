@@ -14,7 +14,7 @@ router.get('/:id', jwt, async(req, res) => {
 try{
     const result = await Group.find({_id: id}).lean()
     const users = await Join.count({group: id, status: 'accept'})
-    console.log(result)
+  
     if(result.length === 0) return res.status(404).send()
     const join = await Join.find({group: id, user: req.userId}).select({status: 1, role: 1, _id: 0}).lean()
     if(join.length === 0) join.push({status: 'reject'})
@@ -99,7 +99,7 @@ router.get('/:id/post/:postid', jwt, async(req, res)=> {
 try{
     const result = await GroupPost.find({_id: postid ,group: id}).populate('by', 'username img verified').populate('group', 'name priv').lean()
     if(result.length === 0) return res.status(404).send()
-    console.log(result)
+  
     const status = await ingroup(id, req.userId)
     if(!result[0].group.priv || status === 'accept') {
         const likes = result[0].like.toString()
@@ -206,8 +206,7 @@ try {
 router.post('/:group/post/:id/unlike', verify, async (req, res) => {
     const id = req.params.id
 try{
-    const unlike = await GroupPost.updateOne({_id: id}, {$pull: {like: req.userId}})
-    console.log(unlike)
+   await GroupPost.updateOne({_id: id}, {$pull: {like: req.userId}})
     res.json({like: false})
 }catch(err) {
     res.status(500).send()

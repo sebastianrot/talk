@@ -9,7 +9,7 @@ import SearchResultsPage from '../routes/result/SearchResultsPage';
 import Groups from '../routes/groups/Groups';
 import Group from '../routes/group/Group';
 import CreateGroup from '../routes/group/CreateGroup';
-import Notifications from '../routes/Notifications/Notifications';
+import Notifications from '../routes/notifications/Notifications';
 import Author from '../routes/author/Author';
 import Contact from '../routes/contact/Contact';
 import Privacy from '../routes/privacy/Privacy';

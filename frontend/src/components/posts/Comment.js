@@ -23,7 +23,7 @@ const Comment = ({value, id}) => {
 
     return(
         <article className='comment-article'>   
-           <Link to={`/user/${value.by.username}`} style={{width: '32px', height: '32px', marginTop: '10px'}}><img src={`${url.serverUrl}/static/profile/${value.by.img !== '' ? value.by.img : 'default.jpeg'}`}
+           <Link to={`/user/${value.by.username}`} style={{width: '32px', height: '32px', marginTop: '10px'}}><img src={`${url.serverUrl}/static/profile/${value.by.img !== '' ? value.by.img : 'default.jpg'}`}
                     alt='zdjęcie profilowe' style={{width: '100%', borderRadius: '50%', objectFit: 'cover'}}/></Link>  
             <div style={{width: '100%', padding: '8px'}}>
             <div className='post-page-user-comment'>

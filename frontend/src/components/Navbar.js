@@ -52,8 +52,8 @@ const Navbar = () => {
         )
         return (
             <Stack direction="row" spacing={4} align="center">
-            <Button variant="ghost" onClick={()=>navigate('/login')}>Sign in</Button>
-            <Button bg='#1071fe' color='#fff' size="md" _hover={{background: '#0c5bce'}} onClick={()=>navigate('/register')}>Sign up</Button>
+            <Button variant="ghost" onClick={()=>navigate('/login')}>Zaloguj</Button>
+            <Button bg='#1071fe' color='#fff' size="md" _hover={{background: '#0c5bce'}} onClick={()=>navigate('/register')}>Zarejestruj</Button>
             </Stack>
         )
     }   

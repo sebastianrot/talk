@@ -6,7 +6,6 @@ const router = express.Router();
 require('dotenv').config()
 
 router.post('/', async(req, res) => {
-    let error
     const {email, password} = req.body
 
     if(!email || !password) {
@@ -21,7 +20,7 @@ router.post('/', async(req, res) => {
                 if(!result) return res.json({error: 'Wprowadź poprawne hasło'})
 
                 const token = jwtGenerator(user[0]._id)
-                return res.cookie('access_token', token, { httpOnly: true}).json({auth: true})
+                return res.cookie('access_token', token, { httpOnly: true, sameSite: 'lax', secure: true, maxAge: 1000 * 3600 * 24 * 30 * 2}).json({auth: true})
                 })
             }catch(e) {
                 return(e)

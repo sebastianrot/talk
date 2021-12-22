@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 5000
 
 const limiter = rateLimit({
     windowMs: 60000,
-    max: 30
+    max: 40
 })
 
 const userRouter = require('./routes/user');

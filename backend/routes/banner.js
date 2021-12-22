@@ -41,7 +41,6 @@ try{
     await User.updateOne({_id: req.userId}, {banner: name})
     return res.json({path: `banner/${name}`})
 }catch(err){
-    console.log(err)
     res.status(500).send()
 }
 })

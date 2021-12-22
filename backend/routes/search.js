@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/', async(req, res) => {
     const query = req.query
-    console.log(query)
+
     try {
        const result = await User.find({username: {$regex: new RegExp(`${query.q}.*`, 'i')}}).select({password: 0}).sort({verified: -1}).limit(4)
         res.json(result)
@@ -16,9 +16,9 @@ router.get('/', async(req, res) => {
 
 router.get('/users', async(req, res) => {
     const query = req.query
-    console.log(query)
+    const format = /[ `!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?~]/;
     try {
-        if(query.q === '' || query.q === '.') return res.json([])
+        if(query.q === '' || format.test(query.q)) return res.json([])
        const result = await User.find({username: {$regex: new RegExp(`${query.q}.*`, 'i')}}).select('username img desc verified').sort({verified: -1})
         res.json(result)
     } catch (err) {
@@ -28,9 +28,9 @@ router.get('/users', async(req, res) => {
 
 router.get('/groups', async(req, res) => {
     const query = req.query
-    console.log(query)
+    const format = /[`!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?~]/;
     try {
-        if(query.q === '' || query.q === '.') return res.json([])
+        if(query.q === '' || format.test(query.q)) return res.json([])
        const result = await Group.find({name: {$regex: new RegExp(`${query.q}.*`, 'i')}, hide: false}).sort({verified: -1})
         res.json(result)
     } catch (err) {

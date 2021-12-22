@@ -66,7 +66,7 @@ const Group = () => {
         <img src={`${urlSettings.serverUrl}/static/bannergroup/${group.banner !== '' ? group.banner : 'default.jpg'}`} alt='banner' style={{width: '100%',objectFit: 'cover'}}/>
         <div className='profile-info'>
         <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'end'}}>
-        <img src={`${urlSettings.serverUrl}/static/profilegroup/${group.img !== '' ? group.img : 'default.jpeg'}`} alt='zdjęcie profilowe' className='img-user'/>
+        <img src={`${urlSettings.serverUrl}/static/profilegroup/${group.img !== '' ? group.img : 'default.png'}`} alt='zdjęcie profilowe' className='img-user'/>
         <JoinGroup key={group._id} group={group} role={role}/>
         </div>
         <div style={{display: 'flex', alignItems: 'center'}}>

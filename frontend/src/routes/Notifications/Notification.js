@@ -10,7 +10,7 @@ const Notification = ({val, type}) =>{
         <Link to={type(val)}>
             <div style={{display: 'flex', alignItems: 'center'}}>
             <div style={{width: '40px', height: '40px', marginRight: '6px'}}>
-            <img src={`${url.serverUrl}/static/profile/${val.sender.img !== '' ? val.sender.img : 'default.jpeg'}`}
+            <img src={`${url.serverUrl}/static/profile/${val.sender.img !== '' ? val.sender.img : 'default.jpg'}`}
                     alt='zdjęcie profilowe' style={{width: '100%', borderRadius: '50%', objectFit: 'cover'}}/>
             </div>
             <div>

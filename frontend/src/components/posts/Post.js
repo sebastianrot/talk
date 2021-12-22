@@ -35,7 +35,7 @@ const Post = ({value}) => {
                 </ModalContent>
             </Modal>
             <div className='post-page-user'>
-                <Link to={`/user/${value.by.username}`} className='post-div-img'><img src={`${url.serverUrl}/static/profile/${value.by.img !== '' ? value.by.img : 'default.jpeg'}`}
+                <Link to={`/user/${value.by.username}`} className='post-div-img'><img src={`${url.serverUrl}/static/profile/${value.by.img !== '' ? value.by.img : 'default.jpg'}`}
                     alt='zdjęcie profilowe' style={{width: '100%', borderRadius: '999px', objectFit: 'cover'}}/></Link>
             <div style={{display: 'flex', flexDirection: 'column', marginLeft: '10px', justifyContent: 'center'}}>
                 <div style={{display: 'flex', alignItems: 'center'}}>

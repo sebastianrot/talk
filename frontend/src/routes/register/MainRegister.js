@@ -41,9 +41,9 @@ const MainRegister = () => {
             setLoading(false)
             if(data.auth) {
                 toast({
-                    title: "Konto zostało stworzone",
+                    title: "Konto zostało stworzone 😃",
                     status: "success",
-                    duration: 2000,
+                    duration: 3000,
                     isClosable: true})
                 return loggedFetch()
                 }

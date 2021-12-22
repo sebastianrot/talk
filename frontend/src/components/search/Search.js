@@ -48,7 +48,7 @@ const Search = () => {
 
     const handleChange = (e) => {
         let text = e.target.value
-        let string = text.toLowerCase().trim()
+        let string = text.toLowerCase()
         setValue(string)
     }
 

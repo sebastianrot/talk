@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Linnk",
+  "name": "Linnk",
+  "description": "Linnk to strona, która pomaga rozwijać swoje pasje poprzez tworzenie grup.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +21,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#1071fe",
   "background_color": "#ffffff"
 }

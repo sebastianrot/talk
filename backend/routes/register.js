@@ -6,10 +6,10 @@ const fetch = require('node-fetch')
 const router = express.Router();
 
 router.post('/', async (req, res) => {
-    console.log(req.body)
     const errors = []
     let {username, email, password, captcha } = req.body
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const format = /[ `!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?~]/;
     username = username.toLowerCase()
     email = email.toLowerCase()
     const key = '6Lcq2FgdAAAAACRNYH_DZmnA0WE5YqU79-ZBF9ta'
@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
         if(username.length < 3 || username.length > 20) {
             errors.push({msg: 'Nazwa użytkownika musi się mieścić w zakresie od 3 do 20 znaków', type: 'username'})
         }
-        if(username.includes(" ")) {
+        if(username.includes(" ") || format.test(username)) {
             errors.push({msg: 'Podaj prawidłową nazwę', type: 'username'})
         }
         if(captcha === undefined || captcha === '' || captcha === null){
@@ -42,7 +42,7 @@ router.post('/', async (req, res) => {
         try {
             const response = await fetch(verifyurl)
             const data = await response.json()
-            console.log(data)
+
             if(data.success !== undefined && !data.success){
                 errors.push({msg: 'Zatwierdź recaptche', type: 'recaptcha'})
                 return res.json(errors)
@@ -53,7 +53,7 @@ router.post('/', async (req, res) => {
                     return res.json(errors)
                 }
             const isuser =  await User.find({username})
-                console.log(isuser)
+    
                 if(isuser.length > 0) {
                     errors.push({msg: 'Już istnieje konto z tym nickiem', type: 'username'})
                     return res.json(errors)
@@ -71,7 +71,7 @@ router.post('/', async (req, res) => {
 
                    const user = await userData.save()
                         const token = jwtGenerator(user._id)
-                        return res.cookie('access_token', token, { httpOnly: true}).json({auth: true})
+                        return res.cookie('access_token', token, {httpOnly: true, sameSite: 'lax', secure: true, maxAge: 1000 * 3600 * 24 * 30 * 2}).json({auth: true})
               
             }))
             }catch (err) {

@@ -9,7 +9,7 @@ const SearchResult = ({val}) => {
     return(
         <div className='search-result' key={val._id} onClick={()=>navigate(`/user/${val.username}`)}>
         <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'end'}}>
-        <img src={`${url.serverUrl}/static/profile/${val.img !== '' ? val.img : 'default.jpeg'}`} alt='profile' style={{width: '42px', borderRadius: '50%'}}/>
+        <img src={`${url.serverUrl}/static/profile/${val.img !== '' ? val.img : 'default.jpg'}`} alt='profile' style={{width: '42px', borderRadius: '50%'}}/>
         </div>
         <div style={{display: 'flex', alignItems: 'center', marginLeft: '6px'}}>
         <Text fontSize='md' fontWeight='600'>{val.username}</Text>
