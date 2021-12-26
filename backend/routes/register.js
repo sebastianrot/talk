@@ -4,6 +4,7 @@ const User = require('../models/User')
 const jwtGenerator = require('../jwtGenerator')
 const fetch = require('node-fetch')
 const router = express.Router();
+require('dotenv').config()
 
 router.post('/', async (req, res) => {
     const errors = []
@@ -12,8 +13,7 @@ router.post('/', async (req, res) => {
     const format = /[ `!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?~]/;
     username = username.toLowerCase()
     email = email.toLowerCase()
-    const key = '6Lcq2FgdAAAAACRNYH_DZmnA0WE5YqU79-ZBF9ta'
-    const verifyurl = `https://www.google.com/recaptcha/api/siteverify?secret=${key}&response=${captcha}&remoteip=${req.socket.remoteAddress}`
+    const verifyurl = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.KEY}&response=${captcha}&remoteip=${req.socket.remoteAddress}`
 
     if(!username || !email || !password) {
         errors.push({msg: 'Uzupełnij wszystkie pola', type: 'all'})

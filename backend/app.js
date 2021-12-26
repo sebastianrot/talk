@@ -41,7 +41,7 @@ const notifications = require('./routes/notifications')
 app.use('/static', express.static('public'))
 app.use(express.json())
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: process.env.URL,
     credentials: true,
     methods: ['GET', 'POST']
 }))

@@ -11,6 +11,8 @@ import ProfileFollow from './ProfileFollow'
 import ProfileNotExist from './ProfileNotExist'
 import Loading from '../../components/Loading'
 import Follow from './Follow'
+import Linkify from 'linkify-react'
+import 'linkify-plugin-mention';
 import { ReactComponent as VerifiedLogo} from '../../components/svg/verified.svg'
 
 const Profile = () => {
@@ -51,6 +53,13 @@ const Profile = () => {
         if(location.pathname === `/user/${user.username}/follow`) return 2
     }
 
+    const options = {
+        className: 'new-link',
+        formatHref: {
+            mention: (href) => '/user' + href
+          }
+      }
+
     const date = new Date(user.date)
     return( 
         <main className='profile-main'>
@@ -67,7 +76,7 @@ const Profile = () => {
         {user.verified && <Tooltip hasArrow label='weryfikacja'><VerifiedLogo/></Tooltip>}
         </div>
         </div>
-        <span style={{marginBottom: '4px'}}>{user.desc}</span>
+        <span style={{marginBottom: '4px'}}><Linkify options={options}>{user.desc}</Linkify></span>
         <span style={{marginBottom: '4px'}}>Dołączył/a {date.getFullYear()}</span>
         <div style={{display: 'flex'}}>
         <div style={{marginBottom: '7px', display: 'flex'}}>

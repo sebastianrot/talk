@@ -11,6 +11,8 @@ import Loading from '../../components/Loading'
 import GroupHashtags from './GroupHashtags'
 import GroupAccept from './admin/GroupAccept'
 import GroupBlock from './admin/GroupBlock'
+import Linkify from 'linkify-react'
+import 'linkify-plugin-mention';
 import {ReactComponent as VerifiedLogo} from '../../components/svg/verified.svg'
 import urlSettings from '../../components/urlSettings'
 
@@ -59,6 +61,13 @@ const Group = () => {
         if(location.pathname === `/group/${group._id}/block`) return 3
     }
 
+    const options = {
+        className: 'new-link',
+        formatHref: {
+            mention: (href) => '/user' + href
+          }
+      }
+
     const date = new Date(group.date)
     return(
         <main className='group-main'>
@@ -80,7 +89,7 @@ const Group = () => {
         </div>
         {group.nsfw && <div style={{marginTop: '1px'}}><Badge variant='outline' colorScheme='red' fontSize='12px'>nsfw</Badge></div>}
         <span style={{marginBottom: '4px'}}>kategoria {group.category}</span>
-        <span style={{marginBottom: '4px'}}>{group.desc}</span>
+        <span style={{marginBottom: '4px'}}><Linkify options={options}>{group.desc}</Linkify></span>
         <span style={{marginBottom: '4px'}}>Utworzono w {date.getFullYear()}</span>
         <div style={{display: 'flex'}}>
         <div style={{marginBottom: '7px', display: 'flex'}}>

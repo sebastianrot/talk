@@ -10,6 +10,8 @@ import Share from './Share'
 import Date from './Date'
 import PostOptions from './PostOptions'
 import AuthContext from '../../context/AuthContext'
+import Linkify from 'linkify-react'
+import 'linkify-plugin-mention';
 import {ReactComponent as VerifiedLogo} from '../svg/verified.svg'
 import url from '../urlSettings'
 
@@ -24,6 +26,13 @@ const Post = ({value}) => {
     }
 
     const image = value.img.map(el =><div key={Math.floor(1000 + Math.random() * 9000)} onClick={()=>handleClick(el)}><img alt='zdjęcie' src={`${url.serverUrl}/static/posts/${el}`} className='post-image' /></div>)
+
+    const options = {
+        className: 'new-link',
+        formatHref: {
+            mention: (href) => '/user' + href
+          }
+      }
 
     return(
         <article className='post-article'>
@@ -49,7 +58,7 @@ const Post = ({value}) => {
             <PostOptions value={value} user={myUser}/>
             </div>
             <div className='post-page-post'>
-                <Text fontSize='md'>{value.text}</Text>
+                <Text fontSize='md'><Linkify options={options}>{value.text}</Linkify></Text>
                 <div style={{marginTop: '5px'}}>
                 <Carousel dynamicHeight emulateTouch showArrows showThumbs={false} showStatus={false}>
                 {image}

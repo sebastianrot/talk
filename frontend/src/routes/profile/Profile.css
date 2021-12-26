@@ -34,6 +34,10 @@
     width: 100%;
 }
 
+.new-link {
+    color: rgb(29, 155, 240);
+}
+
 @media (max-width: 767px)  {
     .img-user{
        width: 90px;
