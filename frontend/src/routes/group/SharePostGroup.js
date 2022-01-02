@@ -23,7 +23,7 @@ const SharePostGroup = ({id, group}) => {
                 <span style={{display: 'flex', justifyContent: 'center'}}>Udostępnij</span>
                 <div style={{display: 'flex', flexDirection: 'row', maxWidth: '1100px', justifyContent: 'space-around', margin: 'auto', marginTop: '20px'}}>
                 <button onClick={handleClick}><FaCopy fontSize='27px'/></button>
-                <FacebookShareButton url={'https://reddit.com'}><FaFacebook fontSize='27px'/></FacebookShareButton>
+                <FacebookShareButton url={link}><FaFacebook fontSize='27px'/></FacebookShareButton>
                 <TwitterShareButton url={link}><FaTwitter fontSize='27px'/></TwitterShareButton>
                 <WhatsappShareButton url={link}><FaWhatsappSquare fontSize='27px'/></WhatsappShareButton>
                 </div>

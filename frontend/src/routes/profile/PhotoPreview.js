@@ -1,10 +1,11 @@
 import './PhotoPreview.css'
 import { useState, useCallback } from 'react'
-import { Button } from '@chakra-ui/button'
+import { IconButton } from '@chakra-ui/react'
+import {FaCheck, FaTimes} from 'react-icons/fa'
 import Cropper from 'react-easy-crop'
 import croppImg from './createImage'
 
-const PhotoPreview = ({prev, setCropped, show, setShow, aspect}) => {
+const PhotoPreview = ({prev, setCropped, show, setShow, aspect, setClose}) => {
     const [crop, setCrop] = useState({ x: 0, y: 0 })
     const [zoom, setZoom] = useState(1)
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
@@ -39,7 +40,8 @@ const PhotoPreview = ({prev, setCropped, show, setShow, aspect}) => {
             onZoomChange={setZoom}
             />
             <div className='prevphoto-button'>
-            <Button onClick={handleClick}>Zatwierdź</Button></div></div>)}
+            <IconButton icon={<FaTimes/>} onClick={()=>setClose(false)}/>
+            <IconButton icon={<FaCheck/>} onClick={handleClick}/></div></div>)}
         </article>
     )
 }

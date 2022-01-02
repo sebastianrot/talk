@@ -13,6 +13,7 @@ const AddPhoto = ({img}) => {
     const[error, setError] = useState(false)
     const [aspect, setAspect] = useState(1)
 
+
     const handleChange = (e) => {
         let files = e.target.files[0]
         const reader = new FileReader();
@@ -51,7 +52,7 @@ const AddPhoto = ({img}) => {
 
     return(
         <>
-        {choose && <PhotoPreview prev={prevImageUrl} setCropped={setCropped} show={show} setShow={setShow} aspect={aspect}/>}
+        {choose && <PhotoPreview prev={prevImageUrl} setCropped={setCropped} show={show} setShow={setShow} aspect={aspect} setClose={setChoose}/>}
        <div>
            <form onSubmit={handleSubmit}>
            <input type='file' onChange={(e)=>handleChange(e)} id='file-input-profile' style={{display: 'none'}}/>

@@ -51,7 +51,7 @@ const AddPhoto = ({id, img}) => {
 
     return(
         <>
-        {choose && <PhotoPreview prev={prevImageUrl} setCropped={setCropped} show={show} setShow={setShow} aspect={aspect}/>}
+        {choose && <PhotoPreview prev={prevImageUrl} setCropped={setCropped} show={show} setShow={setShow} aspect={aspect} setClose={setChoose}/>}
        <div>
            <form onSubmit={handleSubmit}>
            <input type='file' onChange={(e)=>handleChange(e)} id='file-input-profile' style={{display: 'none'}}/>
