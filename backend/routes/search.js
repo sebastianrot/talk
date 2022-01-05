@@ -7,7 +7,7 @@ router.get('/', async(req, res) => {
     const query = req.query
 
     try {
-       const result = await User.find({username: {$regex: new RegExp(`${query.q}.*`, 'i')}}).select({password: 0}).sort({verified: -1}).limit(4)
+       const result = await User.find({username: {$regex: new RegExp(`${query.q}.*`, 'i')}}).select({password: 0, email: 0}).sort({verified: -1}).limit(4)
         res.json(result)
     } catch (err) {
         res.status(500).send()

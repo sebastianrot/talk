@@ -130,13 +130,14 @@ router.post('/create', verify, async(req, res) => {
     if(req.body.hide && !req.body.priv) req.body.hide=false
     const groupData= new Group(data)
 try {
-        if(!c.includes(data.category)) return res.status(404).send()
+        if(!c.includes(data.category)) return res.json({error: true})
         if(data.name.length >= 2 && data.name.length < 25 && data.desc.length < 150){
         const save = await groupData.save()
         const joinData = new Join({user: req.userId, group: save._id, status: 'accept', role: 'admin'})
         await joinData.save()
         return res.json({add: true})
         }
+        return res.json({error: true})
 }catch (err) {
     res.status(500).send()
 }

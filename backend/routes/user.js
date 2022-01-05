@@ -10,8 +10,8 @@ router.get('/:username', verify, async(req, res) => {
     let username = req.params.username
     username = username.toLowerCase()
 try{
-        const user = await User.find({username}).select({password: 0}).lean()
-        if(user.length === 0 || user[0].ban) return res.sendStatus(404)
+        const user = await User.find({username}).select({password: 0, email: 0}).lean()
+        if(user.length === 0) return res.sendStatus(404)
         const followed = await isfollowing(user[0]._id, req.userId)
         const followers = await Follow.count({user: user[0]._id})
         const follow = await Follow.count({follower: user[0]._id})

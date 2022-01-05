@@ -1,0 +1,11 @@
+.section-code {
+    display: flex;
+    flex-direction: column;
+    padding: 25px 50px 30px 50px;
+    position: relative;
+    border-radius: 10px;
+    width: 520px;
+    margin: 0 auto;
+    background-color: #fff;
+    box-shadow: 0 4px 40px rgba(0,0,0,.15);
+}

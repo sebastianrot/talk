@@ -1,8 +1,8 @@
 const express = require('express')
-const bcrypt = require('bcryptjs')
 const User = require('../models/User')
-const jwtGenerator = require('../jwtGenerator')
+const Token = require('../models/Token')
 const fetch = require('node-fetch')
+const sgMail = require('@sendgrid/mail');
 const router = express.Router();
 require('dotenv').config()
 
@@ -59,21 +59,49 @@ router.post('/', async (req, res) => {
                     return res.json(errors)
                 }
 
-            bcrypt.genSalt(12, (err, salt) => bcrypt.hash(password, salt, async(err, hash) => {
-                if(err) throw err
+                let random = Math.random().toString(16).slice(2, 8)
+                let output = `
+                <div style='background: #f9f9f9; width: 100%;'>
+                <center>
+                <article style='background: #fff; margin: 0 auto; border-radius: 10px; border: 1px solid #dfdfdf; padding: 25px 40px 30px 40px; font-family: Roboto,RobotoDraft,Helvetica,Arial,sans-serif; color: #333; max-width: 620px;'>
+                <h2>Hej, ${username}!</h2>
+                <div style='display: flex; flex-direction: column;'>
+                <span>Zweryfikuj swojego emaila</span>
+                <span>poniższy kod wprowadź na stronie</span>
+                </div>
+                <h3 style='font-weight: 700;'>${random}</h3>
+                <div style='border-top: 1px solid #dcddde;margin-bottom: 12px;'></div>
+                <div style='display:flex;flex-direction:column;'>
+                <span style='font-size: 13px;'>Potrzebujesz pomocy? Skontaktuj się z nami</span>
+                <span style='font-size: 13px;margin-top:3px;'>poprzez email: linnkappofficial@gmail.com</span>
+                </div>
+                </article>
+                </center>
+                </div>
+                `
 
-                    const userData = new User({
-                        username: username,
-                        email: email,
-                        password: hash,
-                        verified: false,
-                    })
+                const tokenData = new Token({
+                    email: email,
+                    token: random,
+                })
 
-                   const user = await userData.save()
-                        const token = jwtGenerator(user._id)
-                        return res.cookie('access_token', token, {httpOnly: true, sameSite: 'lax', secure: true, maxAge: 1000 * 3600 * 24 * 30 * 2}).json({auth: true})
-              
-            }))
+                await tokenData.save()
+
+                sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+                const msg = {
+                to: email,
+                from: {
+                    name: 'Linnk',
+                    email: 'noreply@linnk.pl'
+                }, 
+                subject: 'Weryfikacja emaila',
+                html: output,
+                };
+  
+                sgMail.send(msg)
+            
+                res.json({auth: true})
+
             }catch (err) {
                 res.status(500).send()
             }

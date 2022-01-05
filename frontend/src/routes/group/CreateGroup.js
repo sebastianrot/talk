@@ -1,6 +1,6 @@
 import './CreateGroup.css'
 import { useState, useContext } from "react"
-import { Input, Checkbox, Select, Button, Text, Textarea } from "@chakra-ui/react"
+import { Input, Checkbox, Select, Button, Text, Textarea, useToast } from "@chakra-ui/react"
 import { Navigate } from "react-router-dom"
 import AuthContext from "../../context/AuthContext"
 import url from "../../components/urlSettings"
@@ -14,6 +14,7 @@ const CreateGroup = () => {
     const [category, setCategory] = useState()
     const [create, setCreate] = useState(false)
     const {myUser} = useContext(AuthContext)
+    const toast = useToast()
 
     const handleClick = () => {
         fetch(`${url.serverUrl}/api/group/create`,{
@@ -26,8 +27,19 @@ const CreateGroup = () => {
             body: JSON.stringify({name, desc, priv, hide, nsfw, category})
         })
         .then(res=>res.json())
-        .then(data=>setCreate(data.add))
-        .catch(err=>setCategory())
+        .then(data=>{
+            if(data.error) return toast({
+                title: "Wprowadź poprawne dane",
+                status: "error",
+                duration: 3000,
+                isClosable: true})
+            setCreate(data.add)})
+        .catch(err=>{
+            toast({
+                title: "Wprowadź poprawne dane",
+                status: "error",
+                duration: 3000,
+                isClosable: true})})
     }
 
     if(create) return <Navigate to={`/user/${myUser.username}/groups`}/>

@@ -1,5 +1,6 @@
 import './ContentLogin.css';
 import {useContext, useState} from 'react';
+import { useToast } from '@chakra-ui/react';
 import SignIn from './SignIn';
 import AuthContext from '../../context/AuthContext';
 import urlSettings from '../../components/urlSettings';
@@ -12,7 +13,7 @@ const ContentLogin = () => {
     const [loginPassword, setLoginPassword] = useState('')
     const [error, setError] = useState(false)
     const [loading, setLoading] = useState(false);
-
+    const toast = useToast()
 
     const handleClick = () => {
         setLoading(true)
@@ -28,7 +29,15 @@ const ContentLogin = () => {
         .then(res => res.json())
         .then(data =>{
             setError(true)
-            setLoading(false)})
+            setLoading(false)
+            if(data.ban) return(
+                toast({
+                    title: "Twoje konto zostało zablokowane",
+                    description: "Jeśli nie zgadzasz się z blokadą skontaktuj się z nami",
+                    status: "error",
+                    duration: 5000,
+                    isClosable: true})
+            )})
         .then(() => loggedFetch())
         .catch(err => {
             setError(true)

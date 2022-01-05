@@ -14,6 +14,7 @@ const limiter = rateLimit({
 
 const userRouter = require('./routes/user');
 const registerRoute = require('./routes/register');
+const coderegisterRoute = require('./routes/coderegister');
 const loginRoute = require('./routes/login');
 const logoutRoute = require('./routes/logout');
 const loggedRoute = require('./routes/logged');
@@ -35,6 +36,7 @@ const commentRoute = require('./routes/comment')
 const hotRoute = require('./routes/hot')
 const photogroupRoute = require('./routes/photogroup')
 const bannergroupRoute = require('./routes/bannergroup')
+const passwordRoute = require('./routes/password')
 const categoryRoute = require('./routes/category')
 const notifications = require('./routes/notifications')
 
@@ -54,6 +56,8 @@ app.listen(PORT)
 app.use('/api/user', userRouter)
 
 app.use('/api/register', registerRoute)
+
+app.use('/api/register', coderegisterRoute)
 
 app.use('/api/login', loginRoute)
 
@@ -100,3 +104,5 @@ app.use('/api/user', categoryRoute)
 app.use('/api', hotRoute)
 
 app.use('/api/notifications', notifications)
+
+app.use('/api/password', passwordRoute)

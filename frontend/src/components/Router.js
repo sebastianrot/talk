@@ -13,6 +13,7 @@ import Notifications from '../routes/notifications/Notifications';
 import Author from '../routes/author/Author';
 import Contact from '../routes/contact/Contact';
 import Privacy from '../routes/privacy/Privacy';
+import Settings from '../routes/settings/Settings';
 import PublicRoute from './PublicRoute';
 import PrivateRoute from './PrivateRoute';
 
@@ -36,6 +37,7 @@ const Router = () => {
             <Route path='/author' element={<Author/>}/> 
             <Route path='/contact' element={<Contact/>}/> 
             <Route path='/privacy' element={<Privacy/>}/> 
+            <Route path='/settings' element={<PrivateRoute><Settings/></PrivateRoute>}/> 
             <Route path='*' element={<span>404</span>} />
         </Routes>
         </main>
