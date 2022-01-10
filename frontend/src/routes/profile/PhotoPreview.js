@@ -1,7 +1,6 @@
 import './PhotoPreview.css'
 import { useState, useCallback } from 'react'
-import { IconButton } from '@chakra-ui/react'
-import {FaCheck, FaTimes} from 'react-icons/fa'
+import { Button } from '@chakra-ui/react'
 import Cropper from 'react-easy-crop'
 import croppImg from './createImage'
 
@@ -40,8 +39,8 @@ const PhotoPreview = ({prev, setCropped, show, setShow, aspect, setClose}) => {
             onZoomChange={setZoom}
             />
             <div className='prevphoto-button'>
-            <IconButton icon={<FaTimes/>} onClick={()=>setClose(false)}/>
-            <IconButton icon={<FaCheck/>} onClick={handleClick}/></div></div>)}
+            <Button onClick={()=>setClose(false)} variant='ghost'>Anuluj</Button>
+            <Button colorScheme='blue' onClick={handleClick}>Zastosuj</Button></div></div>)}
         </article>
     )
 }

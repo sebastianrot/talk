@@ -24,8 +24,10 @@ try{
 
 router.get('/:id/groups', verify, async(req, res) => {
     let id = req.params.id
+    const page = req.query.page
+    const skip = (page-1)*15
 try{
-    const group = await Join.find({user: id, status: 'accept'}).populate('group').sort({date: -1})
+    const group = await Join.find({user: id, status: 'accept'}).populate('group').skip(skip).limit(15).sort({date: -1})
     return res.json(group)
 }catch(err){
     res.status(500).send()
@@ -34,8 +36,10 @@ try{
 
 router.get('/:id/follow', verify, async(req, res) => {
     let id = req.params.id
+    const page = req.query.page
+    const skip = (page-1)*15
 try{
-    const follows = await Follow.find({follower: id}).populate('user', 'username img desc verified date priv').sort({date: -1})
+    const follows = await Follow.find({follower: id}).populate('user', 'username img desc verified date priv').skip(skip).limit(15).sort({date: -1})
     return res.json(follows)
 }catch(err){
     res.status(500).send()

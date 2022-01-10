@@ -14,8 +14,8 @@ router.get('/:id', jwt, async(req, res) => {
 try{
     const result = await Group.find({_id: id}).lean()
     const users = await Join.count({group: id, status: 'accept'})
-  
-    if(result.length === 0) return res.status(404).send()
+
+    if(result.length === 0 || result[0].ban) return res.status(404).send()
     const join = await Join.find({group: id, user: req.userId}).select({status: 1, role: 1, _id: 0}).lean()
     if(join.length === 0) join.push({status: 'reject'})
     const group = {...result[0], users, ...join[0]}
@@ -115,8 +115,10 @@ try{
 
 router.get('/:id/members', verify, async(req, res)=> {
     const id = req.params.id
+    const page = req.query.page
+    const skip = (page-1)*15
  try{
-    const result = await Join.find({group: id, status: 'accept'}).populate('user', 'username img verified desc')
+    const result = await Join.find({group: id, status: 'accept'}).populate('user', 'username img verified desc').skip(skip).limit(15)
     return res.json(result)
  }catch(err) {
     res.status(500).send()

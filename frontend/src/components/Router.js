@@ -29,7 +29,7 @@ const Router = () => {
             <Route path='/register' element={<PublicRoute><Register/></PublicRoute>}/>
             <Route path='/user/:username/*' element={<Profile/>}/>
             <Route path='/p/:id' element={<PostPage/>}/>
-            <Route path='/search/:action' element={<SearchResultsPage/>}/>
+            <Route path='/search/*' element={<SearchResultsPage/>}/>
             <Route path='/group/:id/*' element={<Group/>}/> 
             <Route path='/groups/create' element={<PrivateRoute><CreateGroup/></PrivateRoute>}/>
             <Route path='/groups/discover' element={<PrivateRoute><Groups/></PrivateRoute>}/>

@@ -1,12 +1,21 @@
 import './SearchUsersPage.css'
+import { useState, useEffect } from 'react'
 import NavSearch from "./NavSearch"
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, useLocation} from 'react-router-dom'
 import { Tooltip, Text } from '@chakra-ui/react'
+import InfiniteScroll from 'react-infinite-scroll-component'
+import Loading from '../../components/Loading'
 import { ReactComponent as VerifiedLogo} from '../../components/svg/verified.svg'
 import url from '../../components/urlSettings'
 
-const SearchUsersPage = ({value}) => {
+const SearchUsersPage = () => {
+    const [data, setData] = useState()
+    const [error, setError] = useState(false)
+    const [loading, setLoading] = useState(true)
+    const [page, setPage] = useState(2)
+    const [hasMore, setHasMore] = useState(true)
     let navigate = useNavigate()
+    const location = useLocation()
 
     const partText = (str) => {
         if (str.length > 40) {
@@ -17,7 +26,40 @@ const SearchUsersPage = ({value}) => {
         }
     }
 
-    const result = value.map(val=>(<div className='searchuserpage-div' key={val._id} onClick={()=>navigate(`/user/${val.username}`)}>
+    useEffect(()=>{
+        fetch(`${url.serverUrl}/api/search/users${location.search}&page=1`)
+        .then(res => res.json())
+        .then(res =>{
+            setData(res)
+            setLoading(false)})
+        .catch(err=>{
+            setError(true)
+            setLoading(false)})
+    },[location])
+
+    const fetchSearch = async () =>{
+        try{
+            const res = await fetch(`${url.serverUrl}/api/search/users${location.search}&page=${page}`,{
+                credentials: 'include'
+            })
+            const data = await res.json()
+            setData(prev=>[...prev, ...data])
+            if(data.length === 0 || data.length < 15){
+                setHasMore(false)
+            }
+            setPage(prev=>prev+1)
+        }catch(err){
+            setHasMore(false)
+        }
+        }
+
+        if(loading) return <Loading/>
+
+        if(error) return <span>404</span>
+
+        if(data.length === 0) return <section className='searchuserspage-section'><span style={{fontWeight:600, fontSize:'35px', margin: 'auto'}}>404</span></section>
+
+    const result = data.map(val=>(<div className='searchuserpage-div' key={Math.floor(100000000 + Math.random() * 900000000)} onClick={()=>navigate(`/user/${val.username}`)}>
     <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'end'}}>
     <img src={`${url.serverUrl}/static/profile/${val.img !== '' ? val.img : 'default.jpg'}`} alt='zdjęcie profilowe' style={{width: '42px', borderRadius: '50%'}}/>
     </div>
@@ -35,7 +77,14 @@ const SearchUsersPage = ({value}) => {
     return(
         <section className='searchuserspage-section'>
             <NavSearch/>
+            <InfiniteScroll
+            dataLength={data.length}
+            next={fetchSearch}
+            hasMore={hasMore}
+            loader={<Loading/>}
+            style={{overflow: 'hidden'}}>
             {result}
+            </InfiniteScroll>
         </section>
     )
 }
