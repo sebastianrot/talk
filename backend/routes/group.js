@@ -49,8 +49,10 @@ try{
 router.get('/:id/search', jwt, async(req, res)=>{
     const id = req.params.id
     const query = req.query
+    const page = req.query.page
+    const skip = (page-1)*15
  try{
-    const result = await GroupPost.find({group: id, hashtag: {$in: query.q}}).populate('by', 'username img verified').populate('group', 'name priv').sort({date: -1}).lean()
+    const result = await GroupPost.find({group: id, hashtag: {$in: query.q}}).populate('by', 'username img verified').populate('group', 'name priv').skip(skip).limit(15).sort({date: -1}).lean()
     if(result.length === 0) return res.status(404).send()
     const status = await ingroup(id, req.userId)
     if(result[0].group.priv && status !== 'accept') return res.status(401).send()
