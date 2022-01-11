@@ -51,6 +51,7 @@ const VerificationCode = ({username, email, password}) => {
             <PinInputField />
         </PinInput>
         </HStack>
+        <Text fontSize='sm' fontWeight='600' marginBottom='15px' color='#293241'>Jeśli nie dostałeś emaila z weryfikacją sprawdź w spamie!</Text>
         <Text fontSize='sm' fontWeight='600' marginBottom='15px' color='#293241'>Kod jest aktywny przez 20 min</Text>
         <Button onClick={handleClick} size="md" isLoading={loading} loadingText="Loading" style={{background: '#1071fe', color: '#fff'}} spinnerPlacement="start">Zarejestruj się</Button>
     </section>
