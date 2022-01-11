@@ -4,8 +4,10 @@ const verify = require('../middlewares/jwt-verify')
 const router = express.Router();
 
 router.get('/', verify, async(req, res) => {
+    const page = req.query.page
+    const skip = (page-1)*15
 try{
-        const user = await Notification.find({receiver: req.userId}).populate('sender', 'username img verified').populate('ref', 'username group').sort({read: false, date: -1}).lean()
+        const user = await Notification.find({receiver: req.userId}).populate('sender', 'username img verified').populate('ref', 'username group').skip(skip).limit(15).sort({read: false, date: -1}).lean()
         if(user.length === 0) return res.sendStatus(404)
         res.json(user)
     }catch (err){

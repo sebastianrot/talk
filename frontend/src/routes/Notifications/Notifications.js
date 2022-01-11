@@ -1,6 +1,7 @@
 import './Notifications.css'
 import { useState, useEffect } from "react"
 import Notification from './Notification'
+import InfiniteScroll from 'react-infinite-scroll-component'
 import Loading from "../../components/Loading"
 import url from "../../components/urlSettings"
 
@@ -8,9 +9,11 @@ const Notifications = () => {
     const [data, setData] = useState()
     const [loading, setLoading] = useState(true)
     const [err, setErr] = useState(false)
+    const [page, setPage] = useState(2)
+    const [hasMore, setHasMore] = useState(true)
 
     useEffect(()=> {
-        fetch(`${url.serverUrl}/api/notifications`,{
+        fetch(`${url.serverUrl}/api/notifications?page=1`,{
             credentials: 'include'
         })
         .then(res => res.json())
@@ -44,6 +47,23 @@ const Notifications = () => {
         if(val.onModel==='GroupPost') return `/group/${val.ref.group}/p/${val.ref._id}`
     }
 
+
+    const fetchData = async () =>{
+        try{
+            const res = await fetch(`${url.serverUrl}/api/notifications?page=${page}`,{
+                credentials: 'include'
+            })
+            const data = await res.json()
+            setData(prev=>[...prev, ...data])
+            if(data.length === 0 || data.length < 15){
+                setHasMore(false)
+            }
+            setPage(prev=>prev+1)
+        }catch(err){
+            setHasMore(false)
+        }
+        }
+
     if(loading) return <Loading/>
 
     if(err) return(
@@ -56,7 +76,16 @@ const Notifications = () => {
 
     return(
         <section className="notifications-section">
-           {result}
+            <div style={{width: '100%'}}>
+            <InfiniteScroll
+            dataLength={data.length}
+            next={fetchData}
+            hasMore={hasMore}
+            loader={<Loading/>}
+            style={{overflow: 'hidden'}}>
+            {result}
+            </InfiniteScroll>
+            </div>
         </section>
     )
 }
