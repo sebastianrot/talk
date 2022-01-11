@@ -29,6 +29,8 @@ const ProfileFollow = ({id}) => {
 
     if(loading) return <Loading/>
 
+    if(user.length === 0) return <section className='userfollow-section'><span style={{fontWeight:600, margin: 'auto'}}>nie obserwuje nikogo</span></section>
+
     const partText = (str) => {
         if (str.length > 30) {
             return (str.substring(0, 30) + "...");

@@ -32,6 +32,8 @@ const ProfileGroups = ({id}) => {
 
     if(loading) return <Loading/>
 
+    if(group.length === 0) return <section className='usergroup-section'><span style={{fontWeight:600, margin: 'auto'}}>nie jest na żadnej grupie</span></section>
+
     if(err) return <span>Nie jest na grupach</span>
 
     const partText = (str) => {
