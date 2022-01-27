@@ -2,6 +2,7 @@ const express = require('express')
 const verify = require('./jwt-profile')
 const Post = require('../models/Post')
 const Comment = require('../models/Comment')
+const Feed = require('../models/Feed')
 const isfollowing = require('../isfollowing')
 const fs = require('fs')
 const router = express.Router();
@@ -35,6 +36,7 @@ router.post('/:id/delete', verify, async(req, res)=>{
         if(result[0].by.toString() !== req.userId) return res.status(403).send()
         await Post.deleteOne({_id: id})
         await Comment.deleteMany({post: id})
+        await Feed.deleteMany({post: id})
         if(result[0].img.length > 0){
             result[0].img.forEach(val => {
                 fs.unlinkSync(`public/posts/${val}`);

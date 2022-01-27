@@ -4,6 +4,7 @@ const Join = require('../models/Join')
 const Group = require('../models/Group')
 const GroupPost = require('../models/GroupPost')
 const Comment = require('../models/Comment')
+const Feed = require('../models/Feed')
 const admin = require('../middlewares/admin-verify')
 const access = require('../middlewares/role-verify')
 const fs = require('fs')
@@ -122,6 +123,7 @@ try{
     if(result[0].role === 'admin' || result[0].role === 'mod' || post[0].by.toString() === req.userId){
     await GroupPost.deleteOne({_id: postid, group: id})
     await Comment.deleteMany({post: postid})
+    await Feed.deleteMany({post: postid})
     if(post[0].img.length > 0){
         post[0].img.forEach(val => {
             fs.unlinkSync(`public/posts/${val}`);

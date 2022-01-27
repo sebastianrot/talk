@@ -11,6 +11,7 @@ const Feed = () => {
     const [posts, setPosts] = useState([])
     const [page, setPage] = useState(2)
     const [hasMore, setHasMore] = useState(true)
+    const [error, setError] = useState(false)
     const [loading, setLoading] = useState(true)
 
     useEffect(()=>{
@@ -20,8 +21,10 @@ const Feed = () => {
         .then(res => res.json())
         .then(data=>{
             setPosts(prev=>[...prev, ...data])
+            setError(false)
             setLoading(false)
         }).catch(err=>{
+            setError(true)
             setLoading(false)
         })
     },[])
@@ -30,8 +33,11 @@ const Feed = () => {
 
     if(posts.length === 0) return <section className='feed-section'><Home/><span style={{fontWeight:600, margin: 'auto', marginTop: '15px'}}>Dołącz do grup żeby była tu zawartość</span></section>
 
+    if(error) return <span>Dołącz do grup żeby pojawiła się tu zawartość</span>
+
 
     const fetchPosts = async () =>{
+    try{
         const res = await fetch(`${url.serverUrl}/api/feed?page=${page}`,{
             credentials: 'include'
         })
@@ -41,6 +47,9 @@ const Feed = () => {
             setHasMore(false)
         }
         setPage(prev=>prev+1)
+    }catch(err){
+        setHasMore(false)
+    }
     }
     const result = posts.map(val=>val.onModel==='Post' ? <Post key={Math.floor(100000000 + Math.random() * 900000000)} value={val.post}/> : <PostFeed key={Math.floor(100000000 + Math.random() * 900000000)} value={val.post} group={val.group}/>)
 
