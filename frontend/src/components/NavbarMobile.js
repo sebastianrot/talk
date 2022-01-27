@@ -21,7 +21,7 @@ const NavbarMobile = ({count, myUser}) => {
                     <DrawerBody display='flex' flexDirection='column'>
                     <Button variant='ghost' onClick={()=>navigate(`/user/${myUser.username}`)}>Konto</Button>
                     <Button variant='ghost' onClick={()=>navigate(`/user/${myUser.username}/groups`)}>Grupy</Button>
-                    <Button variant='ghost' onClick={()=>navigate(`/groups/create`)}>Stwórz grupe</Button>
+                    <Button variant='ghost' onClick={()=>navigate(`/groups/create`)}>Stwórz grupę</Button>
                     <Button variant='ghost' onClick={()=>navigate(`/settings`)}>Ustawienia</Button>
                     <Button variant='ghost'><LogOut/></Button>
                     </DrawerBody>

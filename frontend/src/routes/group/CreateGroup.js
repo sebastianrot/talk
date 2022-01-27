@@ -49,7 +49,7 @@ const CreateGroup = () => {
     return(
         <section className='create-group-section'>
         <article className='create-group-article'> 
-            <Text fontSize='lg' fontWeight='600' margin='auto'>Stwórz grupe</Text> 
+            <Text fontSize='lg' fontWeight='600' margin='auto'>Stwórz grupę</Text> 
             <Text fontSize='md' fontWeight='600' marginTop='10px'>Nazwa</Text>
             <Input type='text' placeholder='Podaj nazwe' value={name} onChange={(e)=>setName(e.target.value)}/>
             <Text fontWeight='600' marginTop='10px'>Opis</Text>

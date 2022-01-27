@@ -43,7 +43,7 @@ const Navbar = () => {
                     <MenuGroup>
                     <MenuItem onClick={()=>navigate(`/user/${myUser.username}`)}>Konto</MenuItem>
                     <MenuItem onClick={()=>navigate(`/user/${myUser.username}/groups`)}>Grupy</MenuItem>
-                    <MenuItem onClick={()=>navigate(`/groups/create`)}>Stwórz grupe</MenuItem>
+                    <MenuItem onClick={()=>navigate(`/groups/create`)}>Stwórz grupę</MenuItem>
                     <MenuItem onClick={()=>navigate(`/settings`)}>Ustawienia</MenuItem>
                     <MenuItem><LogOut/></MenuItem>
                     </MenuGroup>

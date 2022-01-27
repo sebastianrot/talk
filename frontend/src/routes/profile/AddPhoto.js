@@ -67,7 +67,7 @@ const AddPhoto = ({img}) => {
            </label>
            <Button type='submit' size='sm' marginTop='10px'>Zapisz</Button>
            </form>
-           {error && <span style={{color: 'red'}}>Zdjęcie jest nie prawidłowe</span>}
+           {error && <span style={{color: 'red'}}>Zdjęcie jest nieprawidłowe</span>}
        </div>
        </>
     )
