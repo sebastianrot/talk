@@ -2,6 +2,8 @@ const express = require('express')
 const Post = require('../models/Post')
 const GroupPost = require('../models/GroupPost')
 const Join = require('../models/Join')
+const Follow = require('../models/Follow')
+const Feed = require('../models/Feed')
 const verify = require('../middlewares/jwt-verify')
 const ingroup = require('../ingroup')
 const multer = require('multer')
@@ -44,11 +46,20 @@ router.post('/post', verify, upload.array('images', 4), async(req, res) => {
         img: filesArray,
         by: req.userId
     })
+    
 try{
     const length = text.split(" ").join("").length
     if(text.length < 10000 && (length > 0 || files.length > 0)){
     const add = await postData.save()
     await add.populate('by', 'username img verified')
+    const followers = await Follow.find({user: req.userId}).lean()
+
+    const feedData = followers.map(val=>({
+        user: req.userId,
+        receiver: val.follower,
+        post: add._id,
+        onModel: 'Post'}))
+        await Feed.insertMany(feedData)
     res.json(add)
     }
 }catch (err) {
@@ -90,6 +101,18 @@ router.post('/group/:id/post', verify, ismember, upload.array('images', 4), asyn
         const add = await postData.save()
         await add.populate('by', 'username img verified')
         await add.populate('group')
+        const joins = await Join.find({group: id, status: 'accept'}).lean()
+
+        const feedData = joins.filter(el=>{
+            if(el.user.toString()===req.userId) return false
+            return true
+        }).map(val=>({
+            user: req.userId,
+            receiver: val.user,
+            post: add._id,
+            group: id,
+            onModel: 'GroupPost'}))
+            await Feed.insertMany(feedData)
         res.json(add)
     }
    }

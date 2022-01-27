@@ -39,6 +39,7 @@ const bannergroupRoute = require('./routes/bannergroup')
 const passwordRoute = require('./routes/password')
 const categoryRoute = require('./routes/category')
 const notifications = require('./routes/notifications')
+const feedRoute = require('./routes/feed')
 
 app.use('/static', express.static('public'))
 app.use(express.json())
@@ -106,3 +107,5 @@ app.use('/api', hotRoute)
 app.use('/api/notifications', notifications)
 
 app.use('/api/password', passwordRoute)
+
+app.use('/api/feed', feedRoute)

@@ -9,7 +9,7 @@ require('dotenv').config()
 router.post('/code', async (req, res) => {
     let {username, email, password, token} = req.body
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    const format = /[ `!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?~]/;
+    const format = /^[a-z0-9_\.]+$/;
     username = username.toLowerCase()
     email = email.toLowerCase()
 
@@ -27,7 +27,7 @@ router.post('/code', async (req, res) => {
         if(username.length < 3 || username.length > 20) {
             res.status(401).send()
         }
-        if(username.includes(" ") || format.test(username)) {
+        if(username.includes(" ") || !format.test(username)) {
             res.status(401).send()
         }
     }

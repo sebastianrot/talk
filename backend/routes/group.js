@@ -115,7 +115,7 @@ try{
 }
 })
 
-router.get('/:id/members', verify, async(req, res)=> {
+router.get('/:id/members', jwt, async(req, res)=> {
     const id = req.params.id
     const page = req.query.page
     const skip = (page-1)*15

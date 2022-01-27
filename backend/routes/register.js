@@ -10,7 +10,7 @@ router.post('/', async (req, res) => {
     const errors = []
     let {username, email, password, captcha } = req.body
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    const format = /[ `!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?~]/;
+    const format = /^[a-z0-9_\.]+$/;
     username = username.toLowerCase()
     email = email.toLowerCase()
     const verifyurl = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.KEY}&response=${captcha}&remoteip=${req.socket.remoteAddress}`
@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
         if(username.length < 3 || username.length > 20) {
             errors.push({msg: 'Nazwa użytkownika musi się mieścić w zakresie od 3 do 20 znaków', type: 'username'})
         }
-        if(username.includes(" ") || format.test(username)) {
+        if(username.includes(" ") || !format.test(username)) {
             errors.push({msg: 'Podaj prawidłową nazwę', type: 'username'})
         }
         if(captcha === undefined || captcha === '' || captcha === null){
